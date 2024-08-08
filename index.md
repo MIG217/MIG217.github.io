@@ -9,7 +9,7 @@ Hello! I'm Mingrui, and this is my personal website hosted on GitHub Pages.
 
 ## About Me
 
-I am passionate about technology, especially areas related to Artificial Intelligence and data analysis. This website will showcase my projects, thoughts, and publications.
+
 
 ## Contact
 
