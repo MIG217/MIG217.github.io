@@ -7,9 +7,9 @@
 
 # Site Settings
 title                    : "Mingrui Guo"
-description              : "Hello, my name is Mingrui Guo. I am a product manager in charge of AI application in financial industry. I like reading, traveling, and data! "
+description              : "Hello, my name is Mingrui. I am a product manager in charge of AI application in financial industry. I like reading, traveling, and data! "
 repository               : "MIG217/MIG217.github.io"
-google_scholar_stats_use_cdn : true
+google_scholar_stats_use_cdn : false
 
 # google analytics
 google_analytics_id      :  # get google_analytics_id from https://analytics.google.com/analytics/
@@ -28,7 +28,7 @@ author:
   employer         :
   pubmed           : 
   googlescholar    : "https://scholar.google.com/citations?user=YOUR_GOOGLE_SCHOLAR_ID"
-  email            : "Lorem@ipsum.com"
+  email            : "mingrui27.guo@gmail.com"
   researchgate     :  # e.g., "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
