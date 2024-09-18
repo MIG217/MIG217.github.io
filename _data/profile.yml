@@ -33,17 +33,17 @@ portrait_caption: >-
 
 education:
   - name: University of Pittsburgh
-    logo: /assets/images/badges/MIT_Social_circle.png
-    position: M.S. Student in Data Science
-    date: May. 2024 - present
+    logo: /assets/images/badges/Pitt_logo.png
+    position: M.S. in Data Science
+    date: May 2024 - present
   - name: Huaiyin Institute of Technology
-    logo: /assets/images/badges/MIT_Social_circle.png
-    position: B.S. Computer Science and Technology
-    date: Sep. 2016 - Jun. 2018
+    logo: /assets/images/badges/Huaiyin_logo.png
+    position: B.S. in Computer Science and Technology
+    date: Sep 2016 - Jun 2018
   - name: Nanjing Polytechnic Institute
-    logo: /assets/images/badges/MIT_Social_circle.png
-    position: Associate Degree in Electrical Automation
-    date: Sep. 2013 - Jun. 2016
+    logo: /assets/images/badges/Nanjing_logo.png
+    position: A.A. in Electrical Automation
+    date: Sep 2013 - Jun 2016
 
 licenses_and_certifications:
   - name: Google Advanced Data Analytics Specialization
@@ -54,7 +54,7 @@ licenses_and_certifications:
     logo: /assets/images/badges/MIT_Social_circle.png
     issuing_organization: Duke University
     date: Jul. 2024
- #  - name: Generative AI: Prompt Engineering
- #    logo: /assets/images/badges/MIT_Social_circle.png
- #    issuing_organization: IBM
- #    date: Jun. 2024
+  - name: Generative AI:Prompt Engineering
+    logo: /assets/images/badges/MIT_Social_circle.png
+    issuing_organization: IBM
+    date: Jun. 2024
