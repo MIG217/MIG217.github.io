@@ -59,3 +59,8 @@ img.lazy {
     font-family: Courier, monospace;
 }
 
+.logo-img {
+    width: 18px;       /* 设置宽度为 18px */
+    height: auto;      /* 高度自动调整，以保持比例 */
+    max-width: 100%;   /* 确保宽度不会超出容器 */
+}
