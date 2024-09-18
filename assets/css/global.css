@@ -65,15 +65,11 @@ img.lazy {
     max-width: 100%;   /* 确保图标不会超出其容器 */
     object-fit: contain; /* 确保图标不会变形 */
     vertical-align: middle; /* 确保垂直对齐 */
+    margin-right: 0.5rem; /* 统一右边距 */
 }
 
 /* Flexbox 布局 */
-.media {
-    display: flex;
-    align-items: center; /* 确保垂直对齐 */
-}
-
-.d-flex {
+.media, .d-flex {
     display: flex;
     align-items: center; /* 确保垂直对齐 */
 }
@@ -101,11 +97,6 @@ img.lazy {
     display: flex;
     flex-direction: column; /* 垂直对齐 */
     justify-content: center; /* 垂直居中对齐内容 */
-}
-
-.d-flex > div {
-    display: flex;
-    align-items: center; /* 垂直对齐 */
 }
 
 /* 使列表项具有相同的间距 */
