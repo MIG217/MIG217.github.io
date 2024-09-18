@@ -38,17 +38,12 @@ education:
     date: May. 2024 - present
   - name: Huaiyin Institute of Technology
     logo: /assets/images/badges/MIT_Social_circle.png
-    position: B.S. Computer Science and Technology 
+    position: B.S. Computer Science and Technology
     date: Sep. 2016 - Jun. 2018
   - name: Nanjing Polytechnic Institute
     logo: /assets/images/badges/MIT_Social_circle.png
-    position: Associate Degree in Electrical Automation                                                              
+    position: Associate Degree in Electrical Automation
     date: Sep. 2013 - Jun. 2016
-# experience:
-# - name: Peking University
-#   logo: /assets/images/badges/PKU_red.png
-#   position: Research Intern
-#   date: Sep. 2019 - Jul. 2021
 
 licenses_and_certifications:
   - name: Google Advanced Data Analytics Specialization
