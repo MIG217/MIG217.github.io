@@ -67,15 +67,6 @@ img.lazy {
     vertical-align: middle; /* 确保垂直对齐 */
 }
 
-/* 名称、职位、组织、日期样式 */
-.name-text,
-.position-text,
-.organization-text,
-.date-text {
-    font-size: 1rem;  /* 统一字体大小 */
-    font-weight: 400; /* 确保字体重量一致 */
-}
-
 /* Flexbox 布局 */
 .media {
     display: flex;
@@ -87,6 +78,15 @@ img.lazy {
     align-items: center; /* 确保垂直对齐 */
 }
 
+/* 名称、职位、组织、日期样式 */
+.name-text,
+.position-text,
+.organization-text,
+.date-text {
+    font-size: 1rem;  /* 统一字体大小 */
+    font-weight: 400; /* 确保字体重量一致 */
+}
+
 /* 确保文本对齐一致 */
 .mt-auto {
     margin-top: auto;
@@ -94,4 +94,21 @@ img.lazy {
 
 .ml-auto {
     margin-left: auto;
+}
+
+/* 确保列表项对齐 */
+.media-body {
+    display: flex;
+    flex-direction: column; /* 垂直对齐 */
+    justify-content: center; /* 垂直居中对齐内容 */
+}
+
+.d-flex > div {
+    display: flex;
+    align-items: center; /* 垂直对齐 */
+}
+
+/* 使列表项具有相同的间距 */
+li.media, li.d-flex {
+    margin-bottom: 0.5rem; /* 统一间距 */
 }
