@@ -12,7 +12,8 @@ navbar_title: Blog
     {% for post in posts %}
       <div class="col-md-4">
         <div class="card">
-          <img class="card-img-top" src="{{ post.cover | relative_url }}" alt="{{ post.title }}">
+          <!-- Ensure a default image is used if cover is not available -->
+          <img class="card-img-top" src="{{ post.cover | default: '/assets/images/default_cover.png' | relative_url }}" alt="{{ post.title }}">
           <div class="card-body">
             <h5 class="card-title"><a href="{{ post.url }}">{{ post.title }}</a></h5>
             <p class="card-text">{{ post.excerpt }}</p>
