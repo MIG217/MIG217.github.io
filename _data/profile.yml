@@ -3,11 +3,10 @@ secondary_name: ""
 navbar_name: "Mingrui Guo"
 
 positions:
-- logo: /assets/images/badges/MIT_Social_circle.png  # Logo is optional
-  name: Product Manager
-- logo: /assets/images/badges/Pitt_logo.png
-  name: University of Pittsburgh
-
+  - logo: /assets/images/badges/MIT_Social_circle.png  # Logo is optional
+    name: Product Manager
+  - logo: /assets/images/badges/Pitt_logo.png
+    name: University of Pittsburgh
 
 email: "mingrui27.guo@gmail.com"
 # cv_link: link-to-your-cv-file
@@ -33,10 +32,10 @@ portrait_caption: >-
   Photo by Manja Vitolic on Unsplash (this caption is optional, comment it out to disable).
 
 education:
-- name: University of Pittsburgh
-  logo: /assets/images/badges/MIT_Social_circle.png
-  position: M.S. Student in Data Science
-  date: May. 2024 - present
+  - name: University of Pittsburgh
+    logo: /assets/images/badges/MIT_Social_circle.png
+    position: M.S. Student in Data Science
+    date: May. 2024 - present
 
 # experience:
 # - name: Peking University
@@ -44,8 +43,7 @@ education:
 #   position: Research Intern
 #   date: Sep. 2019 - Jul. 2021
 
-
-licenses & certifications:
+licenses_and_certifications:
   - name: Google Advanced Data Analytics Specialization
     logo: /assets/images/badges/MIT_Social_circle.png
     issuing_organization: Google
