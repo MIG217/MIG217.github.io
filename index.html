@@ -49,3 +49,17 @@ navbar_title: Home
 </div>
 {% endif %}
 {% endif %}
+
+{% if site.data.display.homepage.show_footer %}
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">
+            {% if site.data.display.homepage.footer_text %}
+                {{ site.data.display.homepage.footer_text | markdownify }}
+            {% else %}
+                <a href="https://github.com/luost26/academic-homepage" target="_blank"><i class="fas fa-pencil-ruler"></i> academic-homepage</a>
+            {% endif %}
+        </span>
+    </div>
+</footer>
+{% endif %}
