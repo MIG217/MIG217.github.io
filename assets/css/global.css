@@ -58,30 +58,36 @@ img.lazy {
     font-family: Courier, monospace;
 }
 
-/* 图标样式 */
 .logo-img {
     width: 18px;       /* 设置宽度为 18px */
     height: 18px;      /* 设置高度为 18px，保持 1:1 比例 */
     max-width: 100%;   /* 确保图标不会超出其容器 */
     object-fit: contain; /* 确保图标不会变形 */
     vertical-align: middle; /* 确保垂直对齐 */
-    margin-right: 0.5rem; /* 统一右边距 */
+}
+
+.name-text {
+    font-size: 1rem;  /* 设置名称文本的大小 */
+}
+
+.position-text,
+.organization-text {
+    font-size: 0.875rem; /* 设置职位和组织文本的大小 */
+}
+
+.date-text {
+    font-size: 0.875rem; /* 设置日期文本的大小 */
 }
 
 /* Flexbox 布局 */
-.media, .d-flex {
+.media {
     display: flex;
     align-items: center; /* 确保垂直对齐 */
 }
 
-/* 名称、职位、组织、日期样式 */
-.name-text,
-.position-text,
-.organization-text,
-.date-text {
-    font-size: 1rem;  /* 统一字体大小 */
-    font-weight: 400; /* 确保字体重量一致 */
-    line-height: 1.2; /* 确保文本行高一致 */
+.d-flex {
+    display: flex;
+    align-items: center; /* 确保垂直对齐 */
 }
 
 /* 确保文本对齐一致 */
@@ -101,6 +107,6 @@ img.lazy {
 }
 
 /* 使列表项具有相同的间距 */
-li.media, li.d-flex {
+li.media {
     margin-bottom: 0.5rem; /* 统一间距 */
 }
