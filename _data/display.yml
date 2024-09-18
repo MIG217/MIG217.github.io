@@ -1,7 +1,7 @@
 homepage:
   show_experience: true
-  # show_news: true
-  show_selected_publications: false　
+  show_news: false
+  show_selected_publications: false
   show_latest_blogs: true
   show_footer: false
 
