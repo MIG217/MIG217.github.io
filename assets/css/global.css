@@ -81,6 +81,7 @@ img.lazy {
 .date-text {
     font-size: 1rem;  /* 统一字体大小 */
     font-weight: 400; /* 确保字体重量一致 */
+    line-height: 1.2; /* 确保文本行高一致 */
 }
 
 /* 确保文本对齐一致 */
