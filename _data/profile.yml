@@ -5,7 +5,7 @@ navbar_name: "Mingrui Guo"
 positions:
   - logo: /assets/images/badges/MIT_Social_circle.png  # Logo is optional
     name: Product Manager
-  - logo: /assets/images/badges/Pitt_logo.png
+  - logo: /assets/images/badges/University_of_Pittsburgh_seal.png
     name: University of Pittsburgh
 
 email: "mingrui27.guo@gmail.com"
@@ -33,7 +33,7 @@ portrait_caption: >-
 
 education:
   - name: University of Pittsburgh
-    logo: /assets/images/badges/Pitt_logo.png
+    logo: /assets/images/badges/University_of_Pittsburgh_seal.png
     position: M.S. in Data Science
     date: May 2024 - present
   - name: Huaiyin Institute of Technology
