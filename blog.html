@@ -1,0 +1,30 @@
+---
+layout: default
+title: Categories
+navbar_title: Categories
+body_attr: >-
+  data-spy="scroll" data-target="#navbar-category" data-offset="100"
+---
+
+{% assign pubs_by_category = site.publications | group_by: "category" %}
+
+<div class="row">
+    <div class="col-12 col-lg-10">
+        {% for category in pubs_by_category %}
+        <h2 class="pt-4" id="category-{{ category.name }}">{{ category.name }}</h2>
+        <div class="my-0 p-0 bg-white shadow-sm rounded-sm">
+            {% for item in category.items %}
+                {% include widgets/publication_item.html item=item %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-2 d-none d-lg-block">
+        <div id="navbar-category" class="nav nav-pills flex-column sticky-top" style="top: 80px">
+            {% for category in pubs_by_category %}
+            <a class="nav-link d-block" href="#category-{{ category.name }}">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

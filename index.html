@@ -1,8 +1,9 @@
 ---
 layout: default
-title : Homepage
+title: Homepage
 navbar_title: Home
 ---
+
 {% include widgets/profile_card.html %}
 
 {% include widgets/url_debug_message.html %}
@@ -25,4 +26,26 @@ navbar_title: Home
     publications=pubs
     title='<i class="fas fa-star"></i> Selected Publications'
 %}
+{% endif %}
+
+{% if site.data.display.homepage.show_latest_blogs %}
+{% assign blogs = site.blogs | sort: "date" | reverse | limit: 5 %}
+{% if blogs.size > 0 %}
+<div class="my-3 p-0 bg-white shadow-sm rounded-sm">
+    <h6 class="border-bottom border-gray p-3 mb-0">
+        <i class="fas fa-blog"></i> Recent Blog Posts
+        <a href="{{ '/blog/' | relative_url }}">(view all <i class="fas fa-angle-double-right"></i>)</a>
+    </h6>
+    {% for blog in blogs %}
+        <div class="my-3">
+            <h5><a href="{{ blog.url }}">{{ blog.title }}</a></h5>
+            <p class="small text-muted">{{ blog.date | date: "%b %d, %Y" }}</p>
+            <p>{{ blog.excerpt }}</p>
+        </div>
+    {% endfor %}
+    <h6 class="d-block p-3 mt-0 text-right">
+        <a href="{{ '/blog/' | relative_url }}">All blogs <i class="fas fa-angle-double-right"></i></a>
+    </h6>
+</div>
+{% endif %}
 {% endif %}

@@ -1,4 +1,5 @@
 @charset "utf-8";
+
 body {
     font-family: "Lato", sans-serif;
     font-weight: 400;
@@ -109,4 +110,44 @@ img.lazy {
 /* 使列表项具有相同的间距 */
 li.media {
     margin-bottom: 0.5rem; /* 统一间距 */
+}
+
+/* 博客文章样式 */
+.blog-post-title {
+    font-size: 1.5rem; /* 设置标题大小 */
+    font-weight: 700;  /* 加粗标题 */
+    margin-bottom: 0.5rem; /* 标题下方间距 */
+}
+
+.blog-post-excerpt {
+    font-size: 1rem; /* 设置摘要字体大小 */
+    margin-bottom: 1rem; /* 摘要下方间距 */
+}
+
+.blog-post-cover {
+    width: 100%; /* 让封面图像宽度适应容器 */
+    max-height: 200px; /* 设置最大高度 */
+    object-fit: cover; /* 让图像适应容器而不变形 */
+}
+
+.navbar {
+    background-color: #f8f9fa; /* 背景色 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+}
+
+.blog-post-container {
+    padding: 1rem; /* 容器内边距 */
+    border-bottom: 1px solid #eaeaea; /* 下边框 */
+    margin-bottom: 1rem; /* 博客文章之间的间距 */
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .blog-post-title {
+        font-size: 1.25rem; /* 在小屏幕上调整标题大小 */
+    }
+
+    .blog-post-excerpt {
+        font-size: 0.875rem; /* 在小屏幕上调整摘要大小 */
+    }
 }
