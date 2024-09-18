@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-Welcome!
-=======
 # academic-homepage
 
 ![Preview](assets/images/etc/preview.png)
@@ -55,4 +52,3 @@ A GitHub Pages (Jekyll) template for personal academic website. Click [here](htt
    ```
 
 5. Browse to the displayed URL to see the website.
->>>>>>> a5ee7a3 (更新所有文件)
