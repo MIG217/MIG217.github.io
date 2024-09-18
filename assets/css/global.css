@@ -10,12 +10,11 @@ h1, h2, h3, h4, h5, h6,
     font-weight: 700;
 }
 
-.text-profile-position {
-    font-weight: 400;
-}
-
-.text-profile-bio {
-    /* font-family: "Raleway"; */
+.text-profile-position,
+.text-profile-bio,
+.name-text,
+.organization-text,
+.date-text {
     font-weight: 400;
 }
 
@@ -64,4 +63,17 @@ img.lazy {
     height: 18px;      /* 设置高度为 18px，确保保持 1:1 比例 */
     max-width: 100%;   /* 确保图标不会超出其容器 */
     object-fit: contain; /* 确保图标不会变形 */
+}
+
+.name-text {
+    font-size: 1rem;  /* 设置名称文本的大小 */
+}
+
+.position-text,
+.organization-text {
+    font-size: 0.875rem; /* 设置职位和组织文本的大小 */
+}
+
+.date-text {
+    font-size: 0.875rem; /* 设置日期文本的大小 */
 }
