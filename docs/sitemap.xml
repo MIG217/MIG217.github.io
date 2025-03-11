@@ -2,28 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/tags/agents/</loc>
-    <lastmod>2025-03-10T17:15:29+08:00</lastmod>
+    <loc>https://mig217.github.io/tags/agents/</loc>
+    <lastmod>2025-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/ai/</loc>
-    <lastmod>2025-03-10T17:15:29+08:00</lastmod>
+    <loc>https://mig217.github.io/categories/ai/</loc>
+    <lastmod>2025-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2025-03-10T17:15:29+08:00</lastmod>
+    <loc>https://mig217.github.io/categories/</loc>
+    <lastmod>2025-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/llm/</loc>
-    <lastmod>2025-03-10T17:15:29+08:00</lastmod>
+    <loc>https://mig217.github.io/tags/llm/</loc>
+    <lastmod>2025-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/2025-03-10-llm-agents-overview/</loc>
-    <lastmod>2025-03-10T17:15:29+08:00</lastmod>
+    <loc>https://mig217.github.io/post/2025-03-10-llm-agents-overview/</loc>
+    <lastmod>2025-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2025-03-10T17:15:29+08:00</lastmod>
+    <loc>https://mig217.github.io/</loc>
+    <lastmod>2025-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2025-03-10T17:15:29+08:00</lastmod>
+    <loc>https://mig217.github.io/post/</loc>
+    <lastmod>2025-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-03-10T17:15:29+08:00</lastmod>
+    <loc>https://mig217.github.io/tags/</loc>
+    <lastmod>2025-03-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mig217.github.io/archives/</loc>
+  </url><url>
+    <loc>https://mig217.github.io/search/</loc>
+  </url><url>
+    <loc>https://mig217.github.io/search.fr/</loc>
   </url>
 </urlset>

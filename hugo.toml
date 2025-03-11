@@ -4,17 +4,74 @@ title = "Mingrui's Blog"
 theme = 'hugo-PaperMod'
 publishDir = "docs"
 
+enableInlineShortcodes = true
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+enableEmoji = true
+pygmentsUseClasses = true
 
 [params]
+  env = "production"  # 启用 Google Analytics、OpenGraph、Twitter Cards 等
+  description = "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"
+  author = "Mingrui Guo"  # 更新作者信息
   defaultTheme = "regular"
-  mainSections = ["post"]  # 让主页展示 posts 目录下的文章
-  ShowReadingTime = true   # 显示预计阅读时间
+  mainSections = ["post"]  # 主页展示的文章目录
+  ShowReadingTime = true  # 显示预计阅读时间
   ShowShareButtons = true  # 允许分享
-  ShowToc = true           # 文章内显示目录
-  comments = false         # 关闭评论（如有需要可开启）
-  ShowBreadCrumbs = true   # 面包屑导航
+  ShowToc = true  # 文章内显示目录
+  comments = false  # 关闭评论
+  ShowBreadCrumbs = true  # 面包屑导航
   ShowPostNavLinks = true  # 文章内的前后文章导航
-  ShowWordCount = true     # 显示字数统计
+  ShowWordCount = true  # 显示字数统计
+  ShowCodeCopyButtons = true  # 代码块复制按钮
+  ShowRssButtonInSectionTermList = true  # RSS 订阅按钮
+  ShowAllPagesInArchive = true  # 归档页显示所有文章
+  ShowPageNums = true  # 文章列表显示分页
+  displayFullLangName = true  # 显示完整语言名称
+
+
+  [params.profileMode]
+    enabled = false
+    title = "Mingrui's Blog"
+    imageUrl = "#"
+    imageTitle = "Profile Image"
+    buttons = [
+      { name = "Archives", url = "archives" },
+      { name = "Tags", url = "tags" }
+    ]
+
+  [params.homeInfoParams]
+    Title = "👋Welcome to Mingrui's Blog"
+    Content = """
+     Hey, I’m Mingrui. I started this blog in 2024 to track my thoughts on AI Agents 
+     and the books I’m reading. If the writing sounds a bit too polished, well… let’s 
+     just say ChatGPT helped out. 😏
+    """
+
+   [[params.socialIcons]]
+     name = "github"
+     title = "View Source on Github"
+     url = "https://github.com/mig217"
+  
+  # [[params.socialIcons]]
+  #   name = "X"
+  #   title = "Share on X/Twitter"
+  #   url = "https://x.com/mig217"
+
+  # [[params.socialIcons]]
+  #   name = "KoFi"
+  #   title = "Buy me a Ko-Fi :)"
+  #   url = "https://ko-fi.com/mig217"
+
+   [params.editPost]
+     URL = "https://github.com/mig217/blog/tree/main/content"
+     Text = "Suggest Changes"
+     appendFilePath = true
+
+[minify]
+  disableXML = true
 
 [menu]
   [[menu.main]]
@@ -38,7 +95,6 @@ publishDir = "docs"
     url = "faq/"
     weight = 5
 
-
 [languages]
   [languages.en]
     languageName = "English"
@@ -48,3 +104,6 @@ publishDir = "docs"
   [markup.highlight]
     noClasses = false
     guessSyntax = true
+
+[assets]
+  disableHLJS = true

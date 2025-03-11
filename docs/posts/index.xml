@@ -4,33 +4,21 @@
     <title>Posts on Mingrui&#39;s Blog</title>
     <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Mingrui&#39;s Blog</description>
+    <image>
+      <title>Mingrui&#39;s Blog</title>
+      <url>http://localhost:1313/images/papermod-cover.png</url>
+      <link>http://localhost:1313/images/papermod-cover.png</link>
+    </image>
     <generator>Hugo -- 0.145.0</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 10 Mar 2025 17:15:29 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 10 Mar 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>LLM Agents: Brief History and Overview</title>
       <link>http://localhost:1313/posts/2025-03-10-llm-agents-overview/</link>
-      <pubDate>Mon, 10 Mar 2025 17:15:29 +0800</pubDate>
+      <pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/2025-03-10-llm-agents-overview/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/posts/2025-03-10-llm-agents-overview/#1-introduction&#34;&gt;1. Introduction&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/posts/2025-03-10-llm-agents-overview/#11-what-is-an-agent&#34;&gt;1.1 What is an Agent?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/posts/2025-03-10-llm-agents-overview/#12-whats-an-llm-agent&#34;&gt;1.2 What&amp;rsquo;s an LLM Agent?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/posts/2025-03-10-llm-agents-overview/#2-pre-llm-language-agents&#34;&gt;2. Pre-LLM Language Agents&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/posts/2025-03-10-llm-agents-overview/#21-eliza-1966-the-pioneer-of-text-agents&#34;&gt;2.1 ELIZA (1966): The Pioneer of Text Agents&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/posts/2025-03-10-llm-agents-overview/#22-lstm-dqn-2015-reinforcement-learning-for-text-agents&#34;&gt;2.2 LSTM-DQN (2015): Reinforcement Learning for Text Agents&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/posts/2025-03-10-llm-agents-overview/#3-the-emergence-of-large-language-models&#34;&gt;3. The Emergence of Large Language Models&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://localhost:1313/posts/2025-03-10-llm-agents-overview/#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;1-introduction&#34;&gt;1. Introduction&lt;/h2&gt;
-&lt;p&gt;To understand LLM agents, we need to break the term into two foundational components: &lt;strong&gt;Large Language Models (LLMs)&lt;/strong&gt; and &lt;strong&gt;Agents&lt;/strong&gt;. While LLMs have gained widespread recognition, the concept of &amp;ldquo;agent&amp;rdquo; in this context requires deeper exploration.&lt;/p&gt;</description>
+      <description>Sample article showcasing basic code syntax and formatting for HTML elements.</description>
     </item>
   </channel>
 </rss>
