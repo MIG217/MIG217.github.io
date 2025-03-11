@@ -31,7 +31,6 @@ pygmentsUseClasses = true
   ShowPageNums = true  # 文章列表显示分页
   displayFullLangName = true  # 显示完整语言名称
 
-
   [params.profileMode]
     enabled = false
     title = "Mingrui's Blog"
@@ -45,9 +44,9 @@ pygmentsUseClasses = true
   [params.homeInfoParams]
     Title = "👋Welcome to Mingrui's Blog"
     Content = """
-     Hey, I’m Mingrui. I started this blog in 2024 to track my thoughts on AI Agents 
-     and the books I’m reading. If the writing sounds a bit too polished, well… let’s 
-     just say ChatGPT helped out. 😏
+     Hey, I’m Mingrui. I started this blog in 2025 to track my thoughts on 
+     AI Agents and the books I’m reading. If the writing sounds a bit too 
+     polished, well… let’s just say ChatGPT helped out. 😏
     """
 
    [[params.socialIcons]]
