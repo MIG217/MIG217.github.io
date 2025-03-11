@@ -4,6 +4,7 @@ title = "Mingrui's Blog"
 theme = 'hugo-PaperMod'
 publishDir = "docs"
 
+
 [params]
   defaultTheme = "regular"
   mainSections = ["post"]  # 让主页展示 posts 目录下的文章
@@ -36,10 +37,7 @@ publishDir = "docs"
     name = "FAQ"
     url = "faq/"
     weight = 5
-  [[menu.main]]
-    name = "emojisearch.app"
-    url = "https://emojisearch.app"
-    weight = 6
+
 
 [languages]
   [languages.en]
