@@ -1,4 +1,3 @@
-
 baseURL = 'https://mig217.github.io/'
 languageCode = 'en-us'
 title = "Mingrui's Blog"
@@ -6,4 +5,48 @@ theme = 'hugo-PaperMod'
 publishDir = "docs"
 
 [params]
-  defaultTheme = "regular" 
+  defaultTheme = "regular"
+  mainSections = ["post"]  # 让主页展示 posts 目录下的文章
+  ShowReadingTime = true   # 显示预计阅读时间
+  ShowShareButtons = true  # 允许分享
+  ShowToc = true           # 文章内显示目录
+  comments = false         # 关闭评论（如有需要可开启）
+  ShowBreadCrumbs = true   # 面包屑导航
+  ShowPostNavLinks = true  # 文章内的前后文章导航
+  ShowWordCount = true     # 显示字数统计
+
+[menu]
+  [[menu.main]]
+    name = "Posts"
+    url = "post/"
+    weight = 1
+  [[menu.main]]
+    name = "Archive"
+    url = "archives/"
+    weight = 2
+  [[menu.main]]
+    name = "Search"
+    url = "search/"
+    weight = 3
+  [[menu.main]]
+    name = "Tags"
+    url = "tags/"
+    weight = 4
+  [[menu.main]]
+    name = "FAQ"
+    url = "faq/"
+    weight = 5
+  [[menu.main]]
+    name = "emojisearch.app"
+    url = "https://emojisearch.app"
+    weight = 6
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    weight = 1
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+    guessSyntax = true
