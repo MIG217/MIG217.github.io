@@ -8,6 +8,12 @@ tags: ["LLM", "Agents"]
 
 - [1. Introduction](#1-introduction)
   - [1.1 What is an Agent?](#11-what-is-an-agent)
+  - [1.2 What's an LLM Agent?](#12-whats-an-llm-agent)
+- [2. Pre-LLM Language Agents](#2-pre-llm-language-agents)
+  - [2.1 ELIZA (1966): The Pioneer of Text Agents](#21-eliza-1966-the-pioneer-of-text-agents)
+  - [2.2 LSTM-DQN (2015): Reinforcement Learning for Text Agents](#22-lstm-dqn-2015-reinforcement-learning-for-text-agents)
+- [3. The Emergence of Large Language Models](#3-the-emergence-of-large-language-models)
+- [References](#references)
 
 
 ## 1. Introduction
@@ -30,3 +36,77 @@ Agents typically follow a **perception-reasoning-action cycle**, where they:
 2. Process information and make decisions  
 3. Take actions that affect the environment
 
+### 1.2 What's an LLM Agent?
+
+An LLM agent **integrates the powerful language capabilities of LLMs with the goal-oriented, interactive nature of agents**. These systems represent a significant evolution in AI, with capabilities **ranging from basic conversational skills to complex reasoning and planning**.
+
+![3-level agent](/images/3levelagents.png)
+
+LLM agents can be classified into three progressive levels of sophistication:
+
+**Level 1: Text Agent**
+- Basic agents that process and respond to text input
+- Examples: ELIZE, LSTM-DQN
+
+**Level 2: LLM Agent**
+- Advanced agents that leverage LLMs for direct action generation
+- Examples: SayCan, Language Planner
+
+**Level 3: Reasoning Agent**
+- Use LLM to reason to act
+- Examples: ReAct, AutoGPT
+
+## 2. Pre-LLM Language Agents
+
+### 2.1 ELIZA (1966): The Pioneer of Text Agents
+
+The development of text-based agents dates back to the early days of AI. ELIZA, created in 1966, **marked a significant milestone as one of the first chatbots**.
+
+It's simple yet effective **rule-based approach involved pattern matching and response templates to simulate human conversation**. While users found ELIZA remarkably engaging, the system had inherent limitions:
+
+- Limited to **specific domains** and use cases
+- Require a extensive **manual rule** creation
+- Unable to handle **complex interactions** or understanding
+
+![ELIZA](/images/ELIZA_conversation.png)
+
+Despite these constraints, **ELIZA established the conceptual foundation for future conversational agents and demonstrated the potential of natural language interfaces**.
+
+### 2.2 LSTM-DQN (2015): Reinforcement Learning for Text Agents
+
+Prior to the emergence of LLMs, **RL was a dominant approach for developing text-based agents**. This methodology **treated text as both the observation and action space**, similar to how traditional RL handles pixels and keyboard inputs in video games. The core idea was that optimizing for reward signals would natually lead emergence of language intelligence[1].
+
+![RL 4 Text Agents](/images/RL4textagent.png)
+
+However, this approach faced several significant limitions:
+
+- Domain-specific applications
+- Dependence on explicit scalar reward signals
+- Requires extensive training
+  
+**These early approaches highlighted both the promise and challenges of creating intelligent text-based agents, setting the stage for the transformative impact that large language models would later bring to this field.**
+
+## 3. The Emergence of Large Language Models
+
+
+## References
+
+[1] Narasimhan, Karthik, Tejas Kulkarni, and Regina Barzilay. “Language Understanding for Text-Based Games Using Deep Reinforcement Learning.” arXiv preprint, September 11, 2015.
+
+[2] Brown, Tom B., Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, and others. “Language Models Are Few-Shot Learners.” arXiv preprint, July 22, 2020.
+
+[3] Chen, Wenhu, Xueguang Ma, Xinyi Wang, and William W. Cohen. “Program of Thoughts Prompting: Disentangling Computation from Reasoning for Numerical Reasoning Tasks.” arXiv. November 22, 2022.
+
+[4] SAIL Blog. "Building Scalable, Explainable, and Adaptive NLP Models with Retrieval." October 5, 2021.
+
+[5] Parisi, Aaron, Yao Zhao, and Noah Fiedel. "TALM: Tool Augmented Language Models." arXiv, May 24, 2022.
+
+[6] Schick, Timo, Jane Dwivedi-Yu, Roberto Dessì, Roberta Raileanu, Maria Lomeli, and others. "Toolformer: Language Models Can Teach Themselves to Use Tools." arXiv, February 9, 2023.
+
+[7] Trivedi, Harsh, Niranjan Balasubramanian, Tushar Khot, and Ashish Sabharwal. "Interleaving Retrieval with Chain-of-Thought Reasoning for Knowledge-Intensive Multi-Step Questions." arXiv, June 23, 2023.
+
+[8] Press, Ofir, Muru Zhang, Sewon Min, Ludwig Schmidt, Noah A. Smith, and Mike Lewis. "Measuring and Narrowing the Compositionality Gap in Language Models." arXiv, October 17, 2023.
+
+[9] Yao, Shunyu, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, and Yuan Cao. "ReAct: Synergizing Reasoning and Acting in Language Models." arXiv, March 10, 2023.
+
+[10] Shinn, Noah, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao. "Reflexion: Language Agents with Verbal Reinforcement Learning." arXiv, October 10, 2023.
