@@ -24,7 +24,7 @@ In artificial intelligence, an agent is **an "intelligent" system that perceives
 
 Agents typically follow a **perception-reasoning-action cycle**, where they:
 
-![Agent](images/agents.png)
+![Agent](/images/agents.png)
 
 1. Observe their environment  
 2. Process information and make decisions  
