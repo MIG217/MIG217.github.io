@@ -4,3 +4,6 @@ languageCode = 'en-us'
 title = "Mingrui's Blog"
 theme = 'hugo-PaperMod'
 publishDir = "docs"
+
+[params]
+  defaultTheme = "regular" 
