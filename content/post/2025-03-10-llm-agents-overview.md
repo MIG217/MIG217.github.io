@@ -2,13 +2,11 @@
 title: "LLM Agents: Brief History and Overview"
 author: ["Mingrui Guo"]
 date: "2025-03-10"
-description: "Sample article showcasing basic code syntax and formatting for HTML elements."
-summary: "Sample article showcasing basic code syntax and formatting for HTML elements."
 categories: ["AI"]
 tags: ["LLM", "Agents"]
 draft: false
 ShowToc: true
-TocOpen: true
+TocOpen: false
 ---
 
 ## 1. Introduction
