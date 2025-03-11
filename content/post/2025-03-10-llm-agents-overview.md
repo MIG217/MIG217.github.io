@@ -9,11 +9,11 @@ ShowToc: true
 TocOpen: false
 ---
 
-## 1. Introduction
+## Introduction
 
 To understand LLM agents, we need to break the term into two foundational components: **Large Language Models (LLMs)** and **Agents**. While LLMs have gained widespread recognition, the concept of "agent" in this context requires deeper exploration.
 
-### 1.1 What is an Agent?
+### What is an Agent?
 
 In artificial intelligence, an agent is **an "intelligent" system that perceives and interacts with an "environment" to achieve specific goals**. The classification of agents varies based on their operational environment:
 
@@ -23,17 +23,15 @@ In artificial intelligence, an agent is **an "intelligent" system that perceives
 
 Agents typically follow a **perception-reasoning-action cycle**, where they:
 
-![Agent](/images/agents.png)
-
 1. Observe their environment  
 2. Process information and make decisions  
 3. Take actions that affect the environment
 
-### 1.2 What's an LLM Agent?
+{{< figure src="/images/agents.png" title="Fig.1: Agent-Environment Interaction" width="400px" class="align-center" >}}
+
+### What's an LLM Agent?
 
 An LLM agent **integrates the powerful language capabilities of LLMs with the goal-oriented, interactive nature of agents**. These systems represent a significant evolution in AI, with capabilities **ranging from basic conversational skills to complex reasoning and planning**.
-
-![3-level agent](/images/3levelagents.png)
 
 LLM agents can be classified into three progressive levels of sophistication:
 
@@ -49,9 +47,11 @@ LLM agents can be classified into three progressive levels of sophistication:
 - Use LLM to reason to act
 - Examples: ReAct, AutoGPT
 
-## 2. Pre-LLM Language Agents
+{{< figure src="/images/3levelagents.png" title="Fig.2: Three Levels of LLM Agents: From Text to Reasoning" width="500px" class="align-center" >}}
 
-### 2.1 ELIZA (1966): The Pioneer of Text Agents
+## Pre-LLM Language Agents
+
+### ELIZA (1966): The Pioneer of Text Agents
 
 The development of text-based agents dates back to the early days of AI. ELIZA, created in 1966, **marked a significant milestone as one of the first chatbots**.
 
@@ -61,15 +61,16 @@ It's simple yet effective **rule-based approach involved pattern matching and re
 - Require a extensive **manual rule** creation
 - Unable to handle **complex interactions** or understanding
 
-![ELIZA](/images/ELIZA_conversation.png)
+{{< figure src="/images/ELIZA_conversation.png" title="Fig.3: ELIZA: The First Chatbot" width="500px" class="align-center" >}}
 
 Despite these constraints, **ELIZA established the conceptual foundation for future conversational agents and demonstrated the potential of natural language interfaces**.
 
-### 2.2 LSTM-DQN (2015): Reinforcement Learning for Text Agents
+### LSTM-DQN (2015): Reinforcement Learning for Text Agents
 
 Prior to the emergence of LLMs, **RL was a dominant approach for developing text-based agents**. This methodology **treated text as both the observation and action space**, similar to how traditional RL handles pixels and keyboard inputs in video games. The core idea was that optimizing for reward signals would natually lead emergence of language intelligence[1].
 
-![RL 4 Text Agents](/images/RL4textagent.png)
+{{< figure src="/images/RL4textagent.png" title="Fig.4: LSTM-DQN for Reinforcement Learning in Text-Based Environments" width="700px" class="align-center" >}}
+
 
 However, this approach faced several significant limitions:
 
@@ -79,7 +80,66 @@ However, this approach faced several significant limitions:
   
 **These early approaches highlighted both the promise and challenges of creating intelligent text-based agents, setting the stage for the transformative impact that large language models would later bring to this field.**
 
-## 3. The Emergence of Large Language Models
+## The Emergence of Large Language Models
+
+LLMs have revolutionized text agents through **next-token prediction on massive text corpora. During inference, they solve diverse new tasks through prompting alone**[2]. This emergent generality creates exciting possibilities for building more capable agents.
+
+### A Brief History of LLM Agents
+
+The rise of LLM agents began with models like GPT-3 in 2020. Initially, researchers explored their potential across diverse tasks, which broadly fell into two categories:
+
+- **Reasoning tasks**: such as symbolic question answering and logical inference
+- **Acting tasks**: including interactive applications like games and robotics
+
+{{< figure src="/images/historyofllmagents.png" title="Fig.5: Evolution of LLM Agents: From Reasoning and Acting to ReAct" width="700px" class="align-center" >}}
+
+Over time, reasoning and acting converged, giving rise to **reasoning agents—models** that **combine structured thinking with goal-driven actions**. This led to two key research directions:
+
+1. **Applications**: Web interaction, software engineering, scientific discovery, and more
+2. **Methods**: Memory systems, planning, multi-agent collaboration, and adaptive learning
+
+### Enhancing LLMs with External Knowledge and Computation
+
+While LLMs excel at many tasks, some require more than just next-token prediction—they **demand reasoning, external knowledge, or computation**. To address these limitations, researchers have developed various techniques.
+
+**(1) Code-Augmented Computation**
+
+For tasks involving calculations or formal reasoning, LLMs can **generate code instead of directly predicting an answer**. The generated code is then executed to produce the final result[3].
+
+Example: Prime factorization, Fibonacci sequences 
+
+**(2) Retrieval-Augmented Generation (RAG) for Knowledge**
+
+For knowledge-intensive queries, LLMs can **retrieve relevant information from external corpora before generating a response**[4]. This is typically using:
+
+- **Extra corpora** 
+- **A retriever** (e.g., BM25, DPR, etc.) 
+
+{{< figure src="/images/retrievalbasednlp.png" title="Fig.6: An illustration comparing (a) black-box language models and (b) retrieval-oriented NLP models, the paradigm this post advocates for" width="700px" class="align-center" >}}
+
+**Limitation: RAG depends on the availability of a relevant corpus**. If the needed information is missing (e.g., "Who is the latest Prime Minister?"), retrieval alone is insufficient.
+
+**(3) Tool-Use for Dynamic Information**
+
+When static corpora fall short, LLMs can invoke **external tools in real time**. This is achieved by introducing special tokens that trigger API calls[5][6]. Common tools include: 
+
+- Search engine, calculator, etc.
+- Task-specific models (translation)
+- APIs
+
+**This approach significantly expands capabilities but introduces new challenges in tool selection and interaction management.**
+
+{{< figure src="/images/TALM.png" title="Fig.7: Examples of TALM Text-to-Text Interface in Different Tasks" width="700px" class="align-center" >}}
+
+### What if both knowledge and reasoning are needed?
+
+Many tasks require both **reasoning and external knowledge**, pushing researchers to develop hybrid approaches. For example, one can interleave retrieval with chain-of-thought reasoning[7] or generate follow-up queries to refine responses[8].
+
+However, early solutions were **fragmented**. Even within a single task like QA, different benchmarks posed distinct challenges, leading to a proliferation of task-specific techniques.
+
+
+
+
 
 
 ## References
