@@ -72,6 +72,9 @@ pygmentsUseClasses = true
 [minify]
   disableXML = true
 
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
 [menu]
   [[menu.main]]
     name = "Posts"
