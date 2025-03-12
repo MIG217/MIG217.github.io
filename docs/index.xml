@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>PaperMod on Mingrui&#39;s Blog</title>
-    <link>https://mig217.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content in PaperMod on Mingrui&#39;s Blog</description>
     <generator>Hugo -- 0.145.0</generator>
     <language>en</language>
     <lastBuildDate>Mon, 10 Mar 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://mig217.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>LLM Agents: Brief History and Overview</title>
-      <link>https://mig217.github.io/post/2025-03-10-llm-agents-overview/</link>
+      <link>http://localhost:1313/post/2025-03-10-llm-agents-overview/</link>
       <pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/2025-03-10-llm-agents-overview/</guid>
+      <guid>http://localhost:1313/post/2025-03-10-llm-agents-overview/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;To understand LLM agents, we need to break the term into two foundational components: &lt;strong&gt;Large Language Models (LLMs)&lt;/strong&gt; and &lt;strong&gt;Agents&lt;/strong&gt;. While LLMs have gained widespread recognition, the concept of &amp;ldquo;agent&amp;rdquo; in this context requires deeper exploration.&lt;/p&gt;
 &lt;h3 id=&#34;what-is-an-agent&#34;&gt;What is an Agent?&lt;/h3&gt;
@@ -20,16 +20,16 @@
     </item>
     <item>
       <title>大语言模型的自我提升与推理能力进化(Jason Weston, Meta)</title>
-      <link>https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</link>
+      <link>http://localhost:1313/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</link>
       <pubDate>Sat, 01 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</guid>
+      <guid>http://localhost:1313/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</guid>
       <description>&lt;p&gt;本文内容来自 Jason Weston (Meta) 在 UC Berkeley Advanced Large Language Model Agents 课程中的分享，探讨了大语言模型的推理能力提升。完整讲座 PPT 可通过阅读原文获取。以下为讲座内容：&lt;/p&gt;</description>
     </item>
     <item>
       <title>如何优化大语言模型（LLM）的推理能力？</title>
-      <link>https://mig217.github.io/post/2025-02-16-improving-llm-reasoning/</link>
+      <link>http://localhost:1313/post/2025-02-16-improving-llm-reasoning/</link>
       <pubDate>Sun, 16 Feb 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/2025-02-16-improving-llm-reasoning/</guid>
+      <guid>http://localhost:1313/post/2025-02-16-improving-llm-reasoning/</guid>
       <description>&lt;p&gt;2024年，大语言模型在推理能力方面取得了显著突破。以O系列模型为例，在ARC-AGI评估任务中展现了令人瞩目的性能【1】：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;O3模型达到了87.5%的准确率，尽管每个任务的计算成本较高（超过$1,000）&lt;/li&gt;
