@@ -4,8 +4,6 @@ date: 2025-03-11T12:00:00
 draft: false
 ---
 
-## Frequently Asked Questions
-
 ### Q: How do I use this blog?
 A: You can explore different posts and use the search bar to find topics.
 
