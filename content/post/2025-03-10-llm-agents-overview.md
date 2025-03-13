@@ -11,7 +11,7 @@ TocOpen: false
 
 ## Introduction
 
-To understand LLM agents, we need to break the term into two foundational components: **Large Language Models (LLMs)** and **Agents**. While LLMs have gained widespread recognition, the concept of "agent" in this context requires deeper exploration.
+To understand LLM agents, we need to break the term into two foundational components: **Large Language Models (LLMs)** and **Agents**. While LLMs have gained widespread recognition, the concept of "agent" in this context requires deeper exploration. 
 
 ### What is an Agent?
 
@@ -163,3 +163,4 @@ However, early solutions were **fragmented**. Even within a single task like QA,
 [9] Yao, Shunyu, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, and Yuan Cao. "ReAct: Synergizing Reasoning and Acting in Language Models." arXiv, March 10, 2023.
 
 [10] Shinn, Noah, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao. "Reflexion: Language Agents with Verbal Reinforcement Learning." arXiv, October 10, 2023.
+
