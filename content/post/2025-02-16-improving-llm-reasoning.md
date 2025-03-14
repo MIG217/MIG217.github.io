@@ -3,7 +3,7 @@ title: "如何优化大语言模型（LLM）的推理能力？"
 author: ["Mingrui Guo"]
 date: "2025-02-16"
 categories: ["AI"]
-tags: ["LLM Agents", "CN"]
+tags: ["LLM Agents", "ZH"]
 draft: false
 ShowToc: true
 TocOpen: false

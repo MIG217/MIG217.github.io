@@ -3,7 +3,7 @@ title: "大语言模型的自我提升与推理能力进化(Jason Weston, Meta)"
 author: ["Mingrui Guo"]
 date: "2025-03-01"
 categories: ["AI"]
-tags: ["LLM Agents", "CN"]
+tags: ["LLM Agents", "ZH"]
 draft: false
 ShowToc: true
 TocOpen: false
