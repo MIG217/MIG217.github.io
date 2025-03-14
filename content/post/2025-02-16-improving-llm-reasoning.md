@@ -43,17 +43,35 @@ TocOpen: false
 
 ### Zero-shot CoT Prompting：通过指令引导生成思维链推理
 
-0-shot CoT 是一种通过简短指令引导LLM进行推理的方法，无需依赖任何示例。在这种方法中，模型不需要看到具体的示范或训练数据，仅**通过一个简单的指令（如"Let's think step by step."）（fig.3）即可开始推理**【4】。
+0-shot CoT 是一种通过简短指令引导LLM进行推理的方法，无需依赖任何示例。在这种方法中，模型不需要看到具体的示范或训练数据，仅**通过一个简单的指令（如"Let's think step by step."）（Fig.3）即可开始推理**【4】。
 
 {{< figure src="/images/0-shot-cot.png" title="Fig.3: Example inputs and outputs of GPT-3" width="700px" class="align-center" >}}
 
 **优缺点：**
 
-- **0-shot CoT的表现显著优于普通的0-shot方法**，特别是在数学和符号推理等较难的任务中（fig.4）
-- 相比Few-shot CoT，0-shot CoT更加便捷，因为无需手动标注示例。但从性能来看，**0-shot CoT的表现仍然不如Few-shot CoT**（fig.5）
+- **0-shot CoT的表现显著优于普通的0-shot方法**，特别是在数学和符号推理等较难的任务中（Fig.4）
+- 相比Few-shot CoT，0-shot CoT更加便捷，因为无需手动标注示例。但从性能来看，**0-shot CoT的表现仍然不如Few-shot CoT**（Fig.5）
 
-{{< figure src="/images/accuractcomparison.jpg" caption="fig.4" >}}
-{{< figure src="/images/gsm8k.jpg" caption="fig.5" >}}
+{{< figure src="/images/accuractcomparison.jpg" title="Fig.4: Accuracy comparison of Zero-shot-CoT with Zero-shot on each tasks." width="700px" class="align-center" >}}
+
+{{< figure src="/images/gsm8k.png" title="Fig.5: Comparison with baseline methods using accuracies on MultiArith and GSM8K." width="700px" class="align-center" >}}
+
+### Analogical Prompting：让模型自主生成参考案例
+
+在analogical prompting中，我们并**不直接向LLM提供样本，而是先指示模型回忆相关的示例，然后再解决测试问题**（fig.6）。具体来说，模型会首先自我生成一些相关示例，接着利用这些示例去解决目标问题。【5】
+
+Analogical prompting 表现优于 0-shot CoT和 Few-shot CoT方法。（Fig.6）
+
+**优势：**
+
+- 示例由LLM自主生成，无需手动标注
+- 生成的示例能够根据特定问题量身定制，更具相关性。
+- 除了生成示例外，LLM还能产生更高层次的知识概括，为问题提供更广泛的见解，从而帮助解决原始问题。（Fig.7, Fig.8, Fig.9）
+
+**局限性：**
+
+- 自动生成示例可能比人工标注示例包含更多错误。
+- 有时生成的示例可能与问题无关，或包含错误的解题步骤，影响最终的推理质量。
 
 
 
