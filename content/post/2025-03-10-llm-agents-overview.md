@@ -192,9 +192,27 @@ Building upon the ReAct framework's integration of reasoning and action, we now 
 
 An agent’s short-term memory is limited to the language model’s context window. While this allows it to dynamically add thoughts, actions, and observations, it comes with significant constraints: 
 
-| Short-term Memory        | Long-term Memory                     |
-|--------------------------|--------------------------------------|
-| - Append-only <br> - Limited context <br> - Limited attention <br> - No persistence across tasks | - Read and write <br> - Stores experience, knowledge, skills <br> - Persists over new experiences |
+{{< rawhtml >}}
+<table>
+  <tr>
+    <th>Short-term Memory</th>
+    <th>Long-term Memory</th>
+  </tr>
+  <tr>
+    <td>
+      - Append-only <br>
+      - Limited context <br>
+      - Limited attention <br>
+      - No persistence across tasks
+    </td>
+    <td>
+      - Read and write <br>
+      - Stores experience, knowledge, skills <br>
+      - Persists over new experiences
+    </td>
+  </tr>
+</table>
+{{< /rawhtml >}}
 
 **Short-term memory is like a goldfish with its legendary three-second memory** - an agent might solve remarkable problems but must start from scratch the next time. This limitation motivates the need for long-term memory systems.
 
@@ -222,7 +240,7 @@ Another way to understand Reflexion is through its contrast with traditional rei
 
 | Traditional RL                             | Reflexion: “Verbal” RL                        |
 |--------------------------------------------|----------------------------------------------|
-| - Learns via **scalar rewards** (sparse feedback) <br> - Learns by **updating weights** (credit assignment) | - Learns via **text feedback**  <br> - Learns by **updating language** (a long-term memory of task knowledge) |
+| - Learns via **scalar rewards** (sparse feedback) {{< rawhtml >}}<br>{{< /rawhtml >}} - Learns by **updating weights** (credit assignment) | - Learns via **text feedback**  {{< rawhtml >}}<br>{{< /rawhtml >}} - Learns by **updating language** (a long-term memory of task knowledge) |
 
 
 **By leveraging explicit textual feedback, Reflexion allows agents to iteratively refine their reasoning and decision-making, creating interpretable knowledge that persists as long-term memory for future tasks without requiring weight adjustments.**

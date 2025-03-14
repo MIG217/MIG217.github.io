@@ -473,20 +473,27 @@ In artificial intelligence, an agent is an &ldquo;intelligent&rdquo; system that
 <p>Building upon the ReAct framework&rsquo;s integration of reasoning and action, we now explore <strong>how agents can overcome the fundamental limitations of their working memory through effective long-term memory systems.</strong></p>
 <h3 id="short-term-memory-vs-long-term-memory">Short-term Memory vs. Long-term Memory<a hidden class="anchor" aria-hidden="true" href="#short-term-memory-vs-long-term-memory">#</a></h3>
 <p>An agent’s short-term memory is limited to the language model’s context window. While this allows it to dynamically add thoughts, actions, and observations, it comes with significant constraints: </p>
+
 <table>
-  <thead>
-      <tr>
-          <th>Short-term Memory</th>
-          <th>Long-term Memory</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>- Append-only <!-- raw HTML omitted --> - Limited context <!-- raw HTML omitted --> - Limited attention <!-- raw HTML omitted --> - No persistence across tasks</td>
-          <td>- Read and write <!-- raw HTML omitted --> - Stores experience, knowledge, skills <!-- raw HTML omitted --> - Persists over new experiences</td>
-      </tr>
-  </tbody>
+  <tr>
+    <th>Short-term Memory</th>
+    <th>Long-term Memory</th>
+  </tr>
+  <tr>
+    <td>
+      - Append-only <br>
+      - Limited context <br>
+      - Limited attention <br>
+      - No persistence across tasks
+    </td>
+    <td>
+      - Read and write <br>
+      - Stores experience, knowledge, skills <br>
+      - Persists over new experiences
+    </td>
+  </tr>
 </table>
+
 <p><strong>Short-term memory is like a goldfish with its legendary three-second memory</strong> - an agent might solve remarkable problems but must start from scratch the next time. This limitation motivates the need for long-term memory systems.</p>
 <figure class="align-center">
     <img loading="lazy" src="/images/goldfish.png" width="400px"/> <figcaption>
@@ -527,8 +534,8 @@ In artificial intelligence, an agent is an &ldquo;intelligent&rdquo; system that
   </thead>
   <tbody>
       <tr>
-          <td>- Learns via <strong>scalar rewards</strong> (sparse feedback) <!-- raw HTML omitted --> - Learns by <strong>updating weights</strong> (credit assignment)</td>
-          <td>- Learns via <strong>text feedback</strong>  <!-- raw HTML omitted --> - Learns by <strong>updating language</strong> (a long-term memory of task knowledge)</td>
+          <td>- Learns via <strong>scalar rewards</strong> (sparse feedback) <br> - Learns by <strong>updating weights</strong> (credit assignment)</td>
+          <td>- Learns via <strong>text feedback</strong>  <br> - Learns by <strong>updating language</strong> (a long-term memory of task knowledge)</td>
       </tr>
   </tbody>
 </table>
