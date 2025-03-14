@@ -139,7 +139,7 @@ Many tasks require both **reasoning and external knowledge**, pushing researcher
 
 However, early solutions were **fragmented**. Even within a single task like QA, different benchmarks posed distinct challenges, leading to a proliferation of task-specific techniques.
 
-{{< figure src="/images/QA.png" title="Fig.9: QA Methods and Reasoning Approaches" width="700px" class="align-center" >}}
+{{< figure src="/images/QA.png" title="Fig.9: QA Methods and Reasoning Approaches" width="400px" class="align-center" >}}
 
 **To achieve generality, we need a framework that integrates knowledge retrieval with structured reasoning.**
 
@@ -198,7 +198,7 @@ An agent’s short-term memory is limited to the language model’s context wind
 
 **Short-term memory is like a goldfish with its legendary three-second memory** - an agent might solve remarkable problems but must start from scratch the next time. This limitation motivates the need for long-term memory systems.
 
-{{< figure src="/images/goldfish.png" title="Fig.13: The Ephemeral Genius: A Goldfish’s Dilemma" width="700px" class="align-center" >}}
+{{< figure src="/images/goldfish.png" title="Fig.13: The Ephemeral Genius: A Goldfish’s Dilemma" width="400px" class="align-center" >}}
 
 ### Reflexion: A Simple Form of Long-term Memory
 
@@ -242,7 +242,7 @@ By viewing both neural networks and external text repositories as forms of long-
 - **Action Space**: What the agent can do 
 - **Decision-making procedure**: How the agent selects actions based on memory and capabilities
 
-{{< figure src="/images/CoALA.png" title="Fig.16: A compilation of language agents using the Cognitive Architectures for Language Agents (🐨CoALA) framework." width="700px" class="align-center" >}}
+{{< figure src="/images/CoALA.png" title="Fig.16: A compilation of language agents using the Cognitive Architectures for Language Agents (🐨CoALA) framework." width="550px" class="align-center" >}}
 
 This framework provides a sufficient and comprehensive way to conceptualize agent system of any complexity.
 
@@ -252,7 +252,7 @@ Looking beyond [LLM agents specifically](#a-brief-history-of-llm-agents), we can
 
 | Era | Agent Paradigm | Representation | Characteristics |
 |-----|---------------|----------------|-----------------|
-| Early AI | **Symbolic AI** | Rule-based logical expressions | • Programmed rules for environment interaction<br>• Expert systems<br>• Intensive design effort<br>• Task-specific |
+| Early AI | **Symbolic AI** | Rule-based logical expressions | • Programmed rules for environment interaction &#10; • Expert systems &#10; • Intensive design effort &#10; • Task-specific |
 | Post-AI Winter | **Deep RL** | Neural embeddings/vectors | • Data-driven learning<br>• Breakthroughs like Atari, AlphaGo<br>• Millions of training steps<br>• Limited generalization |
 | Recent | **LLM Agents** | Natural language | • Language as intermediate representation<br>• Rich priors from pre-training<br>• Inference-time scalability<br>• General and generalizable |
 
