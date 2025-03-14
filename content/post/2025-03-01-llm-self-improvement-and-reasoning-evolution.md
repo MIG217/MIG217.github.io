@@ -3,7 +3,7 @@ title: "大语言模型的自我提升与推理能力进化(Jason Weston, Meta)"
 author: ["Mingrui Guo"]
 date: "2025-03-01"
 categories: ["AI"]
-tags: ["LLM", "Agents"]
+tags: ["LLM Agents", "CN"]
 draft: false
 ShowToc: true
 TocOpen: false
@@ -97,7 +97,7 @@ CoVe 的核心思想是，让LLM不仅仅生成一个初步的答案（可以看
 
 
 
-## 参考文献：
+## 参考文献
 
 [1] Ouyang, Long, Jeff Wu, Xu Jiang, Diogo Almeida, Carroll L. Wainwright, and others. "Training Language Models to Follow Instructions with Human Feedback." arXiv, March 4, 2022.
 [2] Rafailov, Rafael, Archit Sharma, Eric Mitchell, Stefano Ermon, Christopher D. Manning, and Chelsea Finn. "Direct Preference Optimization: Your Language Model is Secretly a Reward Model." arXiv, July 29, 2024.

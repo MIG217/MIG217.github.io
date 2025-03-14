@@ -3,7 +3,7 @@ title: "LLM Agents: Brief History and Overview"
 author: ["Mingrui Guo"]
 date: "2025-03-10"
 categories: ["AI"]
-tags: ["LLM", "Agents"]
+tags: ["LLM Agents", "EN"]
 draft: false
 ShowToc: true
 TocOpen: false
@@ -134,6 +134,8 @@ When static corpora fall short, LLMs can invoke **external tools in real time**.
 ### What if both knowledge and reasoning are needed?
 
 Many tasks require both **reasoning and external knowledge**, pushing researchers to develop hybrid approaches. For example, one can interleave retrieval with chain-of-thought reasoning[7] or generate follow-up queries to refine responses[8].
+
+
 
 However, early solutions were **fragmented**. Even within a single task like QA, different benchmarks posed distinct challenges, leading to a proliferation of task-specific techniques.
 

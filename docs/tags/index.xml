@@ -9,17 +9,24 @@
     <lastBuildDate>Mon, 10 Mar 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://mig217.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Agents</title>
-      <link>https://mig217.github.io/tags/agents/</link>
+      <title>EN</title>
+      <link>https://mig217.github.io/tags/en/</link>
       <pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/tags/agents/</guid>
+      <guid>https://mig217.github.io/tags/en/</guid>
       <description></description>
     </item>
     <item>
-      <title>LLM</title>
-      <link>https://mig217.github.io/tags/llm/</link>
+      <title>LLM Agents</title>
+      <link>https://mig217.github.io/tags/llm-agents/</link>
       <pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/tags/llm/</guid>
+      <guid>https://mig217.github.io/tags/llm-agents/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CN</title>
+      <link>https://mig217.github.io/tags/cn/</link>
+      <pubDate>Sat, 01 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://mig217.github.io/tags/cn/</guid>
       <description></description>
     </item>
   </channel>
