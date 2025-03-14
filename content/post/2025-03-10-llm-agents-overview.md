@@ -252,9 +252,9 @@ Looking beyond [LLM agents specifically](#a-brief-history-of-llm-agents), we can
 
 | Era | Agent Paradigm | Representation | Characteristics |
 |-----|---------------|----------------|-----------------|
-| Early AI | **Symbolic AI** | Rule-based logical expressions | • Programmed rules for environment interaction &#10; • Expert systems &#10; • Intensive design effort &#10; • Task-specific |
-| Post-AI Winter | **Deep RL** | Neural embeddings/vectors | • Data-driven learning<br>• Breakthroughs like Atari, AlphaGo<br>• Millions of training steps<br>• Limited generalization |
-| Recent | **LLM Agents** | Natural language | • Language as intermediate representation<br>• Rich priors from pre-training<br>• Inference-time scalability<br>• General and generalizable |
+| Early AI | **Symbolic AI** | Rule-based logical expressions | • Programmed rules for environment interaction {{< rawhtml >}}<br>{{< /rawhtml >}} • Expert systems {{< rawhtml >}}<br>{{< /rawhtml >}} • Intensive design effort {{< rawhtml >}}<br>{{< /rawhtml >}} • Task-specific |
+| Post-AI Winter | **Deep RL** | Neural embeddings/vectors | • Data-driven learning {{< rawhtml >}}<br>{{< /rawhtml >}} • Breakthroughs like Atari, AlphaGo {{< rawhtml >}}<br>{{< /rawhtml >}} • Millions of training steps {{< rawhtml >}}<br>{{< /rawhtml >}} • Limited generalization |
+| Recent | **LLM Agents** | Natural language | • Language as intermediate representation {{< rawhtml >}}<br>{{< /rawhtml >}} • Rich priors from pre-training {{< rawhtml >}}<br>{{< /rawhtml >}} • Inference-time scalability {{< rawhtml >}}<br>{{< /rawhtml >}} • General and generalizable |
 
 **The fundamental difference between these paradigms lies in how they transform observations into actions:**
 
