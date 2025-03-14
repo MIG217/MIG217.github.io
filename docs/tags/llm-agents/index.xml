@@ -6,12 +6,12 @@
     <description>Recent content in LLM Agents on Mingrui&#39;s Blog</description>
     <generator>Hugo -- 0.145.0</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 10 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Mar 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://mig217.github.io/tags/llm-agents/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>LLM Agents: Brief History and Overview</title>
       <link>https://mig217.github.io/post/2025-03-10-llm-agents-overview/</link>
-      <pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 14 Mar 2025 00:00:00 +0000</pubDate>
       <guid>https://mig217.github.io/post/2025-03-10-llm-agents-overview/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;To understand LLM agents, we need to break the term into two foundational components: &lt;strong&gt;Large Language Models (LLMs)&lt;/strong&gt; and &lt;strong&gt;Agents&lt;/strong&gt;. While LLMs have gained widespread recognition, the concept of &amp;ldquo;agent&amp;rdquo; in this context requires deeper exploration.&lt;/p&gt;
