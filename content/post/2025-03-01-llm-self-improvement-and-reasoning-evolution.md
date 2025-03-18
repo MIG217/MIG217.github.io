@@ -100,11 +100,17 @@ CoVe 的核心思想是，让LLM不仅仅生成一个初步的答案（可以看
 ## 参考文献
 
 [1] Ouyang, Long, Jeff Wu, Xu Jiang, Diogo Almeida, Carroll L. Wainwright, and others. "Training Language Models to Follow Instructions with Human Feedback." arXiv, March 4, 2022.
+
 [2] Rafailov, Rafael, Archit Sharma, Eric Mitchell, Stefano Ermon, Christopher D. Manning, and Chelsea Finn. "Direct Preference Optimization: Your Language Model is Secretly a Reward Model." arXiv, July 29, 2024.
+
 [3] Dhuliawala, Shehzaad, Mojtaba Komeili, Jing Xu, Roberta Raileanu, Xian Li, Asli Celikiyilmaz, and Jason Weston. "Chain-of-Verification Reduces Hallucination in Large Language Models." arXiv, September 25, 2023. 
+
 [4] Weston, Jason, and Sainbayar Sukhbaatar. "System 2 Attention (Is Something You Might Need Too)." arXiv, November 20, 2023.
+
 [5] Saha, Swarnadeep, Omer Levy, Asli Celikiyilmaz, Mohit Bansal, Jason Weston, and Xian Li. "Branch-Solve-Merge Improves Large Language Model Evaluation and Generation." arXiv, June 7, 2024.
+
 [6] OpenAI. 2024. “Weak-to-Strong Generalization.” OpenAI, February 14. 
+
 [7] Bai, Yuntao, Andy Jones, Kamal Ndousse, Amanda Askell, Anna Chen, and others. "Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback." arXiv, April 12, 2022.
 
 [8] Touvron, Hugo, Louis Martin, Kevin Stone, Peter Albert, Amjad Almahairi, and others. "Llama 2: Open Foundation and Fine-Tuned Chat Models." arXiv, July 19, 2023.
@@ -118,4 +124,5 @@ CoVe 的核心思想是，让LLM不仅仅生成一个初步的答案（可以看
 [12] Pang, Richard Yuanzhe, Weizhe Yuan, Kyunghyun Cho, He He, Sainbayar Sukhbaatar, and Jason Weston. “Iterative Reasoning Preference Optimization.” arXiv, 2024.
 
 [13]  Wu, Tianhao, Weizhe Yuan, Olga Golovneva, Jing Xu, and Yuandong Tian. “Meta-Rewarding Language Models: Self-Improving Alignment with LLM-as-a-Meta-Judge.” arXiv preprint arXiv:2407.19594, July 30, 2024. 
+
 [14] Hao, Shibo, Sainbayar Sukhbaatar, DiJia Su, Xian Li, Zhiting Hu, Jason Weston, and Yuandong Tian. “Training Large Language Models to Reason in a Continuous Latent Space.” Preprint, December 11, 2024.

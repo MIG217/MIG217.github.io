@@ -288,6 +288,68 @@ Looking beyond [LLM agents specifically](#a-brief-history-of-llm-agents), we can
 
 This fundamental shift enables an entriely new class of apllications that were previously impossible. Let's explore these next.
 
+### Digital Automation
+
+LLM Agents enable a new class of digital automation applications. This advancement stands in stark contrast to previous digital assistants like Siri, which had fundamentally limited capabilities. The breakthrough with LLM agents comes from: 
+
+- **Reasoning over real-world language (and other modalities)**
+- **Making decisions across open-ended actions and long horizons**
+
+Earlier sequence-to-sequence systems couldn't handle complex tasks requiring contextual understanding and extended planning.
+
+**The evolution of LLM agents represents parallel advancement in both mathematical models and practical applications - a dual progression critical to unlocking digital automation's potential.**
+
+## Applications
+
+### WebArena: General Web Interaction
+
+WebArena[12] extends AI applications in web environments beyond online shopping, **enabling a broader range of web-based interactions such as information retrieval, form filling, web navigation, and content generation**. This highlights **AI's potential for diverse real-world applications**.
+
+{{< figure src="/images/webarena.png" title="Fig.17: Overview of WebArena – A Self-Hosted Agent-Driven Automation Framework." width="700px" class="align-center" >}}
+
+### SWE-Bench: AI for Software Engineering 
+
+SWE-Bench[13] is **a benchmark designed for evaluate LLMs on real world software issues collected from GitHub**. Given a codebase and an issue report, the AI must generate a file diff that resolves the issue. In this task:
+
+- **Input:** GitHub repository + issue report
+- **Output:** File diff to fix the issue
+- **Evaluation:** Passing unit tests from a pull request
+
+{{< figure src="/images/swebench.png" title="Fig.18: Language Model-Assisted Code Fixing and Testing Workflow." width="700px" class="align-center" >}}
+
+The task definition is straightforward, but **solving it requires complex repository interaction, creating unit tests, executing code, and iterative debugging-mirroring the workflow of human software engineers**.
+
+### ChemCrow: AI-Driven Scientific Discovery
+
+ChemCrow[14] leverages **ReAct** to enable **LLM agents in chemical discovery**. Given chemical data and access to tools like Python and online databases, the AI can analyze information, reason through potential compounds, and take actions to propose novel chemical structures.
+
+{{< figure src="/images/chemcrow.jpg" title="Fig.19: ChemCrow—An Autonomous Agent for AI-Driven Chemistry Research." width="700px" class="align-center" >}}
+
+A key breakthrough is the **integration of AI with physical experiments**-suggested compounds are synthesized in a lab, providing real-world feedback that refines the AI's predictions. **This demonstrates how AI agents can operate byond digital tasks, extending into scientific research and real world experimentation.**
+
+## Summary
+
+### Lessons for Research
+
+**Some of the most impactful research is remarkably simple-think of CoT and ReAct. Simplicity is powerful because it often leads to generality**. However, achieving simplicity is challenging. It requires both:
+
+- **Abstract Thinking:** Looking beyond specific tasks or datasets to identify broader principles.
+
+- **Task Familiarity (but not over-reliance on task-specific methods):** Understanding problems deeply without getting stuck in incremental improvements.
+
+**Studying history and diverse disciplines can aid in developing abstraction skills, helping researchers identify more generalizable soultions.**
+
+### What's Next?
+
+The future of AI research is multi-dimensional, with several promising directions. Here are five key areas worth exploring:
+
+- **Training:** How can we effectively train models for AI agents? Where does the data come from?
+- **Interface:** How do we design environments for AI agents?
+- **Robustness:** How do we ensure AI solutions work reliably in real-world scenarios?
+- **Human interaction:** How do AI systems perform when interacting with people?
+- **Benchmarking:** How do we create meaningful benchmarks to measure progress?
+
+
 
 ## References
 
@@ -311,5 +373,11 @@ This fundamental shift enables an entriely new class of apllications that were p
 
 [10] Shinn, Noah, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao. "Reflexion: Language Agents with Verbal Reinforcement Learning." arXiv, October 10, 2023.
 
-[11] Sumers, T. R., Yao, S., Narasimhan, K., and Griffiths, T. L. "Cognitive Architectures for Language Agents." arXiv.org, September 05, 2023.
+[11] Sumers, T. R., Yao, S., Narasimhan, K., and Griffiths, T. L. "Cognitive Architectures for Language Agents." arXiv.org, September 05, 2023.
+
+[12] Zhou, Shuyan, Frank F. Xu, Hao Zhu, Xuhui Zhou, Robert Lo, and others. "WebArena: A Realistic Web Environment for Building Autonomous Agents." arXiv, April 16, 2024.
+
+[13] Jimenez, Carlos E., John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir Press, and Karthik Narasimhan. "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?" arXiv, November 11, 2024.
+
+[14] Bran, Andres M., Sam Cox, Oliver Schilter, Carlo Baldassari, Andrew D. White, and Philippe Schwaller. "ChemCrow: Augmenting large-language models with chemistry tools." arXiv, October 2, 2023.
 
