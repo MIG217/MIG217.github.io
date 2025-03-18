@@ -1,6 +1,6 @@
 baseURL = 'https://mig217.github.io/'
 languageCode = 'en-us'
-title = "Mingrui's Blog"
+title = "Mig's Blog"
 theme = 'hugo-PaperMod'
 publishDir = "docs"
 
@@ -33,7 +33,7 @@ pygmentsUseClasses = true
 
   [params.profileMode]
     enabled = false
-    title = "Mingrui's Blog"
+    title = "Mig's Blog"
     imageUrl = "#"
     imageTitle = "Profile Image"
     buttons = [
@@ -42,9 +42,9 @@ pygmentsUseClasses = true
     ]
 
   [params.homeInfoParams]
-    Title = "👋Welcome to Mingrui's Blog"
+    Title = "👋Welcome to Mig's Blog"
     Content = """
-     Hey, I’m Mingrui. I started this blog in 2025 to track my thoughts on 
+     Hey, this is Mingrui. I started this blog in 2025 to track my thoughts on 
      AI Agents and the books I’m reading. If the writing sounds a bit too 
      polished, well… let’s just say ChatGPT did most of the work! 😆
     """

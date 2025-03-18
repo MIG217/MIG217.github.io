@@ -4,8 +4,11 @@ date: 2025-03-11T12:00:00
 draft: false
 ---
 
-### Q: How do I use this blog?
-A: You can explore different posts and use the search bar to find topics.
+### Q: What topics do you write about?
 
-### Q: How do I contact you?
-A: Feel free to reach out via [GitHub](https://github.com/mig217).
+A: I write about AI, books I have read, and insights on learning and thinking.
+
+### Q: Can I cite or share your posts?
+
+A: Yes! Feel free to share links to my posts. If you cite them, please include proper attribution with a link back to the original post. 
+

@@ -90,9 +90,6 @@ Analogical prompting 表现优于 0-shot CoT和 Few-shot CoT方法。（Fig.6）
 12. Yao, Shunyu, Dian Yu, Jeffrey Zhao, Izhak Shafran, Thomas L. Griffiths, Yuan Cao, and Karthik Narasimhan. "Tree of Thoughts: Deliberate Problem Solving with Large Language Models." Preprint, arXiv, December 3, 2023.
 13. Shinn, Noah, Federico Cassa, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao. "Reflexion: Language Agents with Verbal Reinforcement Learning." Preprint, arXiv, October 10, 2023.
 14. Madaan, Aman, Niket Tandon, Prakhar Gupta, Skyler Hallinan, Luyu Gao, and others. "Self-Refine: Iterative Refinement with Self-Feedback." Preprint, arXiv, May 25, 2023.
-
 15. Huang, Jie, Xinyun Chen, Swaroop Mishra, Huaixiu Steven Zheng, Adams Wei Yu, Xinying Song, and Denny Zhou. "Large Language Models Cannot Self-Correct Reasoning Yet." Preprint, arXiv, March 14, 2024.
-
 16. Du, Yilun, Shuang Li, Antonio Torralba, Joshua B. Tenenbaum, and Igor Mordatch. "Improving Factuality and Reasoning in Language Models through Multiagent Debate." Preprint, arXiv, May 23, 2023.
-
 17. Sutton, Richard. The Bitter Lesson.
