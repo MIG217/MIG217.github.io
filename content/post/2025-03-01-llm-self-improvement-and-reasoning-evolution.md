@@ -11,6 +11,9 @@ TocOpen: false
 
 本文内容来自 [Jason Weston (Meta) 在 UC Berkeley Advanced Large Language Model Agents 课程中的分享，探讨了大语言模型的推理能力提升](https://rdi.berkeley.edu/adv-llm-agents/slides/Jason-Weston-Reasoning-Alignment-Berkeley-Talk.pdf) 。以下为讲座内容：
 
+_______
+
+
 AI 能力正在快速发展，如 O1、R1 等模型在推理基准测试中取得的突破性进展。本文将聚焦于模型的**自我提升能力(self-improvement)**。
 
 为了更好地理解AI的推理机制，我们首先需要区分两种基本的思维模式：**System 1和 System 2**：
@@ -108,7 +111,7 @@ CoVe 的核心思想是，让LLM不仅仅生成一个初步的答案（可以看
 
 研究表明，通过给予语言模型额外的思考时间，BSM方法能显著提升评估结果的质量。
 
-{{< figure src="/images/BSM.png" title="Fig.7: Branch-Solve-Merge Improves Large Language Model Evaluation and Generation." width="500px" class="align-center" >}}
+{{< figure src="/images/BSM.png" title="Fig.7: Branch-Solve-Merge Improves Large Language Model Evaluation and Generation." width="600px" class="align-center" >}}
 
 虽然Prompting方法通过精心设计的提示能显著提升LLM在复杂任务上的表现，但这些方法仍依赖人工干预，需要为每个特定任务设计专门的提示。
 
@@ -118,7 +121,7 @@ CoVe 的核心思想是，让LLM不仅仅生成一个初步的答案（可以看
 
 传统机器学习中，人类监督比自身弱的 AI 系统（下图左）。为实现与超级智能（远超人类的智能）的对齐，人类需监督比自己更强的 AI（图中）[6]。这引出一个关键问题：**如何持续改进超越人类的模型？**
 
-{{< figure src="/images/SuperAlignmentBlog_Artwork_Transparent.webp" title="Fig.8: A simple analogy for superalignment" width="500px" class="align-center" >}}
+{{< figure src="/images/SuperAlignmentBlog_Artwork_Transparent.webp" title="Fig.8: A simple analogy for superalignment" width="700px" class="align-center" >}}
 
 ### Self-Rewarding LLMs
 
@@ -135,9 +138,101 @@ CoVe 的核心思想是，让LLM不仅仅生成一个初步的答案（可以看
 - **初始训练:** 使用种子指令跟随和评估数据进行多任务训练
 - **迭代优化:** 完成两轮自我奖励训练循环（得到M2和M3模型）
 
+**实验结果**
 
+1. **指令跟随能力**
+  
+- **内部测试集（256条多样化指令）**：迭代训练使模型能力稳步提升 (Fig.10)
 
+{{< figure src="/images/human_evaluation_results.png" title="Fig.10: Human evaluation results." width="500px" class="align-center" >}}
 
+  - AlpacaEval 2.0：经过两轮训练后，**性能接近GPT-4 0314水平** (Fig.11)
+
+{{< figure src="/images/AlpacaEval.png" title="Fig.11: AlpacaEval 2.0 results (win rate over GPT-4 Turbo evaluated by GPT-4)." width="500px" class="align-center" >}}
+
+   -  MT-Bench：各类任务表现均有提升，尤其**在通用写作方面表现突出** (Fig.12)
+  
+{{< figure src="/images/MT-Bench.png" title="Fig.12: MT-Bench Results (on a scale of 10)." width="500px" class="align-center" >}}
+
+2. **自我评估能力**
+
+- OpenAssistant验证集：数据显示模型评估能力随训练周期持续增强
+
+尽管取得显著进展，但仍面临挑战：**如何进一步提升模型在复杂推理任务上的表现？**
+
+### Iterative reasoning preference optimization (IRPO)
+
+IRPO 在 Self-Rewarding 基础上**引入 CoT，使得模型不仅要生成最终答案，还需要提供完整的推理过程**[12]。方法流程如下：（Fig.13）
+
+{{< figure src="/images/IRPO.png" title="Fig.13: Iterative Reasoning Preference Optimization." width="700px" class="align-center" >}}
+
+1. 使用当前模型对**每个训练样本生成多个 CoT 及对应答案**
+2. **根据答案的正确性（正确 vs. 错误）构造偏好对**，筛选优质推理路径
+3. 采用 DPO 与 NLL 损失训练模型，提升正确答案的生成概率，同时抑制错误答案
+4. 训练完成后，使用更新后的模型进行下一轮优化，不断提高推理能力
+
+**实验结果**
+
+- 在 GSM8K 上，该方法在1到4轮迭代中**提升了近10%的准确率**（Fig.14） 
+
+{{< figure src="/images/IRPOgsm8k.png" title="Fig.14: GSM8K results comparing Iterative Reasoning Preference Optimization (Iterative RPO) against other baselines that are based on the same base model and training data." width="500px" class="align-center" >}}
+
+- 在 ARC Challenge 及更复杂的数学推理任务上，也取得了明显的性能提升（Fig.15）
+
+{{< figure src="/images/ARC&MATH.png" title="Fig.15: ARC and MATH results." width="500px" class="align-center" >}}
+
+实验表明 **DPO 训练至关重要；仅使用 SFT 无法获得同样的优化效果，必须通过负样本抑制，才能真正提升模型的推理能力**（Fig.16）。
+
+{{< figure src="/images/SFT.png" title="Fig.16: SFT trained on chosen seqs; init from Llama." width="400px" class="align-center" >}}
+
+### Meta-Rewarding LLMs：提升模型评判能力的新方法
+
+Meta-Rewarding方法解决了**Self-Rewarding训练中快速饱和的问题**。它不仅关注答案质量，**更强调评判能力的提升，让大模型同时扮演Actor、Judge 和 Meta-Judge 三重角色**[13]。
+
+**核心机制：**
+
+- **Meta-Judge**: 评估已有的评判标准，确保模型能持续改进判断逻辑
+- **Meta-Rewards**: 在训练过程中引入新型训练信号，帮助模型动态优化评判标准
+
+**训练迭代流程**: 整个训练过程可以拆解为以下 3 个步骤，并循环优化（Fig.17）
+
+{{< figure src="/images/matarewarding.png" title="Fig.17: Meta-Rewarding iterative training scheme." width="700px" class="align-center" >}}
+
+1. **生成 Actor 数据**: 大模型生成回答，并对自身答案进行评估
+2. **生成 Judge 数据**: 通过 LLM-as-a-Meta-Judge 进一步评估这些评判，形成 Meta-Rewards
+3. **DPO 训练**: 基于偏好对进行 DPO 训练，使得模型不仅学会更好地回答问题（Step 1），也学会更精准地评判答案（Step 2）
+
+这种方法**在 AlpacaEval 任务上取得了更高的胜率**，同时在一些生产级 LLM 评测中也表现良好（Fig.18）。
+
+{{< figure src="/images/AlphaEval2.png" title="Fig.18: AlpacaEval 2: The evaluation on AlpacaEval shows significant improvement with MetaRewarding training." width="500px" class="align-center" >}}
+
+Meta-Rewarding **不仅提升了答案质量，还让大模型具备更强的自我优化能力，使评判标准更加稳健和可信**（Fig.19）。
+
+{{< figure src="/images/lcwin.png" title="Fig.19: AlpacaEval 2. Length-controlled (LC) win rate increases with Meta-Rewarding iterations, even approaching Claude-Opus level." width="500px" class="align-center" >}}
+
+## 思考总结与未来方向 
+
+### Summary
+
+- Self-Rewarding Models (3.1部分) 展现了一种新范式，模型能够自我训练、自我改进，甚至有望迈向超越人类智能的方向。
+
+- Verifiable Rewards：通过优化 CoT 来提升推理能力和评估能力，例如 Iterative Reasoning Preference Optimization (3.2部分) 、DeepSeek 和 O1 方法。
+
+- Better Judges：具备推理能力的评估者（如基于 CoT 的判别模型）能帮助训练模型在非可验证任务上的思考能力。
+
+- Meta-Rewarding & Meta-Reasoning (3.3部分)：模型不仅能评估任务，还能进一步评估自身的评估结果，从而优化判断过程。
+
+**未来大模型发展将致力于整合这些技术，将Meta-Rewarding、CoT 等最新成果与基础架构融为一体。**
+
+同时，**研究正从基于文本的CoT扩展到基于向量的推理方式**，如**COCONUT**[14]方法尝试**用连续向量替代token，能够在某些任务上匹配甚至超越经典 CoT，尤其是在复杂搜索任务上**。不过，这些实验仍然**局限于小规模任务**，未来仍需进一步验证其可扩展性。
+
+### What else comes next?
+
+- **Self-improving & Self-evaluation**: 突破性能瓶颈的关键，通过更多inference time compute for evaluation 可能是提升能力的关键。
+
+- **从交互中学习**：模型不仅应当通过静态数据训练，还应通过交互（与人类、互联网或自身）不断优化推理能力，这与 **Agents 和 Synthetic Data** 的研究方向紧密相关。
+
+- **突破System 1 级推理能力**：当前的研究主要集中于System 2 推理（基于显式逻辑的推理过程），但如果能**改进 Transformer 本身的架构，例如探索更优的注意力机制，或研发新的神经网络层，可能会带来更具颠覆性的进展。**
 
 
 ## 参考文献

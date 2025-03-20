@@ -24,6 +24,7 @@
       <pubDate>Sat, 01 Mar 2025 00:00:00 +0000</pubDate>
       <guid>https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</guid>
       <description>&lt;p&gt;本文内容来自 &lt;a href=&#34;https://rdi.berkeley.edu/adv-llm-agents/slides/Jason-Weston-Reasoning-Alignment-Berkeley-Talk.pdf&#34;&gt;Jason Weston (Meta) 在 UC Berkeley Advanced Large Language Model Agents 课程中的分享，探讨了大语言模型的推理能力提升&lt;/a&gt; 。以下为讲座内容：&lt;/p&gt;
+&lt;hr&gt;
 &lt;p&gt;AI 能力正在快速发展，如 O1、R1 等模型在推理基准测试中取得的突破性进展。本文将聚焦于模型的&lt;strong&gt;自我提升能力(self-improvement)&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;为了更好地理解AI的推理机制，我们首先需要区分两种基本的思维模式：&lt;strong&gt;System 1和 System 2&lt;/strong&gt;：&lt;/p&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
