@@ -60,19 +60,68 @@ TocOpen: false
 
 在analogical prompting中，我们并**不直接向LLM提供样本，而是先指示模型回忆相关的示例，然后再解决测试问题**（fig.6）。具体来说，模型会首先自我生成一些相关示例，接着利用这些示例去解决目标问题。【5】
 
-Analogical prompting 表现优于 0-shot CoT和 Few-shot CoT方法。（Fig.6）
+{{< figure src="/images/analogical_prompting.png" title="Fig.6: Overview of our approach, analogical prompting." width="700px" class="align-center" >}}
+
+
+**Analogical prompting 表现优于 0-shot CoT和 Few-shot CoT方法。**
+
 
 **优势：**
 
-- 示例由LLM自主生成，无需手动标注
-- 生成的示例能够根据特定问题量身定制，更具相关性。
-- 除了生成示例外，LLM还能产生更高层次的知识概括，为问题提供更广泛的见解，从而帮助解决原始问题。（Fig.7, Fig.8, Fig.9）
+- 示例由LLM自主生成，**无需手动标注**
+- 生成的示例能够**根据特定问题量身定制，更具相关性。**
+- 除了生成示例外，LLM还能**产生更高层次的知识概括，为问题提供更广泛的见解**，从而帮助解决原始问题。（Fig.7）
+
+{{< figure src="/images/ap_example.png" title="Fig.7: Actual example of our prompt (top) and LLM output (bottom) for the Codeforces task." width="600px" class="align-center" >}}
 
 **局限性：**
 
-- 自动生成示例可能比人工标注示例包含更多错误。
-- 有时生成的示例可能与问题无关，或包含错误的解题步骤，影响最终的推理质量。
+- 自动生成示例可能**比人工标注示例包含更多错误。**
+- 有时生成的示例可能与问题无关，或包含错误的解题步骤，**影响最终的推理质量。**
 
+### LLM作为优化器，迭代改进Prompt
+
+在这种方法中，我们将**LLM作为优化器，通过分析历史轨迹（即已尝试的提示词及其对应的效果分数）来不断改进提示词质量**【6】。具体实现需要两个LLM配合（Fig.8）：
+
+{{< figure src="/images/OPRO.png" title="Fig.8: An overview of the OPRO framework." width="500px" class="align-center" >}}
+
+- **Optimizer**：基于历史提示词和任务示例，生成新的更优提示词
+- **Evaluator**：评估提示词的准确性表现
+
+为实现这一目标，我们需要设计Meta prompt（Fig.9），主要包含两个关键要素：**Trajectory（记录过往提示词及准确率）**和 **Exemplars：（展示待优化的目标任务）**
+
+{{< figure src="/images/OPRO_example.png" title="Fig.9: An example of the meta-prompt for prompt optimization with instruction-tuned PaLM 2-L (PaLM 2-L-IT) on GSM8K, where the generated instruction will be prepended to the beginning of “A:” in the scorer LLM output (A_begin in Section 4.1)." width="600px" class="align-center" >}}
+
+实验结果表明，这种方法效果显著（Fig.10）：
+
+{{< figure src="/images/OPRO_result.png" title="Fig.10: Top instructions with the highest GSM8K zero-shot test accuracies from prompt optimization with different optimizer LLMs. All results use the pre-trained PaLM 2-L as the scorer." width="600px" class="align-center" >}}
+
+- 从基础提示词"Let's solve the problem"（准确率60.8%）开始
+- 优化后的最佳提示词比"Let's think step by step"**提升了约8%**，达到80.7%的准确率，与PaLM-2使用少量示例CoT的效果相当
+
+**这种方法带来两个重要启示：**
+
+1. **无需手动编写示例即可达到与few-shot CoT相当的性能**
+2. 不仅节省了人工调优时间，还能发现一些意想不到的新视角，比如"**Take a deep breath and work on this problem**"这样的提示策略（Fig.10）
+
+### Least-to-most prompting: 通过问题分解实现推理能力提升
+
+Least-to-most prompting的核心思想是通过指导LLM如何分解复杂问题来提升其推理能力⁠【7】。这种方法包含2个关键步骤（Fig.11）：
+
+{{< figure src="/images/least_to_most_prompting.png" title="Fig.11: Least-to-most prompting solving a math word problem in two stages: (1) query the language model to decompose the problem into subproblems; (2) query the language model to sequentially solve the subproblems." width="700px" class="align-center" >}}
+
+1. Problem reduction：将复杂问题分解为简单的子问题⁠
+2.  Sequentially solve subquestions：按顺序解决子问题，并将解决方案组合起来得到最终答案⁠
+
+**Example: 解决SCAN任务**
+
+任务目标：将合成的自然语言命令转换为对应的动作序列。比如，“look thrice after jump”可能转换为“JUMP LOOK LOOK LOOK”。⁠（Fig.12）
+
+{{< figure src="/images/ltm_example.png" title="Fig.12: Example commands in SCAN and their corresponding action sequences." width="500px" class="align-center" >}}
+
+实验结果：使用从易到难提示法，模型在该任务上取得了接近完美的表现，准确率高达99.7% (Fig.13)
+
+{{< figure src="/images/ltm_result.png" title="Fig.13: Accuracies (%) of different prompting methods on the test set of SCAN under length split." width="500px" class="align-center" >}}
 
 
 
