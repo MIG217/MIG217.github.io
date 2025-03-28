@@ -9,7 +9,7 @@ ShowToc: true
 TocOpen: false
 ---
 
-This content is adaped from [DeepLearning.AI’s course “Reasoning with o1”](https://learn.deeplearning.ai/courses/reasoning-with-o1/lesson/sucf8/prompting-o1).
+This content is adaped from [DeepLearning.AI’s course “Reasoning with o1”](https://learn.deeplearning.ai/courses/reasoning-with-o1).
 
 Starting with the o-series models, I aim to explore when they should be used, how to leverage them effectively-especially when the buit-in CoT reasoning confilcts with my own, and how to craft prompts that enhance their performance.
 

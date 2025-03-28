@@ -30,6 +30,7 @@ pygmentsUseClasses = true
   ShowAllPagesInArchive = true  # 归档页显示所有文章
   ShowPageNums = true  # 文章列表显示分页
   displayFullLangName = true  # 显示完整语言名称
+  enableCJKLanguage = true
 
   [params.profileMode]
     enabled = false
@@ -54,20 +55,20 @@ pygmentsUseClasses = true
      title = "View Source on Github"
      url = "https://github.com/mig217"
   
-  # [[params.socialIcons]]
-  #   name = "X"
-  #   title = "Share on X/Twitter"
-  #   url = "https://x.com/mig217"
+   [[params.socialIcons]]
+     name = "X"
+     title = "Share on X/Twitter"
+     url = "https://x.com/mig217"
 
   # [[params.socialIcons]]
   #   name = "KoFi"
   #   title = "Buy me a Ko-Fi :)"
   #   url = "https://ko-fi.com/mig217"
 
-  # [params.editPost]
-  #   URL = "https://github.com/mig217/blog/tree/main/content"
-  #   Text = "Suggest Changes"
-  #   appendFilePath = true
+  [params.editPost]
+     URL = "https://github.com/mig217/blog/tree/main/content"
+     Text = "Suggest Changes"
+     appendFilePath = true
 
 [minify]
   disableXML = true
