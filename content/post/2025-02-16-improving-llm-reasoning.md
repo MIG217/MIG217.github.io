@@ -52,9 +52,9 @@ TocOpen: false
 - **0-shot CoT的表现显著优于普通的0-shot方法**，特别是在数学和符号推理等较难的任务中（Fig.4）
 - 相比Few-shot CoT，0-shot CoT更加便捷，因为无需手动标注示例。但从性能来看，**0-shot CoT的表现仍然不如Few-shot CoT**（Fig.5）
 
-{{< figure src="/images/accuracycomparison.png" title="Fig.4: Accuracy comparison of Zero-shot-CoT with Zero-shot on each tasks." width="700px" class="align-center" >}}
+{{< figure src="/images/accuracycomparison.png" title="Fig.4: Accuracy comparison of Zero-shot-CoT with Zero-shot on each tasks." width="500px" class="align-center" >}}
 
-{{< figure src="/images/gsm8k.png" title="Fig.5: Comparison with baseline methods using accuracies on MultiArith and GSM8K." width="700px" class="align-center" >}}
+{{< figure src="/images/gsm8k.png" title="Fig.5: Comparison with baseline methods using accuracies on MultiArith and GSM8K." width="500px" class="align-center" >}}
 
 ### Analogical Prompting：让模型自主生成参考案例
 
@@ -122,6 +122,36 @@ Least-to-most prompting的核心思想是通过指导LLM如何分解复杂问题
 实验结果：使用从易到难提示法，模型在该任务上取得了接近完美的表现，准确率高达99.7% (Fig.13)
 
 {{< figure src="/images/ltm_result.png" title="Fig.13: Accuracies (%) of different prompting methods on the test set of SCAN under length split." width="500px" class="align-center" >}}
+
+### Self-Discover：让模型自主构建推理结构
+
+不同的推理任务往往需要不同的推理结构，包括任务分解方式和各阶段的规划等。Self-Discover方法的创新之处在于，**引导模型自动构建特定任务的推理结构，且无需手动编写示例**【8】。⁠⁠这种方法分为两个主要阶段（Fig.14）：
+
+{{< figure src="/images/self_discover.png" title="Fig.14: Illustration of using SELF-DISCOVER for problem-solving." width="700px" class="align-center" >}}
+
+- **Stage 1**: 模型通过Self-Discover模块自动发现并生成适合任务的推理结构⁠⁠
+- **Stage 2**: 模型利用已发现的推理结构来解答具体的任务实例
+
+优势：**Self-Discover方法在处理复杂推理任务时表现优异**，相比传统的直接答案和链式思维方法，在多个复杂推理任务中展现出了优越的性能。**尤其在需要进行多步推理的任务中，Self-Discover能够提供更高的准确率和更强的推理能力**（Fig.15）。
+
+{{< figure src="/images/self_discover_result.png" title="Fig.15: SELF-DISCOVER guides LLMs to self-discover and compose atomic reasoning modules into a reasoning structure to solve challenging tasks." width="600px" class="align-center" >}}
+
+## 增加推理的宽度，探索更广泛的解决方案空间 
+
+为提升LLM的推理能力，我们不应该局限为每个问题只生成1个解决方案。通过**探索多个推理分支，可以让模型从不同角度进行问题求解**，从而提高推理的准确性和灵活性。
+
+### Self-consistency: 多路径推理提升准确率
+
+Self-consistency 是一个简单但效果显著的方法。它的核心思想是让模型生成多个推理路径，然后从中选择最一致的答案，而不是仅依赖单一推理过程【9】。具体实现包含2个关键步骤（Fig.16）：
+
+1. **多路径生成**：让模型对同一个问题生成多个不同推理路径
+2. **答案聚合**：基于最终答案的一致性来选择最优解  
+*Note: 答案的选择仅基于最终结果，不需要不同推理路径之间完全一致*
+
+这一看似简单的策略，却能显著提升模型的表现（图2）：
+
+1. **准确率随样本量提升**：实验数据显示，**随着推理路径数量的增加，模型的准确率显著提升**（图3，图4）。
+2. 该方法揭示了准确率与一致性之间的关联。当**多个推理路径指向相同答案时，LLM对其预测结论的信心更高，聚合后答案的正确性往往也更高**（图5）。
 
 
 

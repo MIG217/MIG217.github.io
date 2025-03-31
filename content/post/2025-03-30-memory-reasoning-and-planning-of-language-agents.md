@@ -46,3 +46,6 @@ Unlike traditional agents, reasoning in language agents is essentially a new for
 
 To understand the uniqueness of language agents, we can compare the evolution of AI agents:
 
+[@zhouSelfDiscoverLargeLanguage2024]
+
+## Reference
