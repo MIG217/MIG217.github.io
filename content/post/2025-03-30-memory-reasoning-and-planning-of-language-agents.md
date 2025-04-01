@@ -88,6 +88,42 @@ Despite these benefits, current RAG implementations have limitations. Traditiona
 
 ### Long-term Memory in Humans
 
+The hippocampal indexing theory [@teylerHippocampalMemoryIndexing1986] provides insights into how human memory achieves efficient recall. It suggests that:
+
+- **Neocortex stores raw sensory data** (e.g., auditory and visual information).
+- **Hippocampus acts as an index**, linking disparate memory fragments into a structured retrieval system.
+- **Parahippocampal regions** facilitate connections between stored experiences, aiding in memory retrieval.
+
+{{< figure src="/images/20250401hippo.webp" title="Fig.6: Hippocampus creates index for the memories to be stored in different part of neocortex [@sExploringHippoRAGNeurobiologically2024]" width="500px" class="align-center" >}}
+
+Indexing procedure enables two fundamental faculties of human memory: 
+
+- **Pattern separation**: process for differentiating memories (neocortex and parahippocampus) 
+- **Pattern completion**: process for recovering complete memories from relevant associations (mostly hippocampus, specifically CA3)
+
+### HippoRAG: Bringing Human-Like Memory to LLMs
+
+HippoRAG [@gutierrezHippoRAGNeurobiologicallyInspired2025a] simulates this memory mechanism by building a similar structured index for RAG systems. Its workflow is divided into two phases:
+
+**Offline Indexing Phase:**
+
+- Concept Extraction: Uses an LLM to extract triplets (concepts, noun phrases, and their relationships) from text
+- Knowledge Graph Construction: Builds a schema-less knowledge graph using the extracted concepts and relationships as nodes and edges
+- Dense Encoding: Employs dense retrievers to consolidate similar or synonymous concepts
+
+**Online Query Phase:**
+
+- **Concept Identification:** Identifies key concepts from the query (such as "Stanford" and "Alzheimer's")
+- **Similar Node Retrieval:** Finds nodes in the index similar to query concepts to serve as seed nodes
+- **Graph Search:** Employs the Personalized PageRank algorithm to search the graph
+Reranking: Reranks original passages based on concept weights
+
+{{< figure src="/images/20250401HippRAG.png" title="Fig.7: Detailed HippoRAG Methodology." width="700px" class="align-center" >}}
+
+**The Personalized PageRank algorithm is a critical component of HippoRAG**. It performs a random walk starting from seed nodes, dispersing probability mass to neighboring nodes. Nodes close to seed nodes or at the intersection of multiple seed nodes naturally receive higher weights.
+
+## Grokking of Implicit Relations in Transformers
+
 
 
 ## Reference
