@@ -65,10 +65,10 @@ pygmentsUseClasses = true
   #   title = "Buy me a Ko-Fi :)"
   #   url = "https://ko-fi.com/mig217"
 
-  [params.editPost]
-     URL = "https://github.com/mig217/blog/tree/main/content"
-     Text = "Suggest Changes"
-     appendFilePath = true
+  # [params.editPost]
+  #    URL = "https://github.com/mig217/blog/tree/main/content"
+  #    Text = "Suggest Changes"
+  #    appendFilePath = true
 
 [minify]
   disableXML = true
