@@ -3,21 +3,23 @@ title: "Memory, Reasoning, and Planning of Language Agents"
 author: ["Mingrui Guo"]
 date: "2025-03-30"
 categories: ["AI"]
-tags: ["LLM Agents", "ZH"]
+tags: ["LLM Agents", "EN"]
 draft: true
 ShowToc: true
 TocOpen: false
 ---
 
-Language Agents have emerged as one of the most exciting research directions in AI over the past two years. **This article explores three core components**: **long-term memory via HippoRAG, reasoning capabilities with Grokked Transformers, and world modeling through WebDreamer**—all essential for building effective language-driven AI systems.
+Language Agents have emerged as one of the most exciting research directions in AI over the past two years. This article explores three core components: **long-term memory via HippoRAG, reasoning capabilities with Grokked Transformers, and world modeling through WebDreamer**—all essential for building effective language-driven AI systems.
 
 ## Why Agents Again?
 
-Russell & Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “**anything that can perceive its environment through sensors and act upon that environment through actions.**”(“Artificial Intelligence: A Modern Approach, 4th US Ed.,” n.d.)
+Russell & Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “**anything that can perceive its environment through sensors and act upon that environment through actions.**”@ArtificialIntelligenceModern
 
-*******image*****
+{{< figure src="/images/20250401agent.png" title="Fig.1:Agent-Environment Interaction Framework" width="500px" class="align-center" >}}
 
 Many people believe modern agents can be simply defined as **“LLM + external environment.”** This view suggests that language models themselves have limited functionality with only text input-output interfaces; once connected to an external environment, able to perceive environmental information and influence the environment, they become agents.
+
+{{< figure src="/images/20250401modernagent.png" title="Fig.2:‘Modern’ agent = LLM + external environment?" width="700px" class="align-center" >}}
 
 However, **this definition is oversimplified**. In reality, there are two main competing views in the community:
 
@@ -25,7 +27,7 @@ However, **this definition is oversimplified**. In reality, there are two main c
   - Implications: scaffold on top of LLMs, prompting focused, heavy on engineering
 
 - **Agent-first view: We integrate LLMs into AI agents so they can use language for reasoning and communication**
-  - Implications: All the same challenges faced by previous AI agents (e.g., **perception, reasoning, world models, planning**) still remain, but we need to re-examine them through the new lens of LLMs and tackle new ones (e.g., **synthetic data, self-reflection, internalized search**)
+  - Implications: All the same challenges faced by previous AI agents (e.g., perception, reasoning, world models, planning) still remain, but we need to **re-examine them through the new lens of LLMs** and tackle new ones (e.g., **synthetic data, self-reflection, internalized search**)
 
 ### Characteristics of Modern Language Agents
 
@@ -36,16 +38,43 @@ Contemporary AI agents, with integrated LLMs, can **use language as a vehicle fo
 
 Unlike traditional agents, reasoning in language agents is essentially a new form of “action”. In traditional AI agents, actions typically refer to the external world (such as manipulating robots). But in language agents, **reasoning occurs in the internal environment**, in the form of “inner monologue.” Its core process include
 
+{{< figure src="/images/20250401reasoningagent.png" title="Fig.3:Inner Monologue and Reasoning in Language Agents" width="500px" class="align-center" >}}
+
 - **Reasoning by generating tokens is a new type of action** (vs. actions in external environments)
-- Internal environment, where reasoning takes place in an inner monologue fashion
-- Self-reflection is a ‘meta’ reasoning action (i.e., reasoning over the reasoning process), akin to metacognitive functions
-- Reasoning is for better acting, by inferring environmental states, retrospection, etc.
-- Percept and external action spaces are substantially expanded, thanks to using language for communication and multimodal perception
+- **Internal environment**, where reasoning takes place in an inner monologue fashion
+- **Self-reflection** is a ‘meta’ reasoning action (i.e., reasoning over the reasoning process), akin to metacognitive functions
+- **Reasoning is for better acting**, by inferring environmental states, retrospection, etc.
+- **Percept and external action spaces** are substantially expanded, thanks to using language for communication and multimodal perception
 
 ### Evolution of AI agents
 
 To understand the uniqueness of language agents, we can compare the evolution of AI agents:
 
-[@zhouSelfDiscoverLargeLanguage2024]
+| Feature        | Logical Agent | Neural Agent | Language Agent |
+|---------------|--------------|--------------|---------------|
+| **Expressiveness** | Low {{< rawhtml >}}<br>{{< /rawhtml >}} bounded by the logical language | Medium {{< rawhtml >}}<br>{{< /rawhtml >}} Anything a (small-ish) NN can encode | High {{< rawhtml >}}<br>{{< /rawhtml >}} Almost anything, especially verbalizable parts of the world |
+| **Reasoning** | Logical inferences {{< rawhtml >}}<br>{{< /rawhtml >}} Sound, explicit, rigid | Parametric inferences {{< rawhtml >}}<br>{{< /rawhtml >}} Stochastic, implicit, rigid | Language-based inferences {{< rawhtml >}}<br>{{< /rawhtml >}} Fuzzy, semi-explicit, flexible |
+| **Adaptivity** | Low {{< rawhtml >}}<br>{{< /rawhtml >}} Bounded by knowledge curation | Medium {{< rawhtml >}}<br>{{< /rawhtml >}} Data-driven but sample inefficient | High {{< rawhtml >}}<br>{{< /rawhtml >}} Strong prior from LLMs + language use |
+
+Early AI agents could only capture limited aspects of human intelligence, such as symbolic reasoning or unimodal perception.
+
+Language agents show significant improvements over traditional logical agents and neural agents in expressiveness, reasoning flexibility, and adaptivity. Their language-driven reasoning abilities enable them to better handle uncertainties in complex environments and formulate more reasonable action strategies. 
+
+### A conceptual framework for language agents
+
+The capabilities of language agents can be divided into three different levels (as shown in the figure), core-competencies similar to human cognitive processes, form lower-level perception, memory, embodiment, to upper-level planning, reasoning, and world models. They simultaneously span issues of safety, evaluation, synthetic data, and efficiency.
+ 
+{{< figure src="/images/20250401conceptual.png" title="Fig.4:Capability Hierarchy and Challenges of Language Agents" width="600px" class="align-center" >}}
+
+That’s the introduction. This article will further explore three main aspects of language agents:
+
+1. On long-term memory: HippoRAG
+2. On reasoning: Grokked Transformers
+3. On world models and planning: WebDreamer
+
+## HippoRAG
+
+
+
 
 ## Reference
