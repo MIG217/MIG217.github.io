@@ -107,9 +107,9 @@ HippoRAG [@gutierrezHippoRAGNeurobiologicallyInspired2025a] simulates this memor
 
 **Offline Indexing Phase:**
 
-- Concept Extraction: Uses an LLM to extract triplets (concepts, noun phrases, and their relationships) from text
-- Knowledge Graph Construction: Builds a schema-less knowledge graph using the extracted concepts and relationships as nodes and edges
-- Dense Encoding: Employs dense retrievers to consolidate similar or synonymous concepts
+- **Concept Extraction:** Uses an LLM to extract triplets (concepts, noun phrases, and their relationships) from text
+- **Knowledge Graph Construction:** Builds a schema-less knowledge graph using the extracted concepts and relationships as nodes and edges
+- **Dense Encoding:** Employs dense retrievers to consolidate similar or synonymous concepts
 
 **Online Query Phase:**
 
@@ -118,9 +118,12 @@ HippoRAG [@gutierrezHippoRAGNeurobiologicallyInspired2025a] simulates this memor
 - **Graph Search:** Employs the Personalized PageRank algorithm to search the graph
 Reranking: Reranks original passages based on concept weights
 
-{{< figure src="/images/20250401HippRAG.png" title="Fig.7: Detailed HippoRAG Methodology." width="700px" class="align-center" >}}
+{{< figure src="/images/20250401HippoRAG.png" title="Fig.7: Detailed HippoRAG Methodology." width="700px" class="align-center" >}}
 
 **The Personalized PageRank algorithm is a critical component of HippoRAG**. It performs a random walk starting from seed nodes, dispersing probability mass to neighboring nodes. Nodes close to seed nodes or at the intersection of multiple seed nodes naturally receive higher weights.
+
+### Performance
+
 
 ## Grokking of Implicit Relations in Transformers
 
