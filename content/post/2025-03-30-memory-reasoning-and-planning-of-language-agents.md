@@ -13,7 +13,7 @@ Language Agents have emerged as one of the most exciting research directions in 
 
 ## Why Agents Again?
 
-Russell & Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “**anything that can perceive its environment through sensors and act upon that environment through actions.**”@ArtificialIntelligenceModern
+Russell & Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “**anything that can perceive its environment through sensors and act upon that environment through actions.**”[@ArtificialIntelligenceModern]
 
 {{< figure src="/images/20250401agent.png" title="Fig.1:Agent-Environment Interaction Framework" width="500px" class="align-center" >}}
 
@@ -52,7 +52,7 @@ To understand the uniqueness of language agents, we can compare the evolution of
 
 | Feature        | Logical Agent | Neural Agent | Language Agent |
 |---------------|--------------|--------------|---------------|
-| **Expressiveness** | Low {{< rawhtml >}}<br>{{< /rawhtml >}} bounded by the logical language | Medium {{< rawhtml >}}<br>{{< /rawhtml >}} Anything a (small-ish) NN can encode | High {{< rawhtml >}}<br>{{< /rawhtml >}} Almost anything, especially verbalizable parts of the world |
+| **Expressiveness** | Low {{< rawhtml >}}<br>{{< /rawhtml >}} Bounded by the logical language | Medium {{< rawhtml >}}<br>{{< /rawhtml >}} Anything a (small-ish) NN can encode | High {{< rawhtml >}}<br>{{< /rawhtml >}} Almost anything, especially verbalizable parts of the world |
 | **Reasoning** | Logical inferences {{< rawhtml >}}<br>{{< /rawhtml >}} Sound, explicit, rigid | Parametric inferences {{< rawhtml >}}<br>{{< /rawhtml >}} Stochastic, implicit, rigid | Language-based inferences {{< rawhtml >}}<br>{{< /rawhtml >}} Fuzzy, semi-explicit, flexible |
 | **Adaptivity** | Low {{< rawhtml >}}<br>{{< /rawhtml >}} Bounded by knowledge curation | Medium {{< rawhtml >}}<br>{{< /rawhtml >}} Data-driven but sample inefficient | High {{< rawhtml >}}<br>{{< /rawhtml >}} Strong prior from LLMs + language use |
 
@@ -60,7 +60,7 @@ Early AI agents could only capture limited aspects of human intelligence, such a
 
 Language agents show significant improvements over traditional logical agents and neural agents in expressiveness, reasoning flexibility, and adaptivity. Their language-driven reasoning abilities enable them to better handle uncertainties in complex environments and formulate more reasonable action strategies. 
 
-### A conceptual framework for language agents
+### A Conceptual Framework for Language Agents
 
 The capabilities of language agents can be divided into three different levels (as shown in the figure), core-competencies similar to human cognitive processes, form lower-level perception, memory, embodiment, to upper-level planning, reasoning, and world models. They simultaneously span issues of safety, evaluation, synthetic data, and efficiency.
  
@@ -72,8 +72,21 @@ That’s the introduction. This article will further explore three main aspects 
 2. On reasoning: Grokked Transformers
 3. On world models and planning: WebDreamer
 
-## HippoRAG
+## HippoRAG: Neurobiologically-Inspired Long-Term Memory for LLMs
 
+Humans and animals continuously learn by gaining and strengthening knowledge. Nobel Prize winner Eric Kandel highlighted memory’s vital role, saying, “Memory is everything. Without it, we are nothing.” [@marksSearchMemoryEmergence2006] Memory relies on synaptic plasticity, where brain connections grow stronger to support learning. Sleep even helps solidify memories for the long term. 
+
+Ideally, AI, especially large language models (LLMs), should learn and build knowledge over time too. But **LLMs struggle with this, often suffering from catastrophic forgetting, where they lose past knowledge—a major limitation**.
+
+### Non-Parametric Memory
+
+Researchers use non-parametric memory to help large language models (LLMs) learn continuously by storing new knowledge externally, as seen in Retrieval-Augmented Generation (RAG). This lets LLMs dynamically pull in outside information, acting as long-term memory. According to studies [@xieAdaptiveChameleonStubborn2024a], **LLMs adapt well to external data, even when it contradicts their own knowledge**.
+
+{{< figure src="/images/20250401example.png" title="Fig.5: LLMs can effectively incorporate external evidence, even when it conflicts with their parametric memory, provided the evidence is coherent and persuasive" width="600px" class="align-center" >}}
+
+Despite these benefits, current RAG implementations have limitations. Traditional RAG systems rely on vector embeddings for retrieval, which often struggle to capture complex associations.
+
+### Long-term Memory in Humans
 
 
 
