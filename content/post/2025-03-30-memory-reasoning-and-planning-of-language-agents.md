@@ -3,7 +3,7 @@ title: "Memory, Reasoning, and Planning of Language Agents"
 author: ["Mingrui Guo"]
 date: "2025-03-30"
 categories: ["AI"]
-tags: ["LLM Agents", "EN"]
+tags: ["LLM Agents", "RAG", "World Models", "Reasoning", "EN"]
 draft: false
 ShowToc: true
 TocOpen: false

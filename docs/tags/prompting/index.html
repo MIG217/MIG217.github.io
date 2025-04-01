@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Tags | Mig&#39;s Blog</title>
+<title>Prompting | Mig&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
 <meta name="author" content="Mingrui Guo">
-<link rel="canonical" href="https://mig217.github.io/tags/">
+<link rel="canonical" href="https://mig217.github.io/tags/prompting/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.76108fe53fb5803e10863876d37b4a17989c5b24ec432d78a6837f5b8c877fcf.css" integrity="sha256-dhCP5T&#43;1gD4Qhjh203tKF5icWyTsQy14poN/W4yHf88=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://mig217.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://mig217.github.io/favicon-16x16.png">
@@ -18,8 +18,8 @@
 <link rel="mask-icon" href="https://mig217.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="https://mig217.github.io/tags/index.xml">
-<link rel="alternate" hreflang="en" href="https://mig217.github.io/tags/">
+<link rel="alternate" type="application/rss+xml" href="https://mig217.github.io/tags/prompting/index.xml">
+<link rel="alternate" hreflang="en" href="https://mig217.github.io/tags/prompting/">
 <noscript>
     <style>
         #theme-toggle,
@@ -56,14 +56,14 @@
         }
 
     </style>
-</noscript><meta property="og:url" content="https://mig217.github.io/tags/">
+</noscript><meta property="og:url" content="https://mig217.github.io/tags/prompting/">
   <meta property="og:site_name" content="Mig&#39;s Blog">
-  <meta property="og:title" content="Tags">
+  <meta property="og:title" content="Prompting">
   <meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tags">
+<meta name="twitter:title" content="Prompting">
 <meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
 
 </head>
@@ -125,7 +125,7 @@
             </li>
             <li>
                 <a href="https://mig217.github.io/tags/" title="Tags">
-                    <span class="active">Tags</span>
+                    <span>Tags</span>
                 </a>
             </li>
             <li>
@@ -136,34 +136,39 @@
         </ul>
     </nav>
 </header>
-<main class="main">
-<header class="page-header">
-    <h1>Tags</h1>
+<main class="main"> 
+<header class="page-header"><div class="breadcrumbs"><a href="https://mig217.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://mig217.github.io/tags/">Tags</a></div>
+  <h1>
+    Prompting
+    <a href="/tags/prompting/index.xml" title="RSS" aria-label="RSS">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" height="23">
+        <path d="M4 11a9 9 0 0 1 9 9" />
+        <path d="M4 4a16 16 0 0 1 16 16" />
+        <circle cx="5" cy="19" r="1" />
+      </svg>
+    </a>
+  </h1>
 </header>
 
-<ul class="terms-tags">
-    <li>
-        <a href="https://mig217.github.io/tags/en/">EN <sup><strong><sup>2</sup></strong></sup> </a>
-    </li>
-    <li>
-        <a href="https://mig217.github.io/tags/llm-agents/">LLM Agents <sup><strong><sup>4</sup></strong></sup> </a>
-    </li>
-    <li>
-        <a href="https://mig217.github.io/tags/prompting/">Prompting <sup><strong><sup>1</sup></strong></sup> </a>
-    </li>
-    <li>
-        <a href="https://mig217.github.io/tags/rag/">RAG <sup><strong><sup>1</sup></strong></sup> </a>
-    </li>
-    <li>
-        <a href="https://mig217.github.io/tags/reasoning/">Reasoning <sup><strong><sup>3</sup></strong></sup> </a>
-    </li>
-    <li>
-        <a href="https://mig217.github.io/tags/world-models/">World Models <sup><strong><sup>1</sup></strong></sup> </a>
-    </li>
-    <li>
-        <a href="https://mig217.github.io/tags/zh/">ZH <sup><strong><sup>2</sup></strong></sup> </a>
-    </li>
-</ul>
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">如何优化大语言模型（LLM）的推理能力？
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>2024年，大语言模型在推理能力方面取得了显著突破。以O系列模型为例，在ARC-AGI评估任务中展现了令人瞩目的性能【1】：
+O3模型达到了87.5%的准确率，尽管每个任务的计算成本较高（超过$1,000） 相比之下，未采用特殊推理技术的传统LLMs准确率通常低于25% Fig.1: O-Series Performance 如何通过有效的Prompting 来激发大语言模型的深层次推理能力，一直是研究者和开发者关注的核心问题。以下是几种主要的触发方法：
+少量示例CoT提示（Few-shot CoT）：通过提供少量推理示例，引导模型学习推理模式并应用到新问题中。 指令型提示（Instruction prompting）：明确指导模型逐步思考问题，避免直接跳至答案。 指令微调（Instruction tuning）：针对多步思考的推理任务对模型进行微调，提升其在类似任务中生成连贯思维链的能力。 强化学习（Reinforcement learning）：利用强化学习技术训练模型，使其能够生成更完整、更准确的推理链。 本文重点：
+我们将深入探讨Inference-time techniques，特别关注如何通过扩展token预算来提升LLM的推理能力。主要包括三个维度：
+基本提示词技巧：使用更多的token预算来生成单一的解决方案。 从多个候选中进行搜索和选择，增加推理的宽度。 模型迭代自我改进，增加推理的深度，最终到达最优解。 使用更多的Token生成单一解决方案 优化提示词能显著提升模型在各类任务中的表现。本节将介绍一些提示词工程技术，帮助我们更好地完成复杂任务。 下图对比了Standard Prompting和CoT Prompting两种方法【2】【3】：
+Standard Prompting：仅给出最终答案，没有推理过程，容易导致错误结果。 CoT Prompting：展示完整的推理过程，让模型清晰地说明从问题到答案的推导步骤。 Fig.2: Chain-of-thought prompting enables large language models to tackle complex arithmetic commonsense, and symbolic reasoning tasks. Chain-of-thought reasoning processes are highlighted. Zero-shot CoT Prompting：通过指令引导生成思维链推理 0-shot CoT 是一种通过简短指令引导LLM进行推理的方法，无需依赖任何示例。在这种方法中，模型不需要看到具体的示范或训练数据，仅通过一个简单的指令（如&#34;Let’s think step by step.&#34;）（Fig.3）即可开始推理【4】。
+Fig.3: Example inputs and outputs of GPT-3 优缺点：
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-02-16 00:00:00 +0000 UTC'>February 16, 2025</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;765 words&nbsp;·&nbsp;Mingrui Guo</footer>
+  <a class="entry-link" aria-label="post link to 如何优化大语言模型（LLM）的推理能力？" href="https://mig217.github.io/post/2025-02-16-improving-llm-reasoning/"></a>
+</article>
     </main>
     
 <footer class="footer">
