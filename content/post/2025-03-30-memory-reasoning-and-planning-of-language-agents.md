@@ -131,7 +131,7 @@ HippoRAG delivers significant performance improvements across multiple benchmark
 - **2WikiMultiHopQA**: Achieves an 11% improvement in R@2 and 20% in R@5, leveraging its entity-centric design for superior retrieval.
 - **MuSiQue**: Shows a 3% improvement, demonstrating robustness across datasets.
 
-{{< figure src="/images/20250402singlestep.png" title="Fig.8: Single-step retrieval performance." width="500px" class="align-center" >}}
+{{< figure src="/images/20250402singlesetp.png" title="Fig.8: Single-step retrieval performance." width="500px" class="align-center" >}}
 
 **Integration with Existing Methods**
 
