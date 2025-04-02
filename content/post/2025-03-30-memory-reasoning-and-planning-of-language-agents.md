@@ -124,6 +124,37 @@ Reranking: Reranks original passages based on concept weights
 
 ### Performance
 
+HippoRAG delivers significant performance improvements across multiple benchmark datasets, particularly in **multi-hop QA tasks** and **iterative retrieval scenarios**.
+
+**Multi-Hop QA Performance**
+
+- **2WikiMultiHopQA**: Achieves an 11% improvement in R@2 and 20% in R@5, leveraging its entity-centric design for superior retrieval.
+- **MuSiQue**: Shows a 3% improvement, demonstrating robustness across datasets.
+
+{{< figure src="/images/20250402singlestep.png" title="Fig.8: Single-step retrieval performance." width="500px" class="align-center" >}}
+
+**Integration with Existing Methods**
+
+HippoRAG complements existing iterative retrieval approaches:
+
+- When integrated with IRCoT, R@5 performance improves further, highlighting the synergistic benefits of structured retrieval with multi-step reasoning.
+
+{{< figure src="/images/20250402multistep.png" title="Fig.9: Multi-step retrieval performance." width="500px" class="align-center" >}}
+
+### Memory in LLMs: Key Insights
+
+- **Memory is fundamental to human learning**. Our sophisticated memory mechanisms enable **pattern recognition, association creation, and dynamic recall of relevant memories** beyond surface-level similarities.
+
+- While LLMs struggle with long-term memory through parametric continual learning, **non-parametric memory (e.g., RAG) offers a promising solution**.
+
+- Recent developments in RAG focus on **adding more structure to embeddings** (e.g., HippoRAG, GraphRAG) to enhance:
+  - **Sensemaking**: the ability to interpret larger, more complex, or uncertain contexts.
+  - **Associativity**: the capacity to draw multi-hop connections between disparate pieces of info.
+
+Despite these advances, we are still far from developing a truly sophisticated memory system. Key challenges, such as handling episodic memory and spatiotemporal reasoning, remain unsolved. 
+
+As we refine memory systems, **the next crucial step is to explore reasoning**, which builds upon memory to enable more advanced cognitive abilities.
+
 
 ## Grokking of Implicit Relations in Transformers
 
