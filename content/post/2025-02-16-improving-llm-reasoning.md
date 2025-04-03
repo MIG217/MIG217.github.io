@@ -174,7 +174,7 @@ Self-consistency 是一个简单但效果显著的方法。它的核心思想是
 
 在 Codeforces 上的实验结果表明，**聚类方法相比单纯的过滤带来了显著的提升**。然而**与Oracle selection相比，仍然存在一定的差距**。（Fig.21，蓝色为Oracle selection）
 
-{{< figure src="/images/Screenshot 2025-04-03 at 2.41.27 PM.png" title="Fig.21: Comparison of different sample selection methods." width="300px" class="align-center" >}}
+{{< figure src="/images/Screenshot 2025-04-03 at 2.41.27 PM.png" title="Fig.21: Comparison of different sample selection methods." width="500px" class="align-center" >}}
 
 **局限性**：Self-consistency在自由生成任务中的效果，不如代码生成中理想。因为自由生成任务没有明确的答案，解码过程复杂且结果不稳定，模型可能难以保持稳定的输出质量。
 
@@ -182,11 +182,11 @@ Self-consistency 是一个简单但效果显著的方法。它的核心思想是
 
 USC的核心思想是：**取代传统的答案提取过程，直接让LLM执行基于一致性的选择**【11】。具体来说：我们**向模型发出指令，要求其基于多数共识来选择最一致的回答，并对所有候选回答进行审视**（Fig.22）。
 
-{{< figure src="/images/Screenshot 2025-04-03 at 2.46.36 PM.png" title="Fig.22: Overview of the Universal Self-Consistency workflow." width="300px" class="align-center" >}}
+{{< figure src="/images/Screenshot 2025-04-03 at 2.46.36 PM.png" title="Fig.22: Overview of the Universal Self-Consistency workflow." width="700px" class="align-center" >}}
 
 这种方法在实践中展现出了显著优势（Fig.23）
 
-{{< figure src="/images/Screenshot 2025-04-03 at 2.47.54 PM.png" title="Fig.22: USC results with different number of samples." width="300px" class="align-center" >}}
+{{< figure src="/images/Screenshot 2025-04-03 at 2.47.54 PM.png" title="Fig.23: USC results with different number of samples." width="600px" class="align-center" >}}
 
 - 在摘要生成和问答等开放式生成任务中，USC取得了显著的性能提升。
 - 在数学推理和编程等任务中，USC能够达到与Self-Consistency方法相当的表现，同时无需进行答案提取和代码执行⁠⁠。
@@ -199,22 +199,22 @@ USC的核心思想是：**取代传统的答案提取过程，直接让LLM执行
 
 通过引入逐步评分机制，ToT能够在解决过程中进行树搜索。这意味着我们不用等到完整解决方案后才做出判断，而是可以在搜索过程中优先探索更有希望的步骤【12】。
 
-{{< figure src="/images/Screenshot 2025-04-03 at 3.00.39 PM.png" title="Fig.23: Schematic illustrating various approaches to problem solving with LLMs." width="600px" class="align-center" >}}
+{{< figure src="/images/Screenshot 2025-04-03 at 3.00.39 PM.png" title="Fig.24: Schematic illustrating various approaches to problem solving with LLMs." width="600px" class="align-center" >}}
 
 **Example: 24点游戏**
 
-ToT方法的工作流程如下（Fig.24）：
+ToT方法的工作流程如下（Fig.25）：
 
-{{< figure src="/images/Screenshot 2025-04-03 at 3.04.08 PM.png" title="Fig.24: ToT in a game of 24. The LM is prompted for (a) thought generation and (b) valuation." width="600px" class="align-center" >}}
+{{< figure src="/images/Screenshot 2025-04-03 at 3.04.08 PM.png" title="Fig.25: ToT in a game of 24. The LM is prompted for (a) thought generation and (b) valuation." width="600px" class="align-center" >}}
 
 - 思维生成：让模型提出可能的下一步思考方向
 - 思维评估：让模型评估当前状态的潜力/可行性
 
-LLM会通过多次投票来选择最佳方案，最终采用得票结果最多的选项（Fig.25）。
+LLM会通过多次投票来选择最佳方案，最终采用得票结果最多的选项（Fig.26）。
 
-{{< figure src="/images/Screenshot 2025-04-03 at 3.05.17 PM.png" title="Fig.25: A step of deliberate search in a randomly picked Creative Writing task. Given the input, the LM samples 5 different plans, then votes 5 times to decide which plan is best." width="600px" class="align-center" >}}
+{{< figure src="/images/Screenshot 2025-04-03 at 3.05.17 PM.png" title="Fig.26: A step of deliberate search in a randomly picked Creative Writing task. Given the input, the LM samples 5 different plans, then votes 5 times to decide which plan is best." width="600px" class="align-center" >}}
 
-研究结果表明：在token预算方面，采用广度优先搜索（BFS）的方法比Standard prompting 和 CoT Prompting方法表现更好（Fig.26）。
+研究结果表明：在token预算方面，采用广度优先搜索（BFS）的方法比Standard prompting 和 CoT Prompting方法表现更好。
 
 {{< figure src="/images/Screenshot 2025-04-03 at 3.07.39 PM.png"  width="600px" class="align-center" >}}
 
