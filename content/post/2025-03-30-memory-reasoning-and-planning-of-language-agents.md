@@ -9,7 +9,7 @@ ShowToc: true
 TocOpen: false
 ---
 
-Language Agents have emerged as one of the most exciting research directions in AI over the past two years. This article explores three core components: **long-term memory via HippoRAG, reasoning capabilities with Grokked Transformers, and world modeling through WebDreamer**—all essential for building effective language-driven AI systems.
+Language Agents have emerged as one of the most exciting research directions in AI over the past two years. This article explores three core components: **long-term memory via HippoRAG, reasoning capabilities with Grokked Transformers, and world modeling through WebDreamer**.
 
 ## Why Agents Again?
 
@@ -157,6 +157,14 @@ As we refine memory systems, **the next crucial step is to explore reasoning**, 
 
 
 ## Grokking of Implicit Relations in Transformers
+
+在当前大型语言模型（LLM）研究中，显式推理方法如思维链（Chain of Thought, CoT）备受关注。然而，隐式推理作为一种更为基础的能力，对于理解模型的本质至关重要。本节将深入探讨Transformer架构中的隐式推理机制。
+
+### What is Implicit Reasoning?
+
+
+
+
 
 
 

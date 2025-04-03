@@ -144,15 +144,79 @@ Least-to-most prompting的核心思想是通过指导LLM如何分解复杂问题
 
 Self-consistency 是一个简单但效果显著的方法。它的核心思想是让模型生成多个推理路径，然后从中选择最一致的答案，而不是仅依赖单一推理过程【9】。具体实现包含2个关键步骤（Fig.16）：
 
+{{< figure src="/images/20250403selfconsistency.png" title="Fig.16: The self-consistency method contains three steps: (1) prompt a language model using chain-of-thought (CoT) prompting; (2) replace the “greedy decode” in CoT prompting by sampling from the language model’s decoder to generate a diverse set of reasoning paths; and (3) marginalize out the reasoning paths and aggregate by choosing the most consistent answer in the final answer set." width="600px" class="align-center" >}}
+
 1. **多路径生成**：让模型对同一个问题生成多个不同推理路径
 2. **答案聚合**：基于最终答案的一致性来选择最优解  
 *Note: 答案的选择仅基于最终结果，不需要不同推理路径之间完全一致*
 
-这一看似简单的策略，却能显著提升模型的表现（图2）：
+这一看似简单的策略，却能显著提升模型的表现（Fig.17）：
 
-1. **准确率随样本量提升**：实验数据显示，**随着推理路径数量的增加，模型的准确率显著提升**（图3，图4）。
-2. 该方法揭示了准确率与一致性之间的关联。当**多个推理路径指向相同答案时，LLM对其预测结论的信心更高，聚合后答案的正确性往往也更高**（图5）。
+{{< figure src="/images/20250403result.png" title="Fig.17: Arithmetic reasoning accuracy by self-consistency compared to chain-of-thought prompting (Wei et al., 2022)." width="600px" class="align-center" >}}
 
+1. **准确率随样本量提升**：实验数据显示，**随着推理路径数量的增加，模型的准确率显著提升**（Fig.18）。
+
+{{< figure src="/images/Screenshot 2025-04-03 at 2.34.10 PM.png" title="Fig.18: Self-consistency significantly outperforms sample-and-rank with the same # of samples." width="700px" class="align-center" >}}
+
+2. 该方法揭示了准确率与一致性之间的关联。当**多个推理路径指向相同答案时，LLM对其预测结论的信心更高，聚合后答案的正确性往往也更高**（Fig.19）。
+
+{{< figure src="/images/Screenshot 2025-04-03 at 2.35.34 PM.png" title="Fig.19: The consistency is correlated with model’s accuracy." width="300px" class="align-center" >}}
+
+### 基于Self-consistency的应用：AlphaCode
+
+在代码生成领域，基于Self-consistency的方法展现出了强大的效果。Google DeepMind的**AlphaCode**项目就是采用了这一方法（Fig.20），其核心是**通过"Flitering & Clustering"来优化代码生成的结果**【10】。具体步骤如下
+
+{{< figure src="/images/Screenshot 2025-04-03 at 2.39.43 PM.png" title="Fig.20: Overview of AlphaCode." width="700px" class="align-center" >}}
+
+1. 对LLM生成的代码（仅限通过测试用例代码），作为输入进行测试
+2. 将所有输出相同的程序聚类在一起
+3. 从最大的10个聚类中，各选择1个程序作为代表
+
+在 Codeforces 上的实验结果表明，**聚类方法相比单纯的过滤带来了显著的提升**。然而**与Oracle selection相比，仍然存在一定的差距**。（Fig.21，蓝色为Oracle selection）
+
+{{< figure src="/images/Screenshot 2025-04-03 at 2.41.27 PM.png" title="Fig.21: Comparison of different sample selection methods." width="300px" class="align-center" >}}
+
+**局限性**：Self-consistency在自由生成任务中的效果，不如代码生成中理想。因为自由生成任务没有明确的答案，解码过程复杂且结果不稳定，模型可能难以保持稳定的输出质量。
+
+### Universal Self-consistency (USC) : 让模型自主进行一致性选择
+
+USC的核心思想是：**取代传统的答案提取过程，直接让LLM执行基于一致性的选择**【11】。具体来说：我们**向模型发出指令，要求其基于多数共识来选择最一致的回答，并对所有候选回答进行审视**（Fig.22）。
+
+{{< figure src="/images/Screenshot 2025-04-03 at 2.46.36 PM.png" title="Fig.22: Overview of the Universal Self-Consistency workflow." width="300px" class="align-center" >}}
+
+这种方法在实践中展现出了显著优势（Fig.23）
+
+{{< figure src="/images/Screenshot 2025-04-03 at 2.47.54 PM.png" title="Fig.22: USC results with different number of samples." width="300px" class="align-center" >}}
+
+- 在摘要生成和问答等开放式生成任务中，USC取得了显著的性能提升。
+- 在数学推理和编程等任务中，USC能够达到与Self-Consistency方法相当的表现，同时无需进行答案提取和代码执行⁠⁠。
+  
+*需要注意的是，USC的性能受限于模型处理长文本的能力⁠⁠。*
+
+### Tree-of-thoughts (ToT) : 让LLM进行深度思考
+
+到目前为止，我们所讨论的方法只在最终解决方案层面进行选择，而ToT方法则更进一步。
+
+通过引入逐步评分机制，ToT能够在解决过程中进行树搜索。这意味着我们不用等到完整解决方案后才做出判断，而是可以在搜索过程中优先探索更有希望的步骤【12】。
+
+{{< figure src="/images/Screenshot 2025-04-03 at 3.00.39 PM.png" title="Fig.23: Schematic illustrating various approaches to problem solving with LLMs." width="600px" class="align-center" >}}
+
+**Example: 24点游戏**
+
+ToT方法的工作流程如下（Fig.24）：
+
+{{< figure src="/images/Screenshot 2025-04-03 at 3.04.08 PM.png" title="Fig.24: ToT in a game of 24. The LM is prompted for (a) thought generation and (b) valuation." width="600px" class="align-center" >}}
+
+- 思维生成：让模型提出可能的下一步思考方向
+- 思维评估：让模型评估当前状态的潜力/可行性
+
+LLM会通过多次投票来选择最佳方案，最终采用得票结果最多的选项（Fig.25）。
+
+{{< figure src="/images/Screenshot 2025-04-03 at 3.05.17 PM.png" title="Fig.25: A step of deliberate search in a randomly picked Creative Writing task. Given the input, the LM samples 5 different plans, then votes 5 times to decide which plan is best." width="600px" class="align-center" >}}
+
+研究结果表明：在token预算方面，采用广度优先搜索（BFS）的方法比Standard prompting 和 CoT Prompting方法表现更好（Fig.26）。
+
+{{< figure src="/images/Screenshot 2025-04-03 at 3.07.39 PM.png"  width="600px" class="align-center" >}}
 
 
 ## 参考文献：
