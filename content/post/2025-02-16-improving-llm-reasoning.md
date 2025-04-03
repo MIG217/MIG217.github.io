@@ -197,7 +197,7 @@ USC的核心思想是：**取代传统的答案提取过程，直接让LLM执行
 
 到目前为止，我们所讨论的方法只在最终解决方案层面进行选择，而ToT方法则更进一步。
 
-通过引入逐步评分机制，ToT能够在解决过程中进行树搜索。这意味着我们不用等到完整解决方案后才做出判断，而是可以在搜索过程中优先探索更有希望的步骤【12】。
+通过**引入逐步评分机制，ToT能够在解决过程中进行树搜索**。这意味着我们不用等到完整解决方案后才做出判断，而是可以**在搜索过程中优先探索更有希望的步骤**【12】。
 
 {{< figure src="/images/Screenshot 2025-04-03 at 3.00.39 PM.png" title="Fig.24: Schematic illustrating various approaches to problem solving with LLMs." width="600px" class="align-center" >}}
 
@@ -207,16 +207,85 @@ ToT方法的工作流程如下（Fig.25）：
 
 {{< figure src="/images/Screenshot 2025-04-03 at 3.04.08 PM.png" title="Fig.25: ToT in a game of 24. The LM is prompted for (a) thought generation and (b) valuation." width="600px" class="align-center" >}}
 
-- 思维生成：让模型提出可能的下一步思考方向
-- 思维评估：让模型评估当前状态的潜力/可行性
+- **思维生成**：让模型提出可能的下一步思考方向
+- **思维评估**：让模型评估当前状态的潜力/可行性
 
-LLM会通过多次投票来选择最佳方案，最终采用得票结果最多的选项（Fig.26）。
+LLM会通过**多次投票来选择最佳方案**，最终采用得票结果最多的选项（Fig.26）。
 
 {{< figure src="/images/Screenshot 2025-04-03 at 3.05.17 PM.png" title="Fig.26: A step of deliberate search in a randomly picked Creative Writing task. Given the input, the LM samples 5 different plans, then votes 5 times to decide which plan is best." width="600px" class="align-center" >}}
 
-研究结果表明：在token预算方面，采用广度优先搜索（BFS）的方法比Standard prompting 和 CoT Prompting方法表现更好。
+研究结果表明：**在token预算方面，采用广度优先搜索（BFS）的方法比Standard prompting 和 CoT Prompting方法表现更好**。
 
 {{< figure src="/images/Screenshot 2025-04-03 at 3.07.39 PM.png"  width="600px" class="align-center" >}}
+
+## 模型迭代自我改进，迈向最优解 
+
+在前文中，我们探讨了通过生成多个解来帮助减少单次预测的错误。但这其实是一种**相对次优**的错误修正方式。因为**所有的响应都是同时生成的，模型无法从之前的错误中吸取经验教训**。
+
+因此，在这一部分中，我们将重点介绍如何**让LLM在推理过程中不断学习和改进，通过迭代优化来提升最终输出的质量**。
+
+### 反思与自我改进：利用内外部反馈提升LLM性能
+
+Reflexion and Self-Refine 是一种让LLM持续优化输出的方法【13】【14】。在生成解决方案后，模型会经历2个关键步骤（Fig.28）：
+
+{{< figure src="/images/Screenshot 2025-04-03 at 5.26.30 PM.png" title="Fig.28: Reflexion works on decision-making 4.1, programming 4.3, and reasoning 4.2 tasks." width="700px" class="align-center" >}}
+
+1. **LLM根据观察结果生成反馈**（这个过程可以引入外部评估提供更客观的参考）
+   - 在Reflexion论文【13】中模型充当代理（agent），向环境提出行动请求，环境根据模型的输入反馈观察结果。这些外部信号帮助模型判断当前步骤的有效性
+2. **LLM结合内部反思和外部反馈优化输出**，为下一步预测提供更好的基础
+
+
+该方法在多个任务中表现出色，尤其是在能够获得高质量外部评估信号的任务中：
+
+- 在ALFWorld任务中，**通过有效的评估启发式方法，反思显著提高了模型性能** (Fig.29)
+
+{{< figure src="/images/Screenshot 2025-04-03 at 5.28.18 PM.png" title="Fig.29: (a) AlfWorld performance across 134 tasks showing cumulative proportions of solved tasks using self-evaluation techniques of (Heuristic) and (GPT) for binary classification. (b) Classification of AlfWorld trajectories by reason of failure." width="700px" class="align-center" >}}
+
+- 在HotPotQA任务中，**外部评估为每次反思提供了答案的准确性，从而帮助模型在每次反思后做出更好的改进** (Fig.30)
+
+{{< figure src="/images/Screenshot 2025-04-03 at 5.30.10 PM.png" title="Fig.30: Chain-of-Thought (CoT) and ReAct. Reflexion improves search, information retrieval, and reasoning capabilities on 100 HotPotQA questions. (a) Reflexion ReAct vs Reflexion CoT (b) Reflexion CoT (GT) for reasoning only (c) Reflexion vs episodic memory ablation." width="700px" class="align-center" >}}
+
+
+### LLMs 自我纠错能力任有局限
+
+Self-correction方法被证明能可以提升模型性能，但这些研究大多依赖于**oracle verifier**。然而在实际应用中，我们通常无法获得这样的外部验证机制。那么在没有外部反馈的情况下，LLM的表现如何呢？
+
+在论文“Large Language Models Cannot Self-Correct Reasoning Yet”中，展示了这一问题的负面结果【15】：
+
+- 在没有oracle verifier的情况下，**LLM需要自行判断其响应的正确性**
+
+- **LLM可能错误地判断自己的预测正确性，从而导致自我修正后性能反而下降**
+
+{{< figure src="/images/Screenshot 2025-04-03 at 5.33.05 PM.png"  width="600px" class="align-center" >}}
+
+### 多智能体辩论 vs Self-consistency
+
+多智能体辩论的核心思想是：**让模型并行生成多个响应，然后提示LLM评估这些响应并给出更新后的答案**。
+
+虽然在 “Multiagent Debate” 论文中表明多智能体辩论优于Self-consistency方法【16】，但深入发现这种方法存在**明显的token使用效率问题**【15】：**如果我们控制相同的回答数量和预算限制，Self-consistency的表现实际上更好**。
+
+{{< figure src="/images/Screenshot 2025-04-03 at 5.35.45 PM.png"  width="500px" class="align-center" >}}
+
+
+## 如何设计有效的推理技术? 
+
+在探索了各种技术后，我们可以总结出几个**关键原则**：
+
+1. **通用性和可扩展性优先**【17】：
+
+    - 最强大方法往往是那些能**随着计算能力增长而持续扩展的通用方法**。
+    - **搜索**和**学习**是2种展现出优异扩展性的基础方法。
+
+2. **理解模型的能力边界**：
+
+    - **不同任务可能需要不同的推理策略**。
+    - 选择的**技术应该与模型的实际能力相匹配**。
+
+3. **注重发现机制**【17】：
+
+    - 我们的目标是打造能够**自主发现的AI系统**，而不是简单地将人类的发现嵌入其中。
+    - **过度依赖预设的解决方案可能会阻碍我们理解真正的发现过程**。
+
 
 
 ## 参考文献：
