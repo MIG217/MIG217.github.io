@@ -30,6 +30,7 @@ pygmentsUseClasses = true
   ShowAllPagesInArchive = true  # 归档页显示所有文章
   ShowPageNums = true  # 文章列表显示分页
   displayFullLangName = true  # 显示完整语言名称
+  math = true
   
 
   [params.profileMode]
