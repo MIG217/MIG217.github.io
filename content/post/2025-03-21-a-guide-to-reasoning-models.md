@@ -7,6 +7,7 @@ tags: ["Reasoning Models", "EN"]
 draft: true
 ShowToc: true
 TocOpen: false
+math: true
 ---
 
 This content is adaped from [DeepLearning.AI’s course “Reasoning with o1”](https://learn.deeplearning.ai/courses/reasoning-with-o1).
