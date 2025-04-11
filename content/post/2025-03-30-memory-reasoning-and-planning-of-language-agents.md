@@ -199,8 +199,10 @@ This investigation explores two key questions:
 - **Model implementation:**   
   The study uses a standard GPT-2 style Transformer (8 layers, 768 hidden dimensions, 12 attention heads) with conventional AdamW optimization (learning rate 1e-1, batch size 512, weight decay 0.1, 2000 warm-up steps). 
 - **Compositional Reasoning Framework:**   
-  For testing implicit reasoning, the authors created synthetic knowledge graphs with $|E|$ entities and 200 relation types, split into **ID** and **OOD** atomic facts. The key mechanism is two-hop composition: 
-  $$(h, r₁, b) ∧ (b, r₂, t) ⇒ (h, r₁∘r₂, t)$$
+  For testing implicit reasoning, the authors created synthetic knowledge graphs with \( |E| \) entities and 200 relation types, split into **ID** and **OOD** atomic facts. The key mechanism is two-hop composition: 
+  $$
+  (h, r₁, b) ∧ (b, r₂, t) ⇒ (h, r₁∘r₂, t)
+  $$
   
   Example: from "Barack has-wife Michelle" and "Michelle born-in 1964," infer "Barack has-wife∘born-in 1964."
 
