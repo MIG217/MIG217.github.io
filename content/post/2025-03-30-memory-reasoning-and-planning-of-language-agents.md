@@ -158,14 +158,65 @@ As we refine memory systems, **the next crucial step is to explore reasoning**, 
 
 ## Grokking of Implicit Relations in Transformers
 
-在当前大型语言模型（LLM）研究中，显式推理方法如思维链（Chain of Thought, CoT）备受关注。然而，隐式推理作为一种更为基础的能力，对于理解模型的本质至关重要。本节将深入探讨Transformer架构中的隐式推理机制。
+In the current landscape of LLM research, explicit reasoning methods such as Chain of Thought (CoT) have garnered significant attention. However, **implicit reasoning**—a more **fundamental capability—is essential for understanding the true nature of these models**. Let's explore the implicit reasoning mechanisms within the Transformer architecture.
 
-### What is Implicit Reasoning?
+### Implicit Reasoning in LMs
+
+Implicit reasoning refers to a model's ability to **generate correct outputs without explicitly showing its reasoning steps**. This fundamental capability shapes how language models process and utilize information.
+
+**Key Aspects of Implicit Reasoning:**
+
+- Models **learn to predict next tokens without explicit reasoning chains** during pre-training
+- Shapes how language models **develop structured knowledge representations**
+- Recent insights into emergent reasoning capabilities:
+  - Base models develop fundamental reasoning constructs during pre-training
+  - Reinforcement learning optimizes selection of existing reasoning patterns
+
+**Current Challenges:**
+
+Research has identified several limitations in language models' implicit reasoning abilities:
+
+- Compositional Reasoning
+  - Models excel primarily at **single-step** reasoning (Yang et al. 2024)
+  - The gap in compositional ability persists even as models scale up (Press et al. 2023)
+- Comparative Analysis
+  - Even advanced models like GPT-4 face difficulties with implicit attribute comparisons, despite having access to the relevant information (Zhu et al. 2023)
 
 
+### Grokked Transformers are Implicit Reasoners
+
+These limitations have fueled a narrative that autoregressive LLMs cannot truly reason. However, a recent paper (@wangGrokkedTransformersAre2024) challenges this view, suggesting **Transformers possess untapped reasoning potential worthy of deeper investigation**.
+
+**Research questions**
+
+This investigation explores two key questions:
+
+1. Can Transformers learn to reason implicitly?
+2. What factors control the acquisition of implicit reasoning?
+
+**Experimental Design**
+
+- **Model implementation:**   
+  The study uses a standard GPT-2 style Transformer (8 layers, 768 hidden dimensions, 12 attention heads) with conventional AdamW optimization (learning rate 1e-1, batch size 512, weight decay 0.1, 2000 warm-up steps). 
+- **Compositional Reasoning Framework:**   
+  For testing implicit reasoning, the authors created synthetic knowledge graphs with $|E|$ entities and 200 relation types, split into **ID** and **OOD** atomic facts. The key mechanism is two-hop composition: 
+  $$(h, r₁, b) ∧ (b, r₂, t) ⇒ (h, r₁∘r₂, t)$$
+  
+  Example: from "Barack has-wife Michelle" and "Michelle born-in 1964," infer "Barack has-wife∘born-in 1964."
+
+- **Inductive Learning Assessment:**  
+  The study examines how models learn deduction reules from examples without explicit instruction, using two test scenarios:  
+  1. **ID Generalization:** Novel combinations of familiar atomic facts used in other compositions.
+  2. **ODD/Systematic Generalization:** Facts seen individually but never used in compositions-success here indicates true reasoning rather than memorization.
+
+**Takeaway**
 
 
+### Analyzing the changes during grokking
 
+
+## world models and planning
 
 
 ## Reference
+
