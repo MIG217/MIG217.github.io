@@ -211,10 +211,34 @@ This investigation explores two key questions:
   1. **ID Generalization:** Novel combinations of familiar atomic facts used in other compositions.
   2. **ODD/Systematic Generalization:** Facts seen individually but never used in compositions-success here indicates true reasoning rather than memorization.
 
-**Takeaway**
+**Key Takeaways**
 
+- **Takeaway #1: Transformers Learn to Reason Through 'Grokking'**
+
+  Initially, models quickly reach 100% training accuracy (overfitting) while test accuracy remains low. However, after continuing training for approximately 20 times more steps beyond overfitting, test accuracy suddenly jumps to 100%. 
+
+  This establishes a clear connection between grokking and the emergence of reasoning capabilities in transformers—**reasoning abilities aren't learned immediately but emerge after extended training periods.**
+
+{{< figure src="/images/Screenshot 2025-04-15 at 9.51.55 AM.png" title="Fig.10: transformers can learn to reason implicitly, but this skill is only robustly acquired through grokking" width="700px" class="align-center" >}}
+
+- **Takeaway #2: Generalization Varies Across Reasoning Types**
+
+  - With compositional reasoning, models achieved perfect performance on in-distribution (ID) test examples but failed to generalize to out-of-distribution (OOD) scenarios. 
+  - For comparative reasoning, however, models eventually reached 100% accuracy on both ID and OOD test sets. 
+
+  This indicates that **the type of logical structure being learned significantly impacts how well the acquired reasoning generalizes.**
+
+- **Takeaway #3: Data Distribution Matters More Than Data Size**
+
+  While previous research suggested that grokking requires a critical threshold of data size, this study challenges that assumption. The researchers found that **data distribution—specifically the ratio between inferred facts and atomic facts (φ)—is far more important than total data quantity**. 
+
+  When keeping this ratio fixed and increasing data size, generalization speed remained consistent. But when maintaining data size while increasing the φ ratio from 3.6 to 18, generalization speed increased dramatically. 
+  
+{{< figure src="/images/Screenshot 2025-04-15 at 9.57.49 AM.png" title="Fig.11: The speed of grokking on the in-distribution (ID) test performance (a) correlates with the ratio between inferred and atomic facts, and (b) is not influenced by the size of training data." width="700px" class="align-center" >}}
 
 ### Analyzing the changes during grokking
+
+
 
 
 ## world models and planning
