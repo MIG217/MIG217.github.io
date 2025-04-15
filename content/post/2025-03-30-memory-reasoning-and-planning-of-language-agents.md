@@ -187,14 +187,14 @@ Research has identified several limitations in language models' implicit reasoni
 
 These limitations have fueled a narrative that autoregressive LLMs cannot truly reason. However, a recent paper (@wangGrokkedTransformersAre2024) challenges this view, suggesting **Transformers possess untapped reasoning potential worthy of deeper investigation**.
 
-**Research questions**
+#### Research questions
 
 This investigation explores two key questions:
 
 1. Can Transformers learn to reason implicitly?
 2. What factors control the acquisition of implicit reasoning?
 
-**Experimental Design**
+#### Experimental Design
 
 - **Model implementation:**   
   The study uses a standard GPT-2 style Transformer (8 layers, 768 hidden dimensions, 12 attention heads) with conventional AdamW optimization (learning rate 1e-1, batch size 512, weight decay 0.1, 2000 warm-up steps). 
@@ -211,7 +211,7 @@ This investigation explores two key questions:
   1. **ID Generalization:** Novel combinations of familiar atomic facts used in other compositions.
   2. **ODD/Systematic Generalization:** Facts seen individually but never used in compositions-success here indicates true reasoning rather than memorization.
 
-**Key Takeaways**
+#### Key Takeaways
 
 - **Takeaway #1: Transformers Learn to Reason Through 'Grokking'**
 
@@ -237,6 +237,7 @@ This investigation explores two key questions:
 {{< figure src="/images/Screenshot 2025-04-15 at 9.57.49 AM.png" title="Fig.11: The speed of grokking on the in-distribution (ID) test performance (a) correlates with the ratio between inferred and atomic facts, and (b) is not influenced by the size of training data." width="700px" class="align-center" >}}
 
 ### Analyzing the changes during grokking
+
 
 
 
