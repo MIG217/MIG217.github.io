@@ -332,12 +332,12 @@ Its primary workflow includes:
 - **Building an "Imagined" World Model:** Reasoning about future states and possible paths based on language input (the "dreaming" process).
 - **Generating Executable Plans:** Developing feasible action steps using the world model and iteratively updating based on feedback.
 
-{{< figure src="/images/Screenshot-2025-04-16-3.44.20-PM.png" title="Fig.15: Illustration of WEBDREAMER simulating outcomes for three candidate actions using GPT-4o: (1) Click 'Office Products', (2) Click 'Electronics', and (3) Type 'Disk' into textbox." width="700px" class="align-center" >}}
+{{< figure src="/images/Screenshot 2025-04-16 at 3.44.20 PM.png" title="Fig.15: Illustration of WEBDREAMER simulating outcomes for three candidate actions using GPT-4o: (1) Click 'Office Products', (2) Click 'Electronics', and (3) Type 'Disk' into textbox." width="700px" class="align-center" >}}
 
 WebDreamer's strength lies in its "imagination" process, giving agents clearer global awareness of complex or multi-step tasks, enhancing plan generation capabilities and execution robustness.
 
 
-{{< figure src="/images/Screenshot-2025-04-16-3.48.53-PM.png" title="Fig.16: Success rate (%) on VisualWebArena (Koh et al., 2024a), Online-Mind2Web (Xue et al., 2025), and Mind2Web-Live (Pan et al., 2024b)." width="700px" class="align-center" >}}
+{{< figure src="/images/Screenshot 2025-04-16 at 3.48.53 PM.png" title="Fig.16: Success rate (%) on VisualWebArena (Koh et al., 2024a), Online-Mind2Web (Xue et al., 2025), and Mind2Web-Live (Pan et al., 2024b)." width="700px" class="align-center" >}}
 
 
 ### Key Takeaways on Planning
