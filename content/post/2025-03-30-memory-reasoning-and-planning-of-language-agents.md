@@ -4,7 +4,7 @@ author: ["Mingrui Guo"]
 date: "2025-03-30"
 categories: ["AI"]
 tags: ["LLM Agents", "RAG", "World Models", "Reasoning", "EN"]
-draft: false
+draft: true
 ShowToc: true
 TocOpen: false
 ---
@@ -238,12 +238,150 @@ This investigation explores two key questions:
 
 ### Analyzing the changes during grokking
 
+To understand the internal changes during the Grokking process, researchers employed two standard mechanistic interpretation tools:
+
+- **Logit Lens:** Shows us how the network processes information at different stages.
+- **Causal Tracing:** Measures how different parts of the network influence the final output.
+
+**Generalization Circuits for Different Reasoning Tasks**
+
+It has been discovered that different types of reasoning tasks lead to distinctly different generalization circuits inside Transformers.
+
+| **Type of Reasoning**       | **Circuit Type**    | **Working Mechanism**                                                              | **Generalization Characteristics**                                                 |
+|----------------------------|---------------------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
+| **Compositional Reasoning** | Two-stage circuit   | First identify the bridging entity *bb*, then perform reasoning via *r2r_2*         | May be limited by the model’s ability to learn the bridging entity, prone to errors |
+| **Comparative Reasoning**   | Parallel circuit    | Directly retrieve numerical values in parallel, followed by magnitude comparison    | Relatively strong generalization ability and more stable performance               |
+
+{{< figure src="/images/Screenshot 2025-04-15 at 3.30.40 PM.png" title="Fig.12: The (evolution of) generalizing circuit for composition." width="700px" class="align-center" >}}
+
+{{< figure src="/images/Screenshot 2025-04-15 at 3.32.36 PM.png" title="Fig.13: The (evolution of) generalizing circuit for comparison." width="700px" class="align-center" >}}
+
+**Why Compositional Reasoning Struggles with Generalization**
+
+Transformers often fail at compositional reasoning in out-of-distribution (OOD) settings. The reason lies in how they store and reuse atomic facts across layers.
+
+- **Two-stage reasoning is required**: first finding a bridge entity *(h, r₁ → b)*, then inferring the answer *(b, r₂ → t)*.
+- **Transformers tend to store both hops in lower layers**, but don’t re-store the second hop in higher layers.
+- **This leads to failure when encountering unseen combinations of known facts** — the core of OOD generalization.
+
+**Core Problem and Solution**
+
+The key issue is that models don't store atomic facts in higher layers⁠⁠. The solution is to force the storage of second-part atomic facts in higher layers⁠.
+
+- **Possible Solutions**
+  - Data Augmentation: Train the model to learn compositional structures in upper layers through special tasks and annotations⁠. 
+  - Regularization Incentives: Design loss functions that encourage storing atomic facts in both lower and higher layers⁠. 
+  - Structural Adjustment: Modify the Transformer's self-attention mechanism to actively recall relationships across different layers⁠. 
+
+- **Expected Outcomes**
+
+  This approach should lead to better systematic generalization by allowing the model to:⁠
+  - Break through OOD generalization limitations
+  - More flexibly combine previously unseen facts
+  - Improve applicability in real-world scenarios
+
+## World Models and Planning
+
+In the context of language agents, **planning can be defined as: given a goal G, determining a sequence of actions a₀, a₁, ..., aₙ that, when executed, lead to a state that satisfies or exceeds the requirements of goal G**.
+
+Unlike traditional systems that use constrained formal languages (like PDDL) to explicitly describe goals, modern language agents typically use natural language to express objectives. **This approach enhances expressiveness and flexibility but introduces challenges such as semantic ambiguity and goal uncertainty.**（@liuLLM+PEmpoweringLarge2023, @kambhampatiLLMsCantPlan2024）。
+
+To address these challenges, current research has proposed various planning paradigms to improve language agents' goal modeling and task execution capabilities.
+
+### Planning paradigms for language agents
+
+Language agents employ several key planning mechanisms:
+
+1. **Prompt-based Planning:** Guides large language models to generate action sequences **through carefully designed prompts**. For example, the ReAct framework alternates between reasoning and acting to enhance task coherence.
+
+2. **Plan-then-Act Architecture:** Divides tasks into two phases—first **generating a global action plan, then executing step by step**. This approach emphasizes forward-looking goal understanding, as seen in methods like **AutoGPT and WebGPT**.
+
+3. **Iterative Planning/Replanning:** Accounts for **environmental dynamics by adjusting plans in real-time during execution**. The **Reflexion** framework exemplifies this approach, where agents update their strategies based on feedback.
+
+4. **Program-aided Planning:** Incorporates **program execution or external tools to support planning**, adding verifiability and structure to the planning process.
+
+### World Models in Language Agents
+
+In language agents, a World Model is an abstract representation of environmental states that helps agents reason about the consequences of future actions. Simply put, **world models answer the question: "What will happen if I take a certain action?"**
+
+While traditional reinforcement learning represents world models as state transition functions, language agents employ more flexible forms, often **relying on language expressions, knowledge graphs, structured memory, or multimodal information**.
+
+World Models serve several critical functions:
+
+- **Environmental Perception:** Agents build world models to understand current states and constraints (e.g., webpage structures, task requirements, conversation history).
+- **Forward Simulation:** Simulating potential future states resulting from specific actions—similar to a "mental rehearsal" process (as in WebDreamer's "dreaming" process).
+- **Multi-step Planning Support:** Using world models as auxiliary modules to predict outcomes at each step of a plan sequence, thereby optimizing overall strategy.
+
+World models can be constructed through:
+
+- **Language-based Simulation:** Using language models to generate predictive outcomes for actions—flexible but difficult to verify.
+- **Tool-enhanced Modeling:** Combining external tools (crawlers, APIs, environment simulators) to build structured state information.
+- **Memory-augmented Modeling:** Incorporating long-term memory modules to record interaction history or external knowledge, enhancing continuous reasoning capabilities.
+
+**While world models significantly improve planning performance, their accuracy and stability remain research bottlenecks.**
+
+### Case Study: WebDreamer
+
+WebDreamer (@guYourLLMSecretly2025) exemplifies the integration of planning and world model construction, emphasizing the "imagine first, then act" philosophy.
+
+{{< figure src="/images/Screenshot 2025-04-16 at 3.41.22 PM.png" title="Fig.14: Schematic illustration of different web agent strategies as a search problem, where each node represents a webpage." width="700px" class="align-center" >}}
+
+Its primary workflow includes:
+
+- **Extracting Task Goals and Constraints:** Parsing user intent from natural language.
+- **Building an "Imagined" World Model:** Reasoning about future states and possible paths based on language input (the "dreaming" process).
+- **Generating Executable Plans:** Developing feasible action steps using the world model and iteratively updating based on feedback.
+
+{{< figure src="/images/Screenshot-2025-04-16-3.44.20-PM.png" title="Fig.15: Illustration of WEBDREAMER simulating outcomes for three candidate actions using GPT-4o: (1) Click 'Office Products', (2) Click 'Electronics', and (3) Type 'Disk' into textbox." width="700px" class="align-center" >}}
+
+WebDreamer's strength lies in its "imagination" process, giving agents clearer global awareness of complex or multi-step tasks, enhancing plan generation capabilities and execution robustness.
 
 
+{{< figure src="/images/Screenshot-2025-04-16-3.48.53-PM.png" title="Fig.16: Success rate (%) on VisualWebArena (Koh et al., 2024a), Online-Mind2Web (Xue et al., 2025), and Mind2Web-Live (Pan et al., 2024b)." width="700px" class="align-center" >}}
 
 
-## world models and planning
+### Key Takeaways on Planning
 
+- Compared to traditional symbolic planning, **language agents require stronger language understanding and plan generalization capabilities** when facing open-ended, natural language goals.
+
+- Multiple planning paradigms (prompt-based, plan-then-act, iterative, program-aided) offer different modeling paths for language agents.
+
+- **Incorporating world models (like WebDreamer) significantly improves planning quality and contextual consistency**, particularly for complex tasks with multi-step requirements or ambiguous goals.
+
+- A major ongoing challenge is **establishing stable, controllable, and verifiable bridges between natural language and executable plans**.
+
+## Future Directions for Language Agents
+
+### Open Research Questions
+
+As language agents continue to evolve, several critical research questions remain unsolved:
+
+1. **Memory and Continual Learning:**
+2. **Reasoning in Uncertain Environments:**
+3. **Planning and World Models:**
+4. **Safety and Security:**
+
+### Promising Applications
+
+Despite these challenges, several exciting applications are emerging that show significant potential:
+
+1. **Agentic Search and Deep Research**
+
+- Tools like Perplexity Pro and Google/OpenAI's deep research agents show clear business potential
+- Enhanced information synthesis across multiple sources with factual grounding
+
+2. **Workflow Automation**
+
+- End-to-end automation of complex multi-step processes
+- Integration with existing software ecosystems and APIs
+- Adaptive workflows that learn from human feedback and patterns
+
+3. **Scientific Research Assistants**
+
+- Literature review and hypothesis generation
+- Experimental design optimization
+- Data analysis and pattern recognition
+- Cross-disciplinary knowledge synthesis
 
 ## Reference
 
