@@ -7,7 +7,7 @@ tags: ["LLM Agents", "RAG", "World Models", "Reasoning", "EN"]
 draft: false
 ShowToc: true
 TocOpen: false
-bibliography: /Users/mig217/mig217/content/My Library.bib
+# bibliography: /Users/mig217/mig217/content/My Library.bib
 ---
 
 Language Agents have emerged as one of the most exciting research
@@ -62,9 +62,7 @@ to the external world (such as manipulating robots). But in language
 agents, **reasoning occurs in the internal environment**, in the form of
 “inner monologue.” Its core process include
 
-{{\< figure src=“/images/20250401reasoningagent.png” title=“Fig.3:Inner
-Monologue and Reasoning in Language Agents” width=“500px”
-class=“align-center” \>}}
+{{< figure src="/images/20250401reasoningagent.png" title="Fig.3: Inner Monologue and Reasoning in Language Agents" width="500px" class="align-center" >}}
 
 - **Reasoning by generating tokens is a new type of action**
   (vs. actions in external environments)
