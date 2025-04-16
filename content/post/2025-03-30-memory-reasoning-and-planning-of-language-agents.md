@@ -1,10 +1,10 @@
 ---
 title: "Memory, Reasoning, and Planning of Language Agents"
 author: ["Mingrui Guo"]
-date: "2025-03-30"
+date: "2025-04-16"
 categories: ["AI"]
 tags: ["LLM Agents", "RAG", "World Models", "Reasoning", "EN"]
-draft: true
+draft: false
 ShowToc: true
 TocOpen: false
 ---
@@ -385,3 +385,93 @@ Despite these challenges, several exciting applications are emerging that show s
 
 ## Reference
 
+
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+
+<div id="ref-ArtificialIntelligenceModern" class="csl-entry">
+
+“Artificial Intelligence: A Modern Approach, 4th US Ed.” n.d.
+https://aima.cs.berkeley.edu/. Accessed March 25, 2025.
+
+</div>
+
+<div id="ref-guYourLLMSecretly2025" class="csl-entry">
+
+Gu, Yu, Kai Zhang, Yuting Ning, Boyuan Zheng, Boyu Gou, Tianci Xue,
+Cheng Chang, et al. 2025. “Is Your LLM Secretly a World Model of the
+Internet? Model-Based Planning for Web Agents.” arXiv.
+<https://doi.org/10.48550/arXiv.2411.06559>.
+
+</div>
+
+<div id="ref-gutierrezHippoRAGNeurobiologicallyInspired2025a"
+class="csl-entry">
+
+Gutiérrez, Bernal Jiménez, Yiheng Shu, Yu Gu, Michihiro Yasunaga, and Yu
+Su. 2025. “HippoRAG: Neurobiologically Inspired Long-Term Memory for
+Large Language Models.” arXiv.
+<https://doi.org/10.48550/arXiv.2405.14831>.
+
+</div>
+
+<div id="ref-kambhampatiLLMsCantPlan2024" class="csl-entry">
+
+Kambhampati, Subbarao, Karthik Valmeekam, Lin Guan, Mudit Verma, Kaya
+Stechly, Siddhant Bhambri, Lucas Saldyt, and Anil Murthy. 2024. “LLMs
+Can’t Plan, But Can Help Planning in LLM-Modulo Frameworks.” arXiv.
+<https://doi.org/10.48550/arXiv.2402.01817>.
+
+</div>
+
+<div id="ref-liuLLM+PEmpoweringLarge2023" class="csl-entry">
+
+Liu, Bo, Yuqian Jiang, Xiaohan Zhang, Qiang Liu, Shiqi Zhang, Joydeep
+Biswas, and Peter Stone. 2023. “LLM+P: Empowering Large Language Models
+with Optimal Planning Proficiency.” arXiv.
+<https://doi.org/10.48550/arXiv.2304.11477>.
+
+</div>
+
+<div id="ref-marksSearchMemoryEmergence2006" class="csl-entry">
+
+Marks, Andrew R. 2006. “In Search of Memory The Emergence of a New
+Science of Mind.” *Journal of Clinical Investigation* 116 (5): 1131.
+<https://doi.org/10.1172/JCI28674>.
+
+</div>
+
+<div id="ref-sExploringHippoRAGNeurobiologically2024" class="csl-entry">
+
+S, SURUTHI. 2024. “Exploring HippoRAG: Neurobiologically Inspired
+Long-Term Memory for Large Language Models.” *Medium*.
+https://suruthi41.medium.com/exploring-hipporag-neurobiologically-inspired-long-term-memory-for-large-language-models-a43d65b35c01.
+
+</div>
+
+<div id="ref-teylerHippocampalMemoryIndexing1986" class="csl-entry">
+
+Teyler, T. J., and P. DiScenna. 1986. “The Hippocampal Memory Indexing
+Theory.” *Behavioral Neuroscience* 100 (2): 147–54.
+<https://doi.org/10.1037//0735-7044.100.2.147>.
+
+</div>
+
+<div id="ref-wangGrokkedTransformersAre2024" class="csl-entry">
+
+Wang, Boshi, Xiang Yue, Yu Su, and Huan Sun. 2024. “Grokked Transformers
+Are Implicit Reasoners: A Mechanistic Journey to the Edge of
+Generalization.” arXiv. <https://doi.org/10.48550/arXiv.2405.15071>.
+
+</div>
+
+<div id="ref-xieAdaptiveChameleonStubborn2024a" class="csl-entry">
+
+Xie, Jian, Kai Zhang, Jiangjie Chen, Renze Lou, and Yu Su. 2024.
+“Adaptive Chameleon or Stubborn Sloth: Revealing the Behavior of Large
+Language Models in Knowledge Conflicts.” arXiv.
+<https://doi.org/10.48550/arXiv.2305.13300>.
+
+</div>
+
+</div>
