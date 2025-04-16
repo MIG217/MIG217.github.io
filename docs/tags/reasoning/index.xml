@@ -15,7 +15,7 @@
       <guid>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</guid>
       <description>&lt;p&gt;Language Agents have emerged as one of the most exciting research directions in AI over the past two years. This article explores three core components: &lt;strong&gt;long-term memory via HippoRAG, reasoning capabilities with Grokked Transformers, and world modeling through WebDreamer&lt;/strong&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;why-agents-again&#34;&gt;Why Agents Again?&lt;/h2&gt;
-&lt;p&gt;Russell &amp;amp; Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “&lt;strong&gt;anything that can perceive its environment through sensors and act upon that environment through actions.&lt;/strong&gt;”[@ArtificialIntelligenceModern]&lt;/p&gt;</description>
+&lt;p&gt;Russell &amp;amp; Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “&lt;strong&gt;anything that can perceive its environment through sensors and act upon that environment through actions.&lt;/strong&gt;”（@ArtificialIntelligenceModern）&lt;/p&gt;</description>
     </item>
     <item>
       <title>大语言模型的自我提升与推理能力进化(Jason Weston, Meta)</title>

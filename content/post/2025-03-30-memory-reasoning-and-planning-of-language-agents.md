@@ -13,7 +13,7 @@ Language Agents have emerged as one of the most exciting research directions in 
 
 ## Why Agents Again?
 
-Russell & Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “**anything that can perceive its environment through sensors and act upon that environment through actions.**”[@ArtificialIntelligenceModern]
+Russell & Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “**anything that can perceive its environment through sensors and act upon that environment through actions.**”（@ArtificialIntelligenceModern）
 
 {{< figure src="/images/20250401agent.png" title="Fig.1:Agent-Environment Interaction Framework" width="500px" class="align-center" >}}
 
@@ -74,13 +74,13 @@ That’s the introduction. This article will further explore three main aspects 
 
 ## HippoRAG: Neurobiologically-Inspired Long-Term Memory for LLMs
 
-Humans and animals continuously learn by gaining and strengthening knowledge. Nobel Prize winner Eric Kandel highlighted memory’s vital role, saying, “Memory is everything. Without it, we are nothing.” [@marksSearchMemoryEmergence2006] Memory relies on synaptic plasticity, where brain connections grow stronger to support learning. Sleep even helps solidify memories for the long term. 
+Humans and animals continuously learn by gaining and strengthening knowledge. Nobel Prize winner Eric Kandel highlighted memory’s vital role, saying, “Memory is everything. Without it, we are nothing.” （@marksSearchMemoryEmergence2006） Memory relies on synaptic plasticity, where brain connections grow stronger to support learning. Sleep even helps solidify memories for the long term. 
 
 Ideally, AI, especially large language models (LLMs), should learn and build knowledge over time too. But **LLMs struggle with this, often suffering from catastrophic forgetting, where they lose past knowledge—a major limitation**.
 
 ### Non-Parametric Memory
 
-Researchers use non-parametric memory to help large language models (LLMs) learn continuously by storing new knowledge externally, as seen in Retrieval-Augmented Generation (RAG). This lets LLMs dynamically pull in outside information, acting as long-term memory. According to studies [@xieAdaptiveChameleonStubborn2024a], **LLMs adapt well to external data, even when it contradicts their own knowledge**.
+Researchers use non-parametric memory to help large language models (LLMs) learn continuously by storing new knowledge externally, as seen in Retrieval-Augmented Generation (RAG). This lets LLMs dynamically pull in outside information, acting as long-term memory. According to studies （@xieAdaptiveChameleonStubborn2024a）, **LLMs adapt well to external data, even when it contradicts their own knowledge**.
 
 {{< figure src="/images/20250401example.png" title="Fig.5: LLMs can effectively incorporate external evidence, even when it conflicts with their parametric memory, provided the evidence is coherent and persuasive" width="600px" class="align-center" >}}
 
@@ -88,13 +88,13 @@ Despite these benefits, current RAG implementations have limitations. Traditiona
 
 ### Long-term Memory in Humans
 
-The hippocampal indexing theory [@teylerHippocampalMemoryIndexing1986] provides insights into how human memory achieves efficient recall. It suggests that:
+The hippocampal indexing theory （@teylerHippocampalMemoryIndexing1986） provides insights into how human memory achieves efficient recall. It suggests that:
 
 - **Neocortex stores raw sensory data** (e.g., auditory and visual information).
 - **Hippocampus acts as an index**, linking disparate memory fragments into a structured retrieval system.
 - **Parahippocampal regions** facilitate connections between stored experiences, aiding in memory retrieval.
 
-{{< figure src="/images/20250401hippo.webp" title="Fig.6: Hippocampus creates index for the memories to be stored in different part of neocortex [@sExploringHippoRAGNeurobiologically2024]" width="500px" class="align-center" >}}
+{{< figure src="/images/20250401hippo.webp" title="Fig.6: Hippocampus creates index for the memories to be stored in different part of neocortex （@sExploringHippoRAGNeurobiologically2024）" width="500px" class="align-center" >}}
 
 Indexing procedure enables two fundamental faculties of human memory: 
 
@@ -103,7 +103,7 @@ Indexing procedure enables two fundamental faculties of human memory:
 
 ### HippoRAG: Bringing Human-Like Memory to LLMs
 
-HippoRAG [@gutierrezHippoRAGNeurobiologicallyInspired2025a] simulates this memory mechanism by building a similar structured index for RAG systems. Its workflow is divided into two phases:
+HippoRAG （@gutierrezHippoRAGNeurobiologicallyInspired2025a） simulates this memory mechanism by building a similar structured index for RAG systems. Its workflow is divided into two phases:
 
 **Offline Indexing Phase:**
 
