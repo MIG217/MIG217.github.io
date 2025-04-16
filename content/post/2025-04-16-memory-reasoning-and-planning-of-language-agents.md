@@ -1,20 +1,13 @@
 ---
-author:
-- Mingrui Guo
-bibliography: /Users/mig217/mig217/content/My Library.bib
-categories:
-- AI
-date: 2025-04-16
+title: "Memory, Reasoning, and Planning of Language Agents"
+author: ["Mingrui Guo"]
+date: "2025-03-30"
+categories: ["AI"]
+tags: ["LLM Agents", "RAG", "World Models", "Reasoning", "EN"]
 draft: false
 ShowToc: true
-tags:
-- LLM Agents
-- RAG
-- World Models
-- Reasoning
-- EN
-title: Memory, Reasoning, and Planning of Language Agents
 TocOpen: false
+bibliography: /Users/mig217/mig217/content/My Library.bib
 ---
 
 Language Agents have emerged as one of the most exciting research
