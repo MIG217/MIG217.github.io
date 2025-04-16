@@ -22,9 +22,7 @@ an agent as “**anything that can perceive its environment through
 sensors and act upon that environment through actions.**”(“Artificial
 Intelligence: A Modern Approach, 4th US Ed.” n.d.)
 
-{{\< figure src=“/images/20250401agent.png”
-title=“Fig.1:Agent-Environment Interaction Framework” width=“500px”
-class=“align-center” \>}}
+{{< figure src="/images/20250401agent.png" title="Fig.1: Agent-Environment Interaction Framework" width="500px" class="align-center" >}}
 
 Many people believe modern agents can be simply defined as **“LLM +
 external environment.”** This view suggests that language models
@@ -33,9 +31,7 @@ interfaces; once connected to an external environment, able to perceive
 environmental information and influence the environment, they become
 agents.
 
-{{\< figure src=“/images/20250401modernagent.png” title=“Fig.2:‘Modern’
-agent = LLM + external environment?” width=“700px” class=“align-center”
-\>}}
+{{< figure src="/images/20250401modernagent.png" title="Fig.2: ‘Modern’ agent = LLM + external environment?" width="700px" class="align-center" >}}
 
 However, **this definition is oversimplified**. In reality, there are
 two main competing views in the community:
