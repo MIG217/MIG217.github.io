@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>EN on Mig&#39;s Blog</title>
-    <link>https://mig217.github.io/tags/en/</link>
-    <description>Recent content in EN on Mig&#39;s Blog</description>
+    <title>World Models on Mig&#39;s Blog</title>
+    <link>https://mig217.github.io/tags/world-models/</link>
+    <description>Recent content in World Models on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.145.0</generator>
     <language>en</language>
     <lastBuildDate>Wed, 16 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://mig217.github.io/tags/en/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mig217.github.io/tags/world-models/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Memory, Reasoning, and Planning of Language Agents</title>
       <link>https://mig217.github.io/post/2025-04-16-memory-reasoning-and-planning-of-language-agents/</link>
@@ -22,16 +22,6 @@ with Grokked Transformers, and world modeling through WebDreamer&lt;/strong&gt;.
 an agent as &amp;ldquo;&lt;strong&gt;anything that can perceive its environment through
 sensors and act upon that environment through actions.&lt;/strong&gt;&amp;rdquo;(&lt;em&gt;Artificial
 Intelligence&lt;/em&gt;, n.d.)&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>LLM Agents: Brief History and Overview</title>
-      <link>https://mig217.github.io/post/2025-03-10-llm-agents-overview/</link>
-      <pubDate>Fri, 14 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/2025-03-10-llm-agents-overview/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;To understand LLM agents, we need to break the term into two foundational components: &lt;strong&gt;Large Language Models (LLMs)&lt;/strong&gt; and &lt;strong&gt;Agents&lt;/strong&gt;. While LLMs have gained widespread recognition, the concept of &amp;ldquo;agent&amp;rdquo; in this context requires deeper exploration.&lt;/p&gt;
-&lt;h3 id=&#34;what-is-an-agent&#34;&gt;What is an Agent?&lt;/h3&gt;
-&lt;p&gt;In artificial intelligence, an agent is &lt;strong&gt;an &amp;ldquo;intelligent&amp;rdquo; system that perceives and interacts with an &amp;ldquo;environment&amp;rdquo; to achieve specific goals&lt;/strong&gt;. The classification of agents varies based on their operational environment:&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
