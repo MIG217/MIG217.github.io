@@ -7,7 +7,7 @@ tags: ["LLM Agents", "RAG", "World Models", "Reasoning", "EN"]
 draft: false
 ShowToc: true
 TocOpen: false
-# bibliography: /Users/mig217/mig217/content/My Library.bib
+bibliography: /Users/mig217/mig217/content/My Library.bib
 # csl: "https://www.zotero.org/styles/apa"
 ---
 
