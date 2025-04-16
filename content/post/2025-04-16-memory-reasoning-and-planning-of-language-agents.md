@@ -1,14 +1,20 @@
 ---
-title: "Memory, Reasoning, and Planning of Language Agents"
-author: ["Mingrui Guo"]
-date: "2025-04-16"
-categories: ["AI"]
-tags: ["LLM Agents", "RAG", "World Models", "Reasoning", "EN"]
-draft: false
-ShowToc: true
-TocOpen: false
+author:
+- Mingrui Guo
 bibliography: /Users/mig217/mig217/content/My Library.bib
-# csl: "https://www.zotero.org/styles/apa"
+categories:
+- AI
+date: 2025-04-16
+draft: true
+ShowToc: true
+tags:
+- LLM Agents
+- RAG
+- World Models
+- Reasoning
+- EN
+title: Memory, Reasoning, and Planning of Language Agents
+TocOpen: false
 ---
 
 Language Agents have emerged as one of the most exciting research
@@ -18,24 +24,24 @@ with Grokked Transformers, and world modeling through WebDreamer**.
 
 ## Why Agents Again?
 
-Russell & Norvig in "Artificial Intelligence: A Modern Approach" define
-an agent as "**anything that can perceive its environment through
-sensors and act upon that environment through actions.**"(*Artificial
-Intelligence*, n.d.)
+Russell & Norvig in “Artificial Intelligence: A Modern Approach” define
+an agent as “**anything that can perceive its environment through
+sensors and act upon that environment through actions.**”(“Artificial
+Intelligence: A Modern Approach, 4th US Ed.” n.d.)
 
-{{\< figure src="/images/20250401agent.png"
-title="Fig.1:Agent-Environment Interaction Framework" width="500px"
-class="align-center" \>}}
+{{\< figure src=“/images/20250401agent.png”
+title=“Fig.1:Agent-Environment Interaction Framework” width=“500px”
+class=“align-center” \>}}
 
-Many people believe modern agents can be simply defined as **"LLM +
-external environment."** This view suggests that language models
+Many people believe modern agents can be simply defined as **“LLM +
+external environment.”** This view suggests that language models
 themselves have limited functionality with only text input-output
 interfaces; once connected to an external environment, able to perceive
 environmental information and influence the environment, they become
 agents.
 
-{{\< figure src="/images/20250401modernagent.png" title="Fig.2:'Modern'
-agent = LLM + external environment?" width="700px" class="align-center"
+{{\< figure src=“/images/20250401modernagent.png” title=“Fig.2:‘Modern’
+agent = LLM + external environment?” width=“700px” class=“align-center”
 \>}}
 
 However, **this definition is oversimplified**. In reality, there are
@@ -62,20 +68,20 @@ vehicle for reasoning and communication**
   replanning, etc.**
 
 Unlike traditional agents, reasoning in language agents is essentially a
-new form of "action". In traditional AI agents, actions typically refer
+new form of “action”. In traditional AI agents, actions typically refer
 to the external world (such as manipulating robots). But in language
 agents, **reasoning occurs in the internal environment**, in the form of
-"inner monologue." Its core process include
+“inner monologue.” Its core process include
 
-{{\< figure src="/images/20250401reasoningagent.png" title="Fig.3:Inner
-Monologue and Reasoning in Language Agents" width="500px"
-class="align-center" \>}}
+{{\< figure src=“/images/20250401reasoningagent.png” title=“Fig.3:Inner
+Monologue and Reasoning in Language Agents” width=“500px”
+class=“align-center” \>}}
 
 - **Reasoning by generating tokens is a new type of action**
   (vs. actions in external environments)
 - **Internal environment**, where reasoning takes place in an inner
   monologue fashion
-- **Self-reflection** is a 'meta' reasoning action (i.e., reasoning over
+- **Self-reflection** is a ‘meta’ reasoning action (i.e., reasoning over
   the reasoning process), akin to metacognitive functions
 - **Reasoning is for better acting**, by inferring environmental states,
   retrospection, etc.
@@ -87,29 +93,11 @@ class="align-center" \>}}
 To understand the uniqueness of language agents, we can compare the
 evolution of AI agents:
 
-  --------------------------------------------------------------------------------------------
-  Feature              Logical Agent           Neural Agent            Language Agent
-  -------------------- ----------------------- ----------------------- -----------------------
-  **Expressiveness**   Low {{\< rawhtml        Medium {{\< rawhtml     High {{\< rawhtml
-                       \>}}`<br>`{=html}{{\<   \>}}`<br>`{=html}{{\<   \>}}`<br>`{=html}{{\<
-                       /rawhtml \>}} Bounded   /rawhtml \>}} Anything  /rawhtml \>}} Almost
-                       by the logical language a (small-ish) NN can    anything, especially
-                                               encode                  verbalizable parts of
-                                                                       the world
-
-  **Reasoning**        Logical inferences {{\< Parametric inferences   Language-based
-                       rawhtml                 {{\< rawhtml            inferences {{\< rawhtml
-                       \>}}`<br>`{=html}{{\<   \>}}`<br>`{=html}{{\<   \>}}`<br>`{=html}{{\<
-                       /rawhtml \>}} Sound,    /rawhtml \>}}           /rawhtml \>}} Fuzzy,
-                       explicit, rigid         Stochastic, implicit,   semi-explicit, flexible
-                                               rigid                   
-
-  **Adaptivity**       Low {{\< rawhtml        Medium {{\< rawhtml     High {{\< rawhtml
-                       \>}}`<br>`{=html}{{\<   \>}}`<br>`{=html}{{\<   \>}}`<br>`{=html}{{\<
-                       /rawhtml \>}} Bounded   /rawhtml \>}}           /rawhtml \>}} Strong
-                       by knowledge curation   Data-driven but sample  prior from LLMs +
-                                               inefficient             language use
-  --------------------------------------------------------------------------------------------
+| Feature | Logical Agent | Neural Agent | Language Agent |
+|----|----|----|----|
+| **Expressiveness** | Low {{\< rawhtml \>}}<br>{{\< /rawhtml \>}} Bounded by the logical language | Medium {{\< rawhtml \>}}<br>{{\< /rawhtml \>}} Anything a (small-ish) NN can encode | High {{\< rawhtml \>}}<br>{{\< /rawhtml \>}} Almost anything, especially verbalizable parts of the world |
+| **Reasoning** | Logical inferences {{\< rawhtml \>}}<br>{{\< /rawhtml \>}} Sound, explicit, rigid | Parametric inferences {{\< rawhtml \>}}<br>{{\< /rawhtml \>}} Stochastic, implicit, rigid | Language-based inferences {{\< rawhtml \>}}<br>{{\< /rawhtml \>}} Fuzzy, semi-explicit, flexible |
+| **Adaptivity** | Low {{\< rawhtml \>}}<br>{{\< /rawhtml \>}} Bounded by knowledge curation | Medium {{\< rawhtml \>}}<br>{{\< /rawhtml \>}} Data-driven but sample inefficient | High {{\< rawhtml \>}}<br>{{\< /rawhtml \>}} Strong prior from LLMs + language use |
 
 Early AI agents could only capture limited aspects of human
 intelligence, such as symbolic reasoning or unimodal perception.
@@ -128,11 +116,11 @@ cognitive processes, form lower-level perception, memory, embodiment, to
 upper-level planning, reasoning, and world models. They simultaneously
 span issues of safety, evaluation, synthetic data, and efficiency.
 
-{{\< figure src="/images/20250401conceptual.png" title="Fig.4:Capability
-Hierarchy and Challenges of Language Agents" width="600px"
-class="align-center" \>}}
+{{\< figure src=“/images/20250401conceptual.png” title=“Fig.4:Capability
+Hierarchy and Challenges of Language Agents” width=“600px”
+class=“align-center” \>}}
 
-That's the introduction. This article will further explore three main
+That’s the introduction. This article will further explore three main
 aspects of language agents:
 
 1.  On long-term memory: HippoRAG
@@ -142,16 +130,16 @@ aspects of language agents:
 ## HippoRAG: Neurobiologically-Inspired Long-Term Memory for LLMs
 
 Humans and animals continuously learn by gaining and strengthening
-knowledge. Nobel Prize winner Eric Kandel highlighted memory's vital
-role, saying, "Memory is everything. Without it, we are nothing."
-(Marks, 2006) Memory relies on synaptic plasticity, where brain
-connections grow stronger to support learning. Sleep even helps solidify
-memories for the long term.
+knowledge. Nobel Prize winner Eric Kandel highlighted memory’s vital
+role, saying, “Memory is everything. Without it, we are nothing.” (Marks
+2006) Memory relies on synaptic plasticity, where brain connections grow
+stronger to support learning. Sleep even helps solidify memories for the
+long term.
 
 Ideally, AI, especially large language models (LLMs), should learn and
 build knowledge over time too. But **LLMs struggle with this, often
-suffering from catastrophic forgetting, where they lose past
-knowledge---a major limitation**.
+suffering from catastrophic forgetting, where they lose past knowledge—a
+major limitation**.
 
 ### Non-Parametric Memory
 
@@ -159,13 +147,13 @@ Researchers use non-parametric memory to help large language models
 (LLMs) learn continuously by storing new knowledge externally, as seen
 in Retrieval-Augmented Generation (RAG). This lets LLMs dynamically pull
 in outside information, acting as long-term memory. According to studies
-(Xie et al., 2024), **LLMs adapt well to external data, even when it
+(Xie et al. 2024), **LLMs adapt well to external data, even when it
 contradicts their own knowledge**.
 
-{{\< figure src="/images/20250401example.png" title="Fig.5: LLMs can
+{{\< figure src=“/images/20250401example.png” title=“Fig.5: LLMs can
 effectively incorporate external evidence, even when it conflicts with
 their parametric memory, provided the evidence is coherent and
-persuasive" width="600px" class="align-center" \>}}
+persuasive” width=“600px” class=“align-center” \>}}
 
 Despite these benefits, current RAG implementations have limitations.
 Traditional RAG systems rely on vector embeddings for retrieval, which
@@ -173,7 +161,7 @@ often struggle to capture complex associations.
 
 ### Long-term Memory in Humans
 
-The hippocampal indexing theory (Teyler & DiScenna, 1986) provides
+The hippocampal indexing theory (Teyler and DiScenna 1986) provides
 insights into how human memory achieves efficient recall. It suggests
 that:
 
@@ -184,9 +172,9 @@ that:
 - **Parahippocampal regions** facilitate connections between stored
   experiences, aiding in memory retrieval.
 
-{{\< figure src="/images/20250401hippo.webp" title="Fig.6: Hippocampus
+{{\< figure src=“/images/20250401hippo.webp” title=“Fig.6: Hippocampus
 creates index for the memories to be stored in different part of
-neocortex (S, 2024)" width="500px" class="align-center" \>}}
+neocortex (S 2024)” width=“500px” class=“align-center” \>}}
 
 Indexing procedure enables two fundamental faculties of human memory:
 
@@ -197,7 +185,7 @@ Indexing procedure enables two fundamental faculties of human memory:
 
 ### HippoRAG: Bringing Human-Like Memory to LLMs
 
-HippoRAG (Gutiérrez et al., 2025) simulates this memory mechanism by
+HippoRAG (Gutiérrez et al. 2025) simulates this memory mechanism by
 building a similar structured index for RAG systems. Its workflow is
 divided into two phases:
 
@@ -213,15 +201,15 @@ divided into two phases:
 **Online Query Phase:**
 
 - **Concept Identification:** Identifies key concepts from the query
-  (such as "Stanford" and "Alzheimer's")
+  (such as “Stanford” and “Alzheimer’s”)
 - **Similar Node Retrieval:** Finds nodes in the index similar to query
   concepts to serve as seed nodes
 - **Graph Search:** Employs the Personalized PageRank algorithm to
   search the graph Reranking: Reranks original passages based on concept
   weights
 
-{{\< figure src="/images/20250401HippoRAG.png" title="Fig.7: Detailed
-HippoRAG Methodology." width="700px" class="align-center" \>}}
+{{\< figure src=“/images/20250401HippoRAG.png” title=“Fig.7: Detailed
+HippoRAG Methodology.” width=“700px” class=“align-center” \>}}
 
 **The Personalized PageRank algorithm is a critical component of
 HippoRAG**. It performs a random walk starting from seed nodes,
@@ -242,8 +230,8 @@ benchmark datasets, particularly in **multi-hop QA tasks** and
 - **MuSiQue**: Shows a 3% improvement, demonstrating robustness across
   datasets.
 
-{{\< figure src="/images/20250402singlesetp.png" title="Fig.8:
-Single-step retrieval performance." width="500px" class="align-center"
+{{\< figure src=“/images/20250402singlesetp.png” title=“Fig.8:
+Single-step retrieval performance.” width=“500px” class=“align-center”
 \>}}
 
 **Integration with Existing Methods**
@@ -254,8 +242,8 @@ HippoRAG complements existing iterative retrieval approaches:
   highlighting the synergistic benefits of structured retrieval with
   multi-step reasoning.
 
-{{\< figure src="/images/20250402multistep.png" title="Fig.9: Multi-step
-retrieval performance." width="500px" class="align-center" \>}}
+{{\< figure src=“/images/20250402multistep.png” title=“Fig.9: Multi-step
+retrieval performance.” width=“500px” class=“align-center” \>}}
 
 ### Memory in LLMs: Key Insights
 
@@ -288,14 +276,14 @@ abilities.
 
 In the current landscape of LLM research, explicit reasoning methods
 such as Chain of Thought (CoT) have garnered significant attention.
-However, **implicit reasoning**---a more **fundamental capability---is
-essential for understanding the true nature of these models**. Let's
+However, **implicit reasoning**—a more **fundamental capability—is
+essential for understanding the true nature of these models**. Let’s
 explore the implicit reasoning mechanisms within the Transformer
 architecture.
 
 ### Implicit Reasoning in LMs
 
-Implicit reasoning refers to a model's ability to **generate correct
+Implicit reasoning refers to a model’s ability to **generate correct
 outputs without explicitly showing its reasoning steps**. This
 fundamental capability shapes how language models process and utilize
 information.
@@ -314,7 +302,7 @@ information.
 
 **Current Challenges:**
 
-Research has identified several limitations in language models' implicit
+Research has identified several limitations in language models’ implicit
 reasoning abilities:
 
 - Compositional Reasoning
@@ -343,24 +331,26 @@ This investigation explores two key questions:
 
 #### Experimental Design
 
-- **Model implementation:**\
+- **Model implementation:**  
   The study uses a standard GPT-2 style Transformer (8 layers, 768
   hidden dimensions, 12 attention heads) with conventional AdamW
   optimization (learning rate 1e-1, batch size 512, weight decay 0.1,
   2000 warm-up steps).
 
-- **Compositional Reasoning Framework:**\
+- **Compositional Reasoning Framework:**  
   For testing implicit reasoning, the authors created synthetic
   knowledge graphs with ( \|E\| ) entities and 200 relation types, split
   into **ID** and **OOD** atomic facts. The key mechanism is two-hop
-  composition: $$
+  composition:
+  ``` math
+
   (h, r₁, b) ∧ (b, r₂, t) ⇒ (h, r₁∘r₂, t)
-  $$
+  ```
 
-  Example: from "Barack has-wife Michelle" and "Michelle born-in 1964,"
-  infer "Barack has-wife∘born-in 1964."
+  Example: from “Barack has-wife Michelle” and “Michelle born-in 1964,”
+  infer “Barack has-wife∘born-in 1964.”
 
-- **Inductive Learning Assessment:**\
+- **Inductive Learning Assessment:**  
   The study examines how models learn deduction reules from examples
   without explicit instruction, using two test scenarios:
 
@@ -372,7 +362,7 @@ This investigation explores two key questions:
 
 #### Key Takeaways
 
-- **Takeaway #1: Transformers Learn to Reason Through 'Grokking'**
+- **Takeaway \#1: Transformers Learn to Reason Through ‘Grokking’**
 
   Initially, models quickly reach 100% training accuracy (overfitting)
   while test accuracy remains low. However, after continuing training
@@ -380,16 +370,15 @@ This investigation explores two key questions:
   accuracy suddenly jumps to 100%.
 
   This establishes a clear connection between grokking and the emergence
-  of reasoning capabilities in transformers---**reasoning abilities
-  aren't learned immediately but emerge after extended training
-  periods.**
+  of reasoning capabilities in transformers—**reasoning abilities aren’t
+  learned immediately but emerge after extended training periods.**
 
-{{\< figure src="/images/Screenshot 2025-04-15 at 9.51.55 AM.png"
-title="Fig.10: transformers can learn to reason implicitly, but this
-skill is only robustly acquired through grokking" width="700px"
-class="align-center" \>}}
+{{\< figure src=“/images/Screenshot 2025-04-15 at 9.51.55 AM.png”
+title=“Fig.10: transformers can learn to reason implicitly, but this
+skill is only robustly acquired through grokking” width=“700px”
+class=“align-center” \>}}
 
-- **Takeaway #2: Generalization Varies Across Reasoning Types**
+- **Takeaway \#2: Generalization Varies Across Reasoning Types**
 
   - With compositional reasoning, models achieved perfect performance on
     in-distribution (ID) test examples but failed to generalize to
@@ -400,24 +389,24 @@ class="align-center" \>}}
   This indicates that **the type of logical structure being learned
   significantly impacts how well the acquired reasoning generalizes.**
 
-- **Takeaway #3: Data Distribution Matters More Than Data Size**
+- **Takeaway \#3: Data Distribution Matters More Than Data Size**
 
   While previous research suggested that grokking requires a critical
   threshold of data size, this study challenges that assumption. The
-  researchers found that **data distribution---specifically the ratio
-  between inferred facts and atomic facts (φ)---is far more important
-  than total data quantity**.
+  researchers found that **data distribution—specifically the ratio
+  between inferred facts and atomic facts (φ)—is far more important than
+  total data quantity**.
 
   When keeping this ratio fixed and increasing data size, generalization
   speed remained consistent. But when maintaining data size while
   increasing the φ ratio from 3.6 to 18, generalization speed increased
   dramatically.
 
-{{\< figure src="/images/Screenshot 2025-04-15 at 9.57.49 AM.png"
-title="Fig.11: The speed of grokking on the in-distribution (ID) test
+{{\< figure src=“/images/Screenshot 2025-04-15 at 9.57.49 AM.png”
+title=“Fig.11: The speed of grokking on the in-distribution (ID) test
 performance (a) correlates with the ratio between inferred and atomic
-facts, and (b) is not influenced by the size of training data."
-width="700px" class="align-center" \>}}
+facts, and (b) is not influenced by the size of training data.”
+width=“700px” class=“align-center” \>}}
 
 ### Analyzing the changes during grokking
 
@@ -434,28 +423,18 @@ researchers employed two standard mechanistic interpretation tools:
 It has been discovered that different types of reasoning tasks lead to
 distinctly different generalization circuits inside Transformers.
 
-  -------------------------------------------------------------------------------------
-  **Type of         **Circuit   **Working Mechanism**       **Generalization
-  Reasoning**       Type**                                  Characteristics**
-  ----------------- ----------- --------------------------- ---------------------------
-  **Compositional   Two-stage   First identify the bridging May be limited by the
-  Reasoning**       circuit     entity *bb*, then perform   model's ability to learn
-                                reasoning via *r2r_2*       the bridging entity, prone
-                                                            to errors
+| **Type of Reasoning** | **Circuit Type** | **Working Mechanism** | **Generalization Characteristics** |
+|----|----|----|----|
+| **Compositional Reasoning** | Two-stage circuit | First identify the bridging entity *bb*, then perform reasoning via *r2r_2* | May be limited by the model’s ability to learn the bridging entity, prone to errors |
+| **Comparative Reasoning** | Parallel circuit | Directly retrieve numerical values in parallel, followed by magnitude comparison | Relatively strong generalization ability and more stable performance |
 
-  **Comparative     Parallel    Directly retrieve numerical Relatively strong
-  Reasoning**       circuit     values in parallel,         generalization ability and
-                                followed by magnitude       more stable performance
-                                comparison                  
-  -------------------------------------------------------------------------------------
+{{\< figure src=“/images/Screenshot 2025-04-15 at 3.30.40 PM.png”
+title=“Fig.12: The (evolution of) generalizing circuit for composition.”
+width=“700px” class=“align-center” \>}}
 
-{{\< figure src="/images/Screenshot 2025-04-15 at 3.30.40 PM.png"
-title="Fig.12: The (evolution of) generalizing circuit for composition."
-width="700px" class="align-center" \>}}
-
-{{\< figure src="/images/Screenshot 2025-04-15 at 3.32.36 PM.png"
-title="Fig.13: The (evolution of) generalizing circuit for comparison."
-width="700px" class="align-center" \>}}
+{{\< figure src=“/images/Screenshot 2025-04-15 at 3.32.36 PM.png”
+title=“Fig.13: The (evolution of) generalizing circuit for comparison.”
+width=“700px” class=“align-center” \>}}
 
 **Why Compositional Reasoning Struggles with Generalization**
 
@@ -465,14 +444,14 @@ and reuse atomic facts across layers.
 
 - **Two-stage reasoning is required**: first finding a bridge entity
   *(h, r₁ → b)*, then inferring the answer *(b, r₂ → t)*.
-- **Transformers tend to store both hops in lower layers**, but don't
+- **Transformers tend to store both hops in lower layers**, but don’t
   re-store the second hop in higher layers.
 - **This leads to failure when encountering unseen combinations of known
-  facts** --- the core of OOD generalization.
+  facts** — the core of OOD generalization.
 
 **Core Problem and Solution**
 
-The key issue is that models don't store atomic facts in higher layers⁠⁠.
+The key issue is that models don’t store atomic facts in higher layers⁠⁠.
 The solution is to force the storage of second-part atomic facts in
 higher layers⁠.
 
@@ -482,7 +461,7 @@ higher layers⁠.
     in upper layers through special tasks and annotations⁠.
   - Regularization Incentives: Design loss functions that encourage
     storing atomic facts in both lower and higher layers⁠.
-  - Structural Adjustment: Modify the Transformer's self-attention
+  - Structural Adjustment: Modify the Transformer’s self-attention
     mechanism to actively recall relationships across different layers⁠.
 
 - **Expected Outcomes**
@@ -497,7 +476,7 @@ higher layers⁠.
 ## World Models and Planning
 
 In the context of language agents, **planning can be defined as: given a
-goal G, determining a sequence of actions a₀, a₁, ..., aₙ that, when
+goal G, determining a sequence of actions a₀, a₁, …, aₙ that, when
 executed, lead to a state that satisfies or exceeds the requirements of
 goal G**.
 
@@ -509,7 +488,7 @@ semantic ambiguity and goal uncertainty.**（Liu et al. (2023),
 Kambhampati et al. (2024)）。
 
 To address these challenges, current research has proposed various
-planning paradigms to improve language agents' goal modeling and task
+planning paradigms to improve language agents’ goal modeling and task
 execution capabilities.
 
 ### Planning paradigms for language agents
@@ -521,10 +500,10 @@ Language agents employ several key planning mechanisms:
     example, the ReAct framework alternates between reasoning and acting
     to enhance task coherence.
 
-2.  **Plan-then-Act Architecture:** Divides tasks into two
-    phases---first **generating a global action plan, then executing
-    step by step**. This approach emphasizes forward-looking goal
-    understanding, as seen in methods like **AutoGPT and WebGPT**.
+2.  **Plan-then-Act Architecture:** Divides tasks into two phases—first
+    **generating a global action plan, then executing step by step**.
+    This approach emphasizes forward-looking goal understanding, as seen
+    in methods like **AutoGPT and WebGPT**.
 
 3.  **Iterative Planning/Replanning:** Accounts for **environmental
     dynamics by adjusting plans in real-time during execution**. The
@@ -539,8 +518,8 @@ Language agents employ several key planning mechanisms:
 
 In language agents, a World Model is an abstract representation of
 environmental states that helps agents reason about the consequences of
-future actions. Simply put, **world models answer the question: "What
-will happen if I take a certain action?"**
+future actions. Simply put, **world models answer the question: “What
+will happen if I take a certain action?”**
 
 While traditional reinforcement learning represents world models as
 state transition functions, language agents employ more flexible forms,
@@ -553,8 +532,8 @@ World Models serve several critical functions:
   current states and constraints (e.g., webpage structures, task
   requirements, conversation history).
 - **Forward Simulation:** Simulating potential future states resulting
-  from specific actions---similar to a "mental rehearsal" process (as in
-  WebDreamer's "dreaming" process).
+  from specific actions—similar to a “mental rehearsal” process (as in
+  WebDreamer’s “dreaming” process).
 - **Multi-step Planning Support:** Using world models as auxiliary
   modules to predict outcomes at each step of a plan sequence, thereby
   optimizing overall strategy.
@@ -562,7 +541,7 @@ World Models serve several critical functions:
 World models can be constructed through:
 
 - **Language-based Simulation:** Using language models to generate
-  predictive outcomes for actions---flexible but difficult to verify.
+  predictive outcomes for actions—flexible but difficult to verify.
 - **Tool-enhanced Modeling:** Combining external tools (crawlers, APIs,
   environment simulators) to build structured state information.
 - **Memory-augmented Modeling:** Incorporating long-term memory modules
@@ -575,37 +554,37 @@ accuracy and stability remain research bottlenecks.**
 ### Case Study: WebDreamer
 
 WebDreamer (Gu et al. (2025)) exemplifies the integration of planning
-and world model construction, emphasizing the "imagine first, then act"
+and world model construction, emphasizing the “imagine first, then act”
 philosophy.
 
-{{\< figure src="/images/Screenshot 2025-04-16 at 3.41.22 PM.png"
-title="Fig.14: Schematic illustration of different web agent strategies
-as a search problem, where each node represents a webpage."
-width="700px" class="align-center" \>}}
+{{\< figure src=“/images/Screenshot 2025-04-16 at 3.41.22 PM.png”
+title=“Fig.14: Schematic illustration of different web agent strategies
+as a search problem, where each node represents a webpage.”
+width=“700px” class=“align-center” \>}}
 
 Its primary workflow includes:
 
 - **Extracting Task Goals and Constraints:** Parsing user intent from
   natural language.
-- **Building an "Imagined" World Model:** Reasoning about future states
-  and possible paths based on language input (the "dreaming" process).
+- **Building an “Imagined” World Model:** Reasoning about future states
+  and possible paths based on language input (the “dreaming” process).
 - **Generating Executable Plans:** Developing feasible action steps
   using the world model and iteratively updating based on feedback.
 
-{{\< figure src="/images/Screenshot 2025-04-16 at 3.44.20 PM.png"
-title="Fig.15: Illustration of WEBDREAMER simulating outcomes for three
-candidate actions using GPT-4o: (1) Click"Office Products", (2) Click
-"Electronics", and (3) Type "Disk" into textbox." width="700px"
-class="align-center" \>}}
+{{\< figure src=“/images/Screenshot-2025-04-16-3.44.20-PM.png”
+title=“Fig.15: Illustration of WEBDREAMER simulating outcomes for three
+candidate actions using GPT-4o: (1) Click ‘Office Products’, (2) Click
+‘Electronics’, and (3) Type ‘Disk’ into textbox.” width=“700px”
+class=“align-center” \>}}
 
-WebDreamer's strength lies in its "imagination" process, giving agents
+WebDreamer’s strength lies in its “imagination” process, giving agents
 clearer global awareness of complex or multi-step tasks, enhancing plan
 generation capabilities and execution robustness.
 
-{{\< figure src="/images/Screenshot 2025-04-16 at 3.48.53 PM.png"
-title="Fig.16: Success rate (%) on VisualWebArena (Koh et al., 2024a),
+{{\< figure src=“/images/Screenshot-2025-04-16-3.48.53-PM.png”
+title=“Fig.16: Success rate (%) on VisualWebArena (Koh et al., 2024a),
 Online-Mind2Web (Xue et al., 2025), and Mind2Web-Live (Pan et al.,
-2024b)." width="700px" class="align-center" \>}}
+2024b).” width=“700px” class=“align-center” \>}}
 
 ### Key Takeaways on Planning
 
@@ -642,7 +621,7 @@ that show significant potential:
 
 1.  **Agentic Search and Deep Research**
 
-- Tools like Perplexity Pro and Google/OpenAI's deep research agents
+- Tools like Perplexity Pro and Google/OpenAI’s deep research agents
   show clear business potential
 - Enhanced information synthesis across multiple sources with factual
   grounding
@@ -660,71 +639,94 @@ that show significant potential:
 - Data analysis and pattern recognition
 - Cross-disciplinary knowledge synthesis
 
-## Reference {#reference .unnumbered}
+## Reference
 
-::::::::::::: {#refs .references .csl-bib-body .hanging-indent entry-spacing="0" line-spacing="2"}
-::: {#ref-ArtificialIntelligenceModern .csl-entry}
-*Artificial Intelligence: A Modern Approach, 4th US ed.* (n.d.).
-https://aima.cs.berkeley.edu/.
-:::
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 
-::: {#ref-guYourLLMSecretly2025 .csl-entry}
-Gu, Y., Zhang, K., Ning, Y., Zheng, B., Gou, B., Xue, T., Chang, C.,
-Srivastava, S., Xie, Y., Qi, P., Sun, H., & Su, Y. (2025). *Is Your LLM
-Secretly a World Model of the Internet? Model-Based Planning for Web
-Agents* (arXiv:2411.06559). arXiv.
-<https://doi.org/10.48550/arXiv.2411.06559>
-:::
+<div id="ref-ArtificialIntelligenceModern" class="csl-entry">
 
-::: {#ref-gutierrezHippoRAGNeurobiologicallyInspired2025a .csl-entry}
-Gutiérrez, B. J., Shu, Y., Gu, Y., Yasunaga, M., & Su, Y. (2025).
-*HippoRAG: Neurobiologically Inspired Long-Term Memory for Large
-Language Models* (arXiv:2405.14831). arXiv.
-<https://doi.org/10.48550/arXiv.2405.14831>
-:::
+“Artificial Intelligence: A Modern Approach, 4th US Ed.” n.d.
+https://aima.cs.berkeley.edu/. Accessed March 25, 2025.
 
-::: {#ref-kambhampatiLLMsCantPlan2024 .csl-entry}
-Kambhampati, S., Valmeekam, K., Guan, L., Verma, M., Stechly, K.,
-Bhambri, S., Saldyt, L., & Murthy, A. (2024). *LLMs Can't Plan, But Can
-Help Planning in LLM-Modulo Frameworks* (arXiv:2402.01817). arXiv.
-<https://doi.org/10.48550/arXiv.2402.01817>
-:::
+</div>
 
-::: {#ref-liuLLM+PEmpoweringLarge2023 .csl-entry}
-Liu, B., Jiang, Y., Zhang, X., Liu, Q., Zhang, S., Biswas, J., & Stone,
-P. (2023). *LLM+P: Empowering Large Language Models with Optimal
-Planning Proficiency* (arXiv:2304.11477). arXiv.
-<https://doi.org/10.48550/arXiv.2304.11477>
-:::
+<div id="ref-guYourLLMSecretly2025" class="csl-entry">
 
-::: {#ref-marksSearchMemoryEmergence2006 .csl-entry}
-Marks, A. R. (2006). In search of memory The emergence of a new science
-of mind. *Journal of Clinical Investigation*, *116*(5), 1131.
-<https://doi.org/10.1172/JCI28674>
-:::
+Gu, Yu, Kai Zhang, Yuting Ning, Boyuan Zheng, Boyu Gou, Tianci Xue,
+Cheng Chang, et al. 2025. “Is Your LLM Secretly a World Model of the
+Internet? Model-Based Planning for Web Agents.” arXiv.
+<https://doi.org/10.48550/arXiv.2411.06559>.
 
-::: {#ref-sExploringHippoRAGNeurobiologically2024 .csl-entry}
-S, S. (2024). Exploring HippoRAG: Neurobiologically Inspired Long-Term
-Memory for Large Language Models. In *Medium*.
+</div>
+
+<div id="ref-gutierrezHippoRAGNeurobiologicallyInspired2025a"
+class="csl-entry">
+
+Gutiérrez, Bernal Jiménez, Yiheng Shu, Yu Gu, Michihiro Yasunaga, and Yu
+Su. 2025. “HippoRAG: Neurobiologically Inspired Long-Term Memory for
+Large Language Models.” arXiv.
+<https://doi.org/10.48550/arXiv.2405.14831>.
+
+</div>
+
+<div id="ref-kambhampatiLLMsCantPlan2024" class="csl-entry">
+
+Kambhampati, Subbarao, Karthik Valmeekam, Lin Guan, Mudit Verma, Kaya
+Stechly, Siddhant Bhambri, Lucas Saldyt, and Anil Murthy. 2024. “LLMs
+Can’t Plan, But Can Help Planning in LLM-Modulo Frameworks.” arXiv.
+<https://doi.org/10.48550/arXiv.2402.01817>.
+
+</div>
+
+<div id="ref-liuLLM+PEmpoweringLarge2023" class="csl-entry">
+
+Liu, Bo, Yuqian Jiang, Xiaohan Zhang, Qiang Liu, Shiqi Zhang, Joydeep
+Biswas, and Peter Stone. 2023. “LLM+P: Empowering Large Language Models
+with Optimal Planning Proficiency.” arXiv.
+<https://doi.org/10.48550/arXiv.2304.11477>.
+
+</div>
+
+<div id="ref-marksSearchMemoryEmergence2006" class="csl-entry">
+
+Marks, Andrew R. 2006. “In Search of Memory The Emergence of a New
+Science of Mind.” *Journal of Clinical Investigation* 116 (5): 1131.
+<https://doi.org/10.1172/JCI28674>.
+
+</div>
+
+<div id="ref-sExploringHippoRAGNeurobiologically2024" class="csl-entry">
+
+S, SURUTHI. 2024. “Exploring HippoRAG: Neurobiologically Inspired
+Long-Term Memory for Large Language Models.” *Medium*.
 https://suruthi41.medium.com/exploring-hipporag-neurobiologically-inspired-long-term-memory-for-large-language-models-a43d65b35c01.
-:::
 
-::: {#ref-teylerHippocampalMemoryIndexing1986 .csl-entry}
-Teyler, T. J., & DiScenna, P. (1986). The hippocampal memory indexing
-theory. *Behavioral Neuroscience*, *100*(2), 147--154.
-<https://doi.org/10.1037//0735-7044.100.2.147>
-:::
+</div>
 
-::: {#ref-wangGrokkedTransformersAre2024 .csl-entry}
-Wang, B., Yue, X., Su, Y., & Sun, H. (2024). *Grokked Transformers are
-Implicit Reasoners: A Mechanistic Journey to the Edge of Generalization*
-(arXiv:2405.15071). arXiv. <https://doi.org/10.48550/arXiv.2405.15071>
-:::
+<div id="ref-teylerHippocampalMemoryIndexing1986" class="csl-entry">
 
-::: {#ref-xieAdaptiveChameleonStubborn2024a .csl-entry}
-Xie, J., Zhang, K., Chen, J., Lou, R., & Su, Y. (2024). *Adaptive
-Chameleon or Stubborn Sloth: Revealing the Behavior of Large Language
-Models in Knowledge Conflicts* (arXiv:2305.13300). arXiv.
-<https://doi.org/10.48550/arXiv.2305.13300>
-:::
-:::::::::::::
+Teyler, T. J., and P. DiScenna. 1986. “The Hippocampal Memory Indexing
+Theory.” *Behavioral Neuroscience* 100 (2): 147–54.
+<https://doi.org/10.1037//0735-7044.100.2.147>.
+
+</div>
+
+<div id="ref-wangGrokkedTransformersAre2024" class="csl-entry">
+
+Wang, Boshi, Xiang Yue, Yu Su, and Huan Sun. 2024. “Grokked Transformers
+Are Implicit Reasoners: A Mechanistic Journey to the Edge of
+Generalization.” arXiv. <https://doi.org/10.48550/arXiv.2405.15071>.
+
+</div>
+
+<div id="ref-xieAdaptiveChameleonStubborn2024a" class="csl-entry">
+
+Xie, Jian, Kai Zhang, Jiangjie Chen, Renze Lou, and Yu Su. 2024.
+“Adaptive Chameleon or Stubborn Sloth: Revealing the Behavior of Large
+Language Models in Knowledge Conflicts.” arXiv.
+<https://doi.org/10.48550/arXiv.2305.13300>.
+
+</div>
+
+</div>
