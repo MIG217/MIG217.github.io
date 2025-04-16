@@ -1,21 +1,14 @@
 ---
-author:
-- Mingrui Guo
-bibliography: /Users/mig217/mig217/content/My Library.bib
-categories:
-- AI
-csl: "https://www.zotero.org/styles/apa"
-date: 2025-03-30
-draft: false
+title: "Memory, Reasoning, and Planning of Language Agents"
+author: ["Mingrui Guo"]
+date: "2025-04-16"
+categories: ["AI"]
+tags: ["LLM Agents", "RAG", "World Models", "Reasoning", "EN"]
+draft: true
 ShowToc: true
-tags:
-- LLM Agents
-- RAG
-- World Models
-- Reasoning
-- EN
-title: Memory, Reasoning, and Planning of Language Agents
 TocOpen: false
+bibliography: /Users/mig217/mig217/content/My Library.bib
+csl: "https://www.zotero.org/styles/apa"
 ---
 
 Language Agents have emerged as one of the most exciting research
