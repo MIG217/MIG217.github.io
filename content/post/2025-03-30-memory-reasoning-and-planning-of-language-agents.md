@@ -357,9 +357,20 @@ WebDreamer's strength lies in its "imagination" process, giving agents clearer g
 As language agents continue to evolve, several critical research questions remain unsolved:
 
 1. **Memory and Continual Learning:**
+
+  How can language agents truly learn over time without catastrophic forgetting? The challenge involves creating systems that **remember past conversations, learn from mistakes, and continuously improve while developing personalized memory systems that respect user privacy**.
+
 2. **Reasoning in Uncertain Environments:**
+
+  Unlike environments with clear metrics, **language agents operate in fuzzy worlds filled with ambiguity**. The field is actively exploring how to implement reasoning frameworks where "correct" answers aren't clear-cut and how agents integrate observations with actions when information may be contradictory.
+
 3. **Planning and World Models:**
+
+Current planning capabilities remain primitive compared to their potential. Finding the balance between computationally intensive simulations and simple reactive approaches presents a fascinating optimization problem, alongside maintaining coherent planning over longer horizons where small errors compound.
+
 4. **Safety and Security:**
+
+The attack surface of web-enabled agents encompasses potentially the entire internet. Research must focus on mitigating both endogenous risks (agent incompetence) and exogenous threats (adversarial attacks) while developing monitoring systems that detect when an agent operates beyond its competence.
 
 ### Promising Applications
 
