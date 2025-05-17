@@ -2,6 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://mig217.github.io/</loc>
+    <lastmod>2025-05-17T12:26:51+08:00</lastmod>
+  </url><url>
+    <loc>https://mig217.github.io/post/</loc>
+    <lastmod>2025-05-17T12:26:51+08:00</lastmod>
+  </url><url>
     <loc>https://mig217.github.io/categories/ai/</loc>
     <lastmod>2025-04-16T00:00:00+00:00</lastmod>
   </url><url>
@@ -15,12 +21,6 @@
     <lastmod>2025-04-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</loc>
-    <lastmod>2025-04-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mig217.github.io/</loc>
-    <lastmod>2025-04-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mig217.github.io/post/</loc>
     <lastmod>2025-04-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://mig217.github.io/tags/rag/</loc>
