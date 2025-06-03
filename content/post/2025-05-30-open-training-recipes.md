@@ -4,7 +4,7 @@ author: ["Mingrui Guo"]
 date: "2025-05-30"
 categories: ["AI"]
 tags: ["LLM", "Post Training", "Pre-training", "EN"]
-draft: true
+draft: false
 ShowToc: true
 TocOpen: false
 ---
