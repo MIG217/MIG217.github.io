@@ -99,7 +99,7 @@ In model evaluation, the team systematically tested performance across multiple 
 
 {{< figure src="/images/Screenshot 2025-05-25 at 7.29.45 PM.png" width="700px" class="align-center"  title="Comparison of different instruction tuning datasets, showing that different instruction-tuning datasets can excel in different aspects, and mixtures perform best on average.">}}
 
-**Data Challenges and Solutions for Reasoning Capabilities**
+<span style="font-size:18px">Data Challenges and Solutions for Reasoning Capabilities</span>
 
 Compared to tasks that output single answers, reasoning problems are often more complex, requiring models to have multi-step thinking capabilities. Research shows that **CoT data is exetermly effective** for such tasks. However, high-quality CoT data often requires expert step-by-step annotation, which is expensive, inefficient, difficult to scale, and lacks diversity in style. 
 
@@ -121,21 +121,21 @@ After adding persona data, models significantly **improved on mathematical tasks
 To further improve quality, Tulu introduced a GPT-4 **self-consistency voting mechanism**, **retaining optimal solution paths** and filtering out nearly 40% of noisy samples. Ultimately, **retaining only 60% of the data still achieved higher accuracy**.
 
 
-**Other approaches to generate COT data**
+<span style="font-size:18px">Other approaches to generate COT data</span>
 
-1. Manual Human Annotation (e.g., GSM8K dataset): Annotators write step by step solutions
+1. **Manual Human Annotation** (e.g., GSM8K dataset): Annotators write step by step solutions
   - High-quality reasoning traces
   - Limited scale (only 7K)
   - Lack of diversity in reasoning styles
-2. Program-Aided Language Models (PAL): Convert math problems into Python code execution traces
+2. **Program-Aided Language Models (PAL)**: Convert math problems into Python code execution traces
   - Guarantee correctness through execution
   - Less natural language reasoning, less intuitive
   - Limited to problems that can be coded
-3. Self-generated COT (self-ask): using LLMs to generate their reasoning paths
+3. **Self-generated COT (self-ask): using LLMs to generate their reasoning paths**
   - Scalable to many problems
   - Quality highly dependent on base model
 
-**Capability-driven Data Mixing**
+<span style="font-size:18px">Capability-driven Data Mixing</span>
 
 1. Data mixing for SFT
   - Training on real user interactions with strong models is helpful almost across the board.

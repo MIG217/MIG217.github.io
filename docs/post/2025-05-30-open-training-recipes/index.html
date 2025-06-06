@@ -346,7 +346,7 @@ We still need to delve deeper into how language models work, improve their capab
         </figcaption>
 </figure>
 
-<p><strong>Data Challenges and Solutions for Reasoning Capabilities</strong></p>
+<p><span style="font-size:18px">Data Challenges and Solutions for Reasoning Capabilities</span></p>
 <p>Compared to tasks that output single answers, reasoning problems are often more complex, requiring models to have multi-step thinking capabilities. Research shows that <strong>CoT data is exetermly effective</strong> for such tasks. However, high-quality CoT data often requires expert step-by-step annotation, which is expensive, inefficient, difficult to scale, and lacks diversity in style.</p>
 <p>To address these challenges, the Tulu team proposed a &ldquo;Persona-Driven data generation&rdquo; method based on the paper &ldquo;Scaling Synthetic Data Creation with 1,000,000,000 Personas&rdquo;(@geScalingSyntheticData2025):</p>
 <ul>
@@ -367,9 +367,9 @@ We still need to delve deeper into how language models work, improve their capab
 <p>Experimental results show:</p>
 <p>After adding persona data, models significantly <strong>improved on mathematical tasks, especially on complex problems</strong>. Improvement on simple problems like <strong>GSM8K was relatively limited</strong>.</p>
 <p>To further improve quality, Tulu introduced a GPT-4 <strong>self-consistency voting mechanism</strong>, <strong>retaining optimal solution paths</strong> and filtering out nearly 40% of noisy samples. Ultimately, <strong>retaining only 60% of the data still achieved higher accuracy</strong>.</p>
-<p><strong>Other approaches to generate COT data</strong></p>
+<p><span style="font-size:18px">Other approaches to generate COT data</span></p>
 <ol>
-<li>Manual Human Annotation (e.g., GSM8K dataset): Annotators write step by step solutions</li>
+<li><strong>Manual Human Annotation</strong> (e.g., GSM8K dataset): Annotators write step by step solutions</li>
 </ol>
 <ul>
 <li>High-quality reasoning traces</li>
@@ -377,7 +377,7 @@ We still need to delve deeper into how language models work, improve their capab
 <li>Lack of diversity in reasoning styles</li>
 </ul>
 <ol start="2">
-<li>Program-Aided Language Models (PAL): Convert math problems into Python code execution traces</li>
+<li><strong>Program-Aided Language Models (PAL)</strong>: Convert math problems into Python code execution traces</li>
 </ol>
 <ul>
 <li>Guarantee correctness through execution</li>
@@ -385,13 +385,13 @@ We still need to delve deeper into how language models work, improve their capab
 <li>Limited to problems that can be coded</li>
 </ul>
 <ol start="3">
-<li>Self-generated COT (self-ask): using LLMs to generate their reasoning paths</li>
+<li><strong>Self-generated COT (self-ask): using LLMs to generate their reasoning paths</strong></li>
 </ol>
 <ul>
 <li>Scalable to many problems</li>
 <li>Quality highly dependent on base model</li>
 </ul>
-<p><strong>Capability-driven Data Mixing</strong></p>
+<p><span style="font-size:18px">Capability-driven Data Mixing</span></p>
 <ol>
 <li>Data mixing for SFT</li>
 </ol>
