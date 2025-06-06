@@ -99,7 +99,7 @@ In model evaluation, the team systematically tested performance across multiple 
 
 {{< figure src="/images/Screenshot 2025-05-25 at 7.29.45 PM.png" width="700px" class="align-center"  title="Comparison of different instruction tuning datasets, showing that different instruction-tuning datasets can excel in different aspects, and mixtures perform best on average.">}}
 
-<span style="font-size:18px">Data Challenges and Solutions for Reasoning Capabilities</span>
+<span style="font-size:18px"><strong>Data Challenges and Solutions for Reasoning Capabilities</strong></span>
 
 Compared to tasks that output single answers, reasoning problems are often more complex, requiring models to have multi-step thinking capabilities. Research shows that **CoT data is exetermly effective** for such tasks. However, high-quality CoT data often requires expert step-by-step annotation, which is expensive, inefficient, difficult to scale, and lacks diversity in style. 
 
@@ -121,7 +121,7 @@ After adding persona data, models significantly **improved on mathematical tasks
 To further improve quality, Tulu introduced a GPT-4 **self-consistency voting mechanism**, **retaining optimal solution paths** and filtering out nearly 40% of noisy samples. Ultimately, **retaining only 60% of the data still achieved higher accuracy**.
 
 
-<span style="font-size:18px">Other approaches to generate COT data</span>
+<span style="font-size:18px"><strong>Other approaches to generate COT data</strong></span>
 
 1. **Manual Human Annotation** (e.g., GSM8K dataset): Annotators write step by step solutions
   - High-quality reasoning traces
@@ -135,7 +135,7 @@ To further improve quality, Tulu introduced a GPT-4 **self-consistency voting me
   - Scalable to many problems
   - Quality highly dependent on base model
 
-<span style="font-size:18px">Capability-driven Data Mixing</span>
+<span style="font-size:18px"><strong>Capability-driven Data Mixing</strong></span>
 
 1. Data mixing for SFT
   - Training on real user interactions with strong models is helpful almost across the board.

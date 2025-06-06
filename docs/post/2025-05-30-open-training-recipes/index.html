@@ -346,7 +346,7 @@ We still need to delve deeper into how language models work, improve their capab
         </figcaption>
 </figure>
 
-<p><span style="font-size:18px">Data Challenges and Solutions for Reasoning Capabilities</span></p>
+<p><span style="font-size:18px"><strong>Data Challenges and Solutions for Reasoning Capabilities</strong></span></p>
 <p>Compared to tasks that output single answers, reasoning problems are often more complex, requiring models to have multi-step thinking capabilities. Research shows that <strong>CoT data is exetermly effective</strong> for such tasks. However, high-quality CoT data often requires expert step-by-step annotation, which is expensive, inefficient, difficult to scale, and lacks diversity in style.</p>
 <p>To address these challenges, the Tulu team proposed a &ldquo;Persona-Driven data generation&rdquo; method based on the paper &ldquo;Scaling Synthetic Data Creation with 1,000,000,000 Personas&rdquo;(@geScalingSyntheticData2025):</p>
 <ul>
@@ -367,7 +367,7 @@ We still need to delve deeper into how language models work, improve their capab
 <p>Experimental results show:</p>
 <p>After adding persona data, models significantly <strong>improved on mathematical tasks, especially on complex problems</strong>. Improvement on simple problems like <strong>GSM8K was relatively limited</strong>.</p>
 <p>To further improve quality, Tulu introduced a GPT-4 <strong>self-consistency voting mechanism</strong>, <strong>retaining optimal solution paths</strong> and filtering out nearly 40% of noisy samples. Ultimately, <strong>retaining only 60% of the data still achieved higher accuracy</strong>.</p>
-<p><span style="font-size:18px">Other approaches to generate COT data</span></p>
+<p><span style="font-size:18px"><strong>Other approaches to generate COT data</strong></span></p>
 <ol>
 <li><strong>Manual Human Annotation</strong> (e.g., GSM8K dataset): Annotators write step by step solutions</li>
 </ol>
@@ -391,7 +391,7 @@ We still need to delve deeper into how language models work, improve their capab
 <li>Scalable to many problems</li>
 <li>Quality highly dependent on base model</li>
 </ul>
-<p><span style="font-size:18px">Capability-driven Data Mixing</span></p>
+<p><span style="font-size:18px"><strong>Capability-driven Data Mixing</strong></span></p>
 <ol>
 <li>Data mixing for SFT</li>
 </ol>
