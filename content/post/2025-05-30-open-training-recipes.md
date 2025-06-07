@@ -280,7 +280,7 @@ These trends suggest that for more complex tasks-like rasoning and instruction f
 
 Trained on human preference data with neural reward model, these models assign scalar scores to responses (e.g., 10.5), indicating how "good" each responses is. However, these scores are often **difficult to interpret, and may not align well with actual task objectives**.
 
-Consider a simple example:
+*Consider a simple example:*
 
 ```
 Prompt: "What is 2 + 2?"
@@ -294,11 +294,43 @@ This insight led the team to propose a simpler, more transparent solution: **for
 
 <span style="font-size:18px"><strong>RLVR Recipe and Analyses</strong></span>
 
+The idea of replacing human preference signals with verifiable rewards is not unique. Earlier this year, the DeepSeek-V3 model adopted a similar philosophy, highlighting the growing momentum and promise of this direction.
+
+**Experimental Setup**
+
+1. **Starting point:** Begain with the Tulu 3 model that had already been optimized via DPO
+2. **Environment:** Using targeted datasets paired with automatic verifiers to evaluate model outputs
+3. **Algorithm:** Returned to classical RL, specifically leveraging the DPO
+4. **Datasets:** Focused on three datasets where answer can be objectively verified: **GSM8K, MATH, and IFEval**.
+
+Some verification tasks, like math reasoning, are straightforward: simply check if the predicted answer matches the correct one (e.g., if prediction == answer ->1, else -> 0). Others, such as constraint satisfication in instruction following, are more nuanced. These required checking which constraints are met and computing an overall satisfication rate. Nonetheless, the underlying principle remains similar.
+
+**Results and Observations**
+
+- **GSM8K:** Consistent **improvements were observed in both stages**, with the most significant gains achieved when RLVR was applied after DPO. Notably, there was no sign of overfitting. 
+
+- **MATH:** A slight dip in performance was seen when starting from DPO, but this quickly rebounded with continued training.
+
+- **IFEval:** Strong improvements emerged when starting the SFT checkpoint. However, gains from the DPO starting point were smaller-likely due to limited training data, according to the team's analysis. 
 
 
+<span style="font-size:18px"><strong>Scaling Up: From 7B to 405B</strong></span>
 
+The Tulu team scaled this "three-stage" RLVR recipe (SFT -> DPO -> RLVR) across model sizes from 7B to 70B, and all the way up to 405B. The results were compelling:
 
+- On various benchmarks, the final **405B model achieved performance on par with GPT-4o and surpassed DeepSeek V3**.
 
+{{< figure src="/images/Screenshot 2025-06-07 at 6.40.16 PM.png" width="700px" class="align-center"  title="Summary of Tülu 3 results relative to peer 405B models.">}}
+
+- The **8B and 70B** versions of Tulu 3 significantly **outperformed other open-source models of similar scale**, such as **Qwen-Instruct** and **LLaMA-3-Instruct**. In fact, these models reached performance levels comparable to small proprietary models like **GPT-4o-mini and Claude 3 Haiku**.
+
+{{< figure src="/images/Screenshot 2025-06-07 at 6.43.39 PM.png" width="700px" class="align-center"  title="Overview of results on Tülu 3 Eval suite, over both 8B and 70B models.">}}
+
+On particularly interesting insight: **RLVR delivers greater gains at scale**. This aligns with the team's hypothesis that larger, stronger base models are better positioned to benefit from reinforcement via verifiable rewards.
+
+Next, we briefly explore a current frontier in model performance enhancement: Test-Time Inference.
+
+## Test-Time Inference
 
 
 
