@@ -150,11 +150,78 @@ SFT mixtures show strong performance, achieving a higher average score than othe
 
 {{< figure src="/images/Screenshot 2025-05-25 at 8.05.04 PM.png" width="700px" class="align-center"  title="Summary of the performance of our Tülu 3 SFT models against comparable baselines.">}}
 
-### Step 2: Preference tuning
+### Step 2: Preference Tuning
+
+After supervised fine-tuning, we move to **preference tuning** to **align the model with human preferences**.
+
+The key idea is: instead of training on "correct" answers, we **train on preference comparisons**. For example:
+
+Input: "Write a haiku about AI"
+
+Output 1: "Sure, here's a haiku: ..." 👍
+
+Output 2: "Sorry, I cannot help you with that." 👎
+
+In this case, human annotators (or even AI models in the case of RLAIF-Reinforcement Learning with AI Feedback) choose the better response. This feedback creates strong training signals that improve the **style, helpfulness, and conversational quality** of responses.
+
+While preference tuning continues to enhance skills developed in SFT, its biggest gains are in areas like tone, clarity, and user alignment - **not necessarily raw task performance like math.**
+
+Since we can't use standard supervised learning on preference comparisons, we need specialized algorithms like **RLHF (Reinforcement Learning with Human Feedback)**.
+
+<span style="font-size:18px"><strong>RLHF</strong></span>
+
+RLHF (@christianoDeepReinforcementLearning2023) uses a reinforcement learning framework to incorporate preference data. In this framework:
+
+- **Policy:** the language model responsible for generating the next token
+- **State:** the user's input prompt
+- **Action:** the model generated response
+- **Environment:** a reward model trained on preference data, which determines which responses is better
+
+The **reward model is specially trained neural network** that takes a prompt and multiple candidate responses as input, and outputs a preference score. This score guides the model to learn to produce responses more aligned with human preferences.
 
 
+{{< figure src="/images/rlhf.png" width="700px" class="align-center"  title="Source: [HuggingFace](https://huggingface.co/blog/rlhf)">}}
+
+To optimize this process, algorithms like **PPO (Proximal Policy Optimization)** are commonly used. In newer approaches, **DPO (Direct Preference Optimization)** is also gaining popularity. Let’s take a closer look at how these methods work.
 
 
+<span style="font-size:18px"><strong>Unpacking DPO vs. PPO</strong></span>
+
+The core challenge of preference tuning lies in balancing two goals:
+
+1. **Maximizing rewards:** training the mdoel to produce outputs aligned with human preferences
+2. **Staying close to the base model:** avoiding drastic shifts that could degrade core capabilities
+
+**PPO：Proximal Policy Optimization**
+
+PPO(@schulmanProximalPolicyOptimization2017) follows the traditional reinforcement learning approach, in two steps:
+
+1. **Train a reward model** using human preference data (e.g., A is better than B). This model learns to assign scores based on human feedback.
+2. **Optimize the policy model** (i.e., the language model) using RL to generate outputs that maximize the learned reward.
+
+PPO delivers **strong performance** but is **complex to implement, costly to train, and requires maintaining both a policy and a reward model**.
+
+
+**DPO: Direct Preference Optimization**
+
+DPO (@rafailovDirectPreferenceOptimization2024a), proposed more recently, simplifies this process. Instead of training a separate reward model, it treats preference data as a **ranking problem** (e.g., A > B) and directly updates the policy model using a derived objective.
+
+DPO is **simplier to implement, more efficient to train** and has inspired variants like SimPO(@mengSimPOSimplePreference2024) and length-normalized DPO(@IterativeLengthRegularizedDirect) for greater flexibility.
+
+
+**The figure below summarizes finding from a recent study on preference tuning in the Tulu system(@ivisonUnpackingDPOPPO2024a)
+
+{{< figure src="/images/Screenshot 2025-06-07 at 10.33.38 AM.png" width="700px" class="align-center"  title="Performance improvements resulted by changing different components in the preference training of TÜLU.(@ivisonUnpackingDPOPPO2024a)">}}
+
+**Key insights:**
+
+- **Data quality** is the single most important factor: upgrading data let to a 56% -> 61% performance jump
+
+- **PPO consistently outperforms DPO**, but DPO's simplicity makes it attractive for real-world deployment 
+
+- **Large reward models** offer diminishing returins
+
+- **Domain-specific prompting** has a strong effect: to boost performance in areas like code, math, or creative writing, use targeted prompts and preference data from that domain.
 
 
 
