@@ -266,6 +266,33 @@ The experiments revealed several critical insights:
 
 With SFT and preference optimization complete, the team introduced a third novel step: **Reinforcement Learning with Verifiable Rewards**, which will be discussed in the next section.
 
+### Reinforcement Learning with Verifiable Rewards
+
+After completing preference tuning with methods like DPO, the Tulu team further examined how model performance evolved with increased training steps across different tasks:
+
+- AlpacaEval: Performance quickly plateaued, showing limited further gains.
+- IFEval: Accuracy in following complex instructions began to decline as training continued.
+- GSM8K (Reasoning): Initially improved, but quickly overfit and degraded.
+
+These trends suggest that for more complex tasks-like rasoning and instruction following-**over optimization becomes a real concern, leading to performance drop-offs rather than improvements**.
+
+**Rethinking the Reward Model**
+
+Trained on human preference data with neural reward model, these models assign scalar scores to responses (e.g., 10.5), indicating how "good" each responses is. However, these scores are often **difficult to interpret, and may not align well with actual task objectives**.
+
+Consider a simple example:
+
+```
+Prompt: "What is 2 + 2?"
+
+Expected Answer: "4"
+```
+
+A neural reward model might return scores like 1.0, 5.5, or 1000-offering little insight into correctness. For tasks with objectively verifiable outcomes, such scoring can be misleading.
+
+This insight led the team to propose a simpler, more transparent solution: **for tasks with verifiable outcomes-such as math and programming**-it's more effective to replace neural reward models with **rule-based reward functions**. Thses are **easier to interpret, more aligned with task objectives, and offer a clearer signal for optimization**.
+
+<span style="font-size:18px"><strong>RLVR Recipe and Analyses</strong></span>
 
 
 

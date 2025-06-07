@@ -385,6 +385,19 @@
   file = {/Users/mig217/Zotero/storage/FQA5KD72/Hao et al. - 2024 - Training Large Language Models to Reason in a Continuous Latent Space.pdf;/Users/mig217/Zotero/storage/YRHC2Q7V/2412.html}
 }
 
+@misc{hoskingHumanFeedbackNot2023,
+  title = {Human {{Feedback}} Is Not {{Gold Standard}}},
+  author = {Hosking, Tom and Blunsom, Phil and Bartolo, Max},
+  year = {2023},
+  month = sep,
+  journal = {arXiv.org},
+  urldate = {2025-06-07},
+  abstract = {Human feedback has become the de facto standard for evaluating the performance of Large Language Models, and is increasingly being used as a training objective. However, it is not clear which properties of a generated output this single `preference' score captures. We hypothesise that preference scores are subjective and open to undesirable biases. We critically analyse the use of human feedback for both training and evaluation, to verify whether it fully captures a range of crucial error criteria. We find that while preference scores have fairly good coverage, they under-represent important aspects like factuality. We further hypothesise that both preference scores and error annotation may be affected by confounders, and leverage instruction-tuned models to generate outputs that vary along two possible confounding dimensions: assertiveness and complexity. We find that the assertiveness of an output skews the perceived rate of factuality errors, indicating that human annotations are not a fully reliable evaluation metric or training objective. Finally, we offer preliminary evidence that using human feedback as a training objective disproportionately increases the assertiveness of model outputs. We encourage future work to carefully consider whether preference scores are well aligned with the desired objective.},
+  howpublished = {https://arxiv.org/abs/2309.16349v2},
+  langid = {english},
+  file = {/Users/mig217/Zotero/storage/MKFYJES8/Hosking et al. - 2023 - Human Feedback is not Gold Standard.pdf}
+}
+
 @misc{hrefBuildingScalableExplainable2021,
   title = {Building {{Scalable}}, {{Explainable}}, and {{Adaptive NLP Models}} with {{Retrieval}}},
   author = {{href=}},
@@ -1088,6 +1101,20 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Computation and Language,Computer Science - Machine Learning},
   file = {/Users/mig217/Zotero/storage/2YBLKCLE/Shinn et al. - 2023 - Reflexion Language Agents with Verbal Reinforcement Learning.pdf;/Users/mig217/Zotero/storage/76YS4C4G/2303.html}
+}
+
+@misc{singhalLongWayGo2023,
+  title = {A {{Long Way}} to {{Go}}: {{Investigating Length Correlations}} in {{RLHF}}},
+  shorttitle = {A {{Long Way}} to {{Go}}},
+  author = {Singhal, Prasann and Goyal, Tanya and Xu, Jiacheng and Durrett, Greg},
+  year = {2023},
+  month = oct,
+  journal = {arXiv.org},
+  urldate = {2025-06-07},
+  abstract = {Great success has been reported using Reinforcement Learning from Human Feedback (RLHF) to align large language models, with open preference datasets enabling wider experimentation, particularly for "helpfulness" in tasks like dialogue and web question answering. Alongside these improvements, however, RLHF also often drives models to produce longer outputs. This paper demonstrates, on three diverse settings, that optimizing for response length is, much more than previously thought, a significant factor behind RLHF. Studying the strategies RL optimization uses to maximize reward, we find improvements in reward to largely be driven by increasing response length, instead of other features. Indeed, we find that even a purely length-based reward reproduces most downstream RLHF improvements over supervised fine-tuned models. Testing a comprehensive set of length-countering interventions, we identify the dominant source of these biases to be reward models, which, by studying training dynamics, we find are non-robust and easily influenced by length biases in preference data.},
+  howpublished = {https://arxiv.org/abs/2310.03716v2},
+  langid = {english},
+  file = {/Users/mig217/Zotero/storage/LSFINZJ7/Singhal et al. - 2023 - A Long Way to Go Investigating Length Correlations in RLHF.pdf}
 }
 
 @misc{sumersCognitiveArchitecturesLanguage2023,
