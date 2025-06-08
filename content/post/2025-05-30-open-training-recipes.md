@@ -266,7 +266,7 @@ The experiments revealed several critical insights:
 
 With SFT and preference optimization complete, the team introduced a third novel step: **Reinforcement Learning with Verifiable Rewards**, which will be discussed in the next section.
 
-### Reinforcement Learning with Verifiable Rewards
+### Step 3: Reinforcement Learning with Verifiable Rewards
 
 After completing preference tuning with methods like DPO, the Tulu team further examined how model performance evolved with increased training steps across different tasks:
 
@@ -328,9 +328,69 @@ The Tulu team scaled this "three-stage" RLVR recipe (SFT -> DPO -> RLVR) across 
 
 On particularly interesting insight: **RLVR delivers greater gains at scale**. This aligns with the team's hypothesis that larger, stronger base models are better positioned to benefit from reinforcement via verifiable rewards.
 
-Next, we briefly explore a current frontier in model performance enhancement: Test-Time Inference.
 
 ## Test-Time Inference
 
+A significant area of current research focuses on enhancing model performance during the inference phase, particularly by improving reasoning capabilities at test time.
 
+### A Minimal Recipe for Reasoning & Test-Time Scaling
+
+We begin by introducing the paper: **s1: Simple test-time scaling** (@muennighoffS1SimpleTesttime2025), which presents a minimalist yet powerful approach to improving model reasoning through test-time scaling.
+
+Similar to other advancement in the language model domain, this method's core lies in a meticulously curated dataset, named s1K. This dataset is then paired with a straightforward test-time scaling algorithm to produce the final s1 model.
+
+<span style="font-size:18px"><strong>Data Curation</strong></span>
+
+This s1K dataset was constructed by filtering a large collection of advanced reasoning problems, including **mathematics, logic puzzles, and probability questions**. The complexity of this data significantly that of previous datasets like Tulu 3 (which primarily contains elementary to high school-level math), **focusing instead on highly challenging problems**, such as those found in Olympaid-level math competitions.
+
+The data curation process involved several key steps:
+
+- **Initial collection:** 59k problems spanning logic puzzles, mathematics, and other domains.
+- **Quality filtering:** reduced to 52k
+- **Difficulty filtering:** reduced further to 24k
+- **Diversity optimization:** final selection of 1k unique and challenging questions
+
+Interestingly, benchmark evaluations revealed that performance using curated 1k dataset was nearly identical to its performance using the full 59k dataset.
+
+**Distill Reasoning Traces & Answers**
+
+Once the problems were selected, they were annotated with detailed reasoning traces and answers. For instance, given the following problem:
+
+```
+An often-repeated fun fact is that humans produce more power per unit volume than stars. If the sun were the same size, but it produced the same amount of power per unit volume as a human, what would its surface temperature be?...
+```
+
+The researchers initially used Google's Gemini model to generate CoT annotations. These annotations intentionally included "thinking" tokens (e.g., "that happens, but let me think more") to capture the reasoning process. 
+
+In the latest version of s1, these annotations were replaced with results from DeepSeek R1, whcih unexpectedly led to a significant improvement in the final performance.
+
+The resulting dataset spans a wide range of domains, from geometry and number theory to control theory and astronomy.
+
+{{< figure src="/images/Screenshot 2025-06-08 at 11.59.30 AM.png" width="700px" class="align-center"  title="s1K and s1-32B. (left) s1K is a dataset of 1,000 high-quality, diverse, and difficult questions with reasoning traces. (right) s1-32B, a 32B parameter model finetuned on s1K is on the sample-efficiency frontier.">}}
+
+<span style="font-size:18px"><strong>Test-Time Scaling with Budget Forcing</strong></span>
+
+Researchers employed a surprisingly simple yet highly effective method called **budget forcing**.
+
+The mechanism is straightforward: when the model generates a response to a prompt (e.g., "How many r's are in the raspberry?"), its output length is checked against a predefined token budget. If the output is shorter than the budget, a special `wait` token is appended to the sequence, prompting the model to continue generating. The `wait` tokens acts as a hint, effectively telling the model, "We are not sure your answer is complete; please continue thinking."
+
+{{< figure src="/images/Screenshot 2025-06-08 at 12.01.40 PM.png" width="500px" class="align-center"  title="Budget forcing with s1-32B.">}}
+
+<span style="font-size:18px"><strong>Training and Results</strong></span>
+
+A Qwen 32B model was fine-tuned on the s1K data. The results demonstrate a clear scaling trend:
+
+- **MATH500 Dataset:** As the allocated token budget was increased from 512 to 2048, the **model's accuracy consistently improved, demonstrating a clear scaling law**.
+
+- **AIME24 & GPQA Datasets:** On these more **challenging datasets**, the model was prompted to generated even longer responses (exceeding 8,000 tokens). Again, **performance scaled positively with the number of generated tokens**.
+
+{{< figure src="/images/Screenshot 2025-06-08 at 10.21.55 AM.png" width="500px" class="align-center"  title="Test-time scaling with s1-32B.">}}
+
+Researchers compared different test-time scaling methods. Budget forcing, a form of sequential scaling, **produced a steeper performance curve and proved more effective than parallel scaling methods**. Parallel approaches, such as generating multiple reasoning paths and using majority voting or self-consistency checks, showed some gains but were less significant.
+
+{{< figure src="/images/Screenshot 2025-06-08 at 12.04.10 PM.png" width="700px" class="align-center"  title="Sequential and parallel test-time scaling.">}}
+
+Ablation studies further validated these findings. The performance different between the 1k s1K dataset and the full 59k dataset was minimal. However, using a randomly selected 1k sample resulted in significantly worse performance, **underscoring the critical importance of high-quality, curated data.**
+
+{{< figure src="/images/Screenshot 2025-06-08 at 12.05.47 PM.png" width="500px" class="align-center"  title="s1K data ablations.">}}
 
