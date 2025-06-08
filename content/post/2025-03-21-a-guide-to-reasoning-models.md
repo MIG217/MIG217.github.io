@@ -3,7 +3,7 @@ title: "A Guide to Reasoning Models"
 author: ["Mingrui Guo"]
 date: "2025-03-21"
 categories: ["AI"]
-tags: ["Reasoning Models", "EN"]
+tags: ["Reasoning Models"]
 draft: true
 ShowToc: true
 TocOpen: false

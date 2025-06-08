@@ -3,7 +3,7 @@ title: "LLM Agents: Brief History and Overview"
 author: ["Mingrui Guo"]
 date: "2025-03-14"
 categories: ["AI"]
-tags: ["LLM Agents", "EN"]
+tags: ["LLM Agents"]
 draft: false
 ShowToc: true
 TocOpen: false

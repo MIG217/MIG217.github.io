@@ -3,7 +3,7 @@ title: " Open Training Recipes for Reasoning in Language Models"
 author: ["Mingrui Guo"]
 date: "2025-05-30"
 categories: ["AI"]
-tags: ["LLM", "Post Training", "Pre-training", "EN"]
+tags: ["LLM", "Post Training", "Pre-training", "Open Traning Recipe"]
 draft: false
 ShowToc: true
 TocOpen: false
