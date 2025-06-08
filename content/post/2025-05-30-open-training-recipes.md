@@ -400,7 +400,7 @@ The Self-RAG framework (@asaiSelfRAGLearningRetrieve2023) introduces an innovati
 
 This process establishes a feedback loop. During generation, the model periodically inserts **critic tokens** to evaluate whether its response is sound and if the retrieved documents are relevant. This mechanism allows the model to **dynamically optimize its answers during inference, enabling more powerful test-time scaling**.
 
-{{< figure src="/images/Screenshot 2025-06-08 at 1.56.22 PM.png" width="700px" class="align-center"  title="s1K data ablations.">}}
+{{< figure src="/images/Screenshot 2025-06-08 at 1.56.22 PM.png" width="700px" class="align-center"  title="Overview of SELF-RAG.">}}
 
 Further research shows this self-improvement loop is especially effective for tasks requiring substantial reasoning, such as synthesizing scientific literature and answering complex scientific question (@asaiOpenScholarSynthesizingScientific2024).
 
