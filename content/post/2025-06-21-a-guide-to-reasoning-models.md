@@ -13,6 +13,8 @@ math: true
 <p style="color: #1E90FF;">
   The following insights are drawn from the <em>Reasoning with o1</em> video course by <a href="https://learn.deeplearning.ai/courses/reasoning-with-o1/lesson/h8dkv/introduction" style="color: #1E90FF; text-decoration: underline;">DeepLearning.ai</a>.
 </p>
+<br>
+<br>
 
 This article explores how to effectively prompt and utilize the new generation of reasoning models. Models released over the past year have demonstrated remarkable progress in reasoning and planning tasks. OpenAI has deeply optimized Chain of Thought (CoT) processing, using reinforcement learning to fine-tune models so they automatically integrate step-by-step reasoning into their response process. 
 
@@ -68,7 +70,7 @@ The performance leap of reasoning model is primarily attributed to two key break
 
 Research has found that in the model's post-training phase, the more reinforcement learning conducted, the higher the model's accuracy. But more surprisingly, **allowing models to "think longer" during inference significanly improves result quality**. By giving models more thinking time, even with the same model parameters and training data, superior performance can be achieved.
 
-{{< figure src="/images/02-reasoning_tokens.png" width="700px" class="align-center" title="图片来源: [OpenAI](https://openai.com/index/learning-to-reason-with-llms/)" >}}
+{{< figure src="/images/02-reasoning_tokens.png" width="700px" class="align-center" title="Image source: [OpenAI](https://openai.com/index/learning-to-reason-with-llms/)" >}}
 
 **2. Consensus Voting**
 
@@ -143,18 +145,18 @@ For example: Suppose you need a function that outputs SMILES IDs for all molecul
 
 **Good Prompt**
 
-```
-Generate a function that outputs the SMILES IDs for all the molecules involved in insulin.
+```Python
+"Generate a function that outputs the SMILES IDs for all the molecules involved in insulin."
 ```
 
 **Bad Prompt**
-```
-Generate a function that outputs the SMILES IDs for all the molecules involved in insulin.
-Think through this step by step, and don't skip any steps:
-- Identify all the molecules involve in insulin
-- Make the function
-- Loop through each molecule, outputting each into the function and returning a SMILES ID
-Molecules:
+```Python
+"Generate a function that outputs the SMILES IDs for all the molecules involved in insulin."
+"Think through this step by step, and don't skip any steps:"
+"- Identify all the molecules involve in insulin"
+"- Make the function"
+"- Loop through each molecule, outputting each into the function and returning a SMILES ID"
+"Molecules:"
 ```
 
 ### 3. Use Structured Prompts
@@ -163,7 +165,7 @@ When your prompt content becomes complex, **use separators (like Markdown, XML t
 
 Example: Customer service assistant scenario
 
-```
+```Python
    "<instructions>You are a customer service assistant for AnyCorp, a provider"
    "of fine storage solutions. Your role is to follow your policy to answer the user's question. "
    "Be kind and respectful at all times.</instructions>\n"
@@ -205,7 +207,7 @@ Instead of explaining your requirements through lengthy text descriptions, **pro
 
 Here's and example: We still use `<prompt>` and `<policy>` to define roles and rules, but we add an `<example>` tag that directly provides a sample question-answer pair to help the model understand the expected response format and citation style. 
 
-```
+```Python
 "<prompt>You are a lawyer specializing in competition law, "
 "assisting business owners with their questions.</prompt>\n"
 "<policy>As a legal professional, provide clear and accurate "
