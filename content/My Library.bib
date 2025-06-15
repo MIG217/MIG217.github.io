@@ -121,6 +121,24 @@
   file = {/Users/mig217/Zotero/storage/M6XVFZ78/Brown et al. - 2020 - Language Models are Few-Shot Learners.pdf;/Users/mig217/Zotero/storage/XCGL9ED5/2005.html}
 }
 
+@misc{brownLargeLanguageMonkeys2024,
+  title = {Large {{Language Monkeys}}: {{Scaling Inference Compute}} with {{Repeated Sampling}}},
+  shorttitle = {Large {{Language Monkeys}}},
+  author = {Brown, Bradley and Juravsky, Jordan and Ehrlich, Ryan and Clark, Ronald and Le, Quoc V. and R{\'e}, Christopher and Mirhoseini, Azalia},
+  year = {2024},
+  month = dec,
+  number = {arXiv:2407.21787},
+  eprint = {2407.21787},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2407.21787},
+  urldate = {2025-06-14},
+  abstract = {Scaling the amount of compute used to train language models has dramatically improved their capabilities. However, when it comes to inference, we often limit models to making only one attempt at a problem. Here, we explore inference compute as another axis for scaling, using the simple technique of repeatedly sampling candidate solutions from a model. Across multiple tasks and models, we observe that coverage -- the fraction of problems that are solved by any generated sample -- scales with the number of samples over four orders of magnitude. Interestingly, the relationship between coverage and the number of samples is often log-linear and can be modelled with an exponentiated power law, suggesting the existence of inference-time scaling laws. In domains like coding and formal proofs, where answers can be automatically verified, these increases in coverage directly translate into improved performance. When we apply repeated sampling to SWE-bench Lite, the fraction of issues solved with DeepSeek-Coder-V2-Instruct increases from 15.9\% with one sample to 56\% with 250 samples, outperforming the single-sample state-of-the-art of 43\%. In domains without automatic verifiers, we find that common methods for picking from a sample collection (majority voting and reward models) plateau beyond several hundred samples and fail to fully scale with the sample budget.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
+  file = {/Users/mig217/Zotero/storage/BVXYA3K9/Brown et al. - 2024 - Large Language Monkeys Scaling Inference Compute with Repeated Sampling.pdf;/Users/mig217/Zotero/storage/QIQXEMUJ/2407.html}
+}
+
 @misc{buhlerAI50AI2025,
   title = {{{AI}} 50: {{AI Agents Move Beyond Chat}}},
   shorttitle = {{{AI}} 50},
@@ -141,6 +159,15 @@
   abstract = {Build agents that write and execute code to perform complex tasks, using Hugging Face's smolagents.},
   howpublished = {https://learn.deeplearning.ai/courses/building-code-agents-with-hugging-face-smolagents/lesson/h11ie/secure-code-execution},
   file = {/Users/mig217/Zotero/storage/VHW4ZDJZ/secure-code-execution.html}
+}
+
+@misc{BuildingEffectiveAI,
+  title = {Building {{Effective AI Agents}}},
+  urldate = {2025-06-10},
+  abstract = {Discover how Anthropic approaches the development of reliable AI agents. Learn about our research on agent capabilities, safety considerations, and technical framework for building trustworthy AI.},
+  howpublished = {https://www.anthropic.com/engineering/building-effective-agents?ref=blog.langchain.dev},
+  langid = {english},
+  file = {/Users/mig217/Zotero/storage/DI25KMEL/building-effective-agents.html}
 }
 
 @misc{burnsWeaktoStrongGeneralizationEliciting2023,
@@ -302,6 +329,15 @@
   file = {/Users/mig217/Zotero/storage/VTQP594E/pub.html}
 }
 
+@misc{GentleSingularity,
+  title = {The {{Gentle Singularity}}},
+  journal = {Sam Altman},
+  urldate = {2025-06-11},
+  abstract = {We are past the event horizon; the takeoff has started. Humanity is close to building digital superintelligence, and at least so far it's much less weird than it seems like it should be. Robots...},
+  howpublished = {https://blog.samaltman.com/the-gentle-singularity},
+  file = {/Users/mig217/Zotero/storage/9KU4YZH4/the-gentle-singularity.html}
+}
+
 @misc{geScalingSyntheticData2025,
   title = {Scaling {{Synthetic Data Creation}} with 1,000,000,000 {{Personas}}},
   author = {Ge, Tao and Chan, Xin and Wang, Xiaoyang and Yu, Dian and Mi, Haitao and Yu, Dong},
@@ -430,6 +466,18 @@
   file = {/Users/mig217/Zotero/storage/MKFYJES8/Hosking et al. - 2023 - Human Feedback is not Gold Standard.pdf}
 }
 
+@misc{HowThinkAgent2025,
+  title = {How to Think about Agent Frameworks},
+  year = {2025},
+  month = apr,
+  journal = {LangChain Blog},
+  urldate = {2025-06-11},
+  abstract = {TL;DR:  * The hard part of building reliable agentic systems is making sure the LLM has the appropriate context at each step. This includes both controlling the exact content that goes into the LLM, as well as running the appropriate steps to generate relevant content.  * Agentic systems consist of both},
+  howpublished = {https://blog.langchain.dev/how-to-think-about-agent-frameworks/},
+  langid = {english},
+  file = {/Users/mig217/Zotero/storage/GNTPGD5N/how-to-think-about-agent-frameworks.html}
+}
+
 @misc{hrefBuildingScalableExplainable2021,
   title = {Building {{Scalable}}, {{Explainable}}, and {{Adaptive NLP Models}} with {{Retrieval}}},
   author = {{href=}},
@@ -485,24 +533,6 @@
   file = {/Users/mig217/Zotero/storage/X32HMT38/2406.html}
 }
 
-@misc{ivisonCamelsChangingClimate2023,
-  title = {Camels in a {{Changing Climate}}: {{Enhancing LM Adaptation}} with {{Tulu}} 2},
-  shorttitle = {Camels in a {{Changing Climate}}},
-  author = {Ivison, Hamish and Wang, Yizhong and Pyatkin, Valentina and Lambert, Nathan and Peters, Matthew and Dasigi, Pradeep and Jang, Joel and Wadden, David and Smith, Noah A. and Beltagy, Iz and Hajishirzi, Hannaneh},
-  year = {2023},
-  month = nov,
-  number = {arXiv:2311.10702},
-  eprint = {2311.10702},
-  primaryclass = {cs},
-  publisher = {arXiv},
-  doi = {10.48550/arXiv.2311.10702},
-  urldate = {2025-05-18},
-  abstract = {Since the release of T{\textbackslash}"ULU [Wang et al., 2023b], open resources for instruction tuning have developed quickly, from better base models to new finetuning techniques. We test and incorporate a number of these advances into T{\textbackslash}"ULU, resulting in T{\textbackslash}"ULU 2, a suite of improved T{\textbackslash}"ULU models for advancing the understanding and best practices of adapting pretrained language models to downstream tasks and user preferences. Concretely, we release: (1) T{\textbackslash}"ULU-V2-mix, an improved collection of high-quality instruction datasets; (2) T{\textbackslash}"ULU 2, LLAMA-2 models finetuned on the V2 mixture; (3) T{\textbackslash}"ULU 2+DPO, T{\textbackslash}"ULU 2 models trained with direct preference optimization (DPO), including the largest DPO-trained model to date (T{\textbackslash}"ULU 2+DPO 70B); (4) CODE T{\textbackslash}"ULU 2, CODE LLAMA models finetuned on our V2 mix that outperform CODE LLAMA and its instruction-tuned variant, CODE LLAMA-Instruct. Our evaluation from multiple perspectives shows that the T{\textbackslash}"ULU 2 suite achieves state-of-the-art performance among open models and matches or exceeds the performance of GPT-3.5-turbo-0301 on several benchmarks. We release all the checkpoints, data, training and evaluation code to facilitate future open efforts on adapting large language models.},
-  archiveprefix = {arXiv},
-  keywords = {Computer Science - Computation and Language},
-  file = {/Users/mig217/Zotero/storage/K6Y9MMHL/Ivison et al. - 2023 - Camels in a Changing Climate Enhancing LM Adaptation with Tulu 2.pdf;/Users/mig217/Zotero/storage/PUDPTS6C/2311.html}
-}
-
 @misc{ivisonCamelsChangingClimate2023a,
   title = {Camels in a {{Changing Climate}}: {{Enhancing LM Adaptation}} with {{Tulu}} 2},
   shorttitle = {Camels in a {{Changing Climate}}},
@@ -552,24 +582,6 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Computation and Language},
   file = {/Users/mig217/Zotero/storage/4226YLPP/Ivison et al. - 2025 - Large-Scale Data Selection for Instruction Tuning.pdf;/Users/mig217/Zotero/storage/MYWER5D3/2503.html}
-}
-
-@misc{ivisonUnpackingDPOPPO2024,
-  title = {Unpacking {{DPO}} and {{PPO}}: {{Disentangling Best Practices}} for {{Learning}} from {{Preference Feedback}}},
-  shorttitle = {Unpacking {{DPO}} and {{PPO}}},
-  author = {Ivison, Hamish and Wang, Yizhong and Liu, Jiacheng and Wu, Zeqiu and Pyatkin, Valentina and Lambert, Nathan and Smith, Noah A. and Choi, Yejin and Hajishirzi, Hannaneh},
-  year = {2024},
-  month = oct,
-  number = {arXiv:2406.09279},
-  eprint = {2406.09279},
-  primaryclass = {cs},
-  publisher = {arXiv},
-  doi = {10.48550/arXiv.2406.09279},
-  urldate = {2025-05-18},
-  abstract = {Learning from preference feedback has emerged as an essential step for improving the generation quality and performance of modern language models (LMs). Despite its widespread use, the way preference-based learning is applied varies wildly, with differing data, learning algorithms, and evaluations used, making disentangling the impact of each aspect difficult. In this work, we identify four core aspects of preference-based learning: preference data, learning algorithm, reward model, and policy training prompts, systematically investigate the impact of these components on downstream model performance, and suggest a recipe for strong learning for preference feedback. Our findings indicate that all aspects are important for performance, with better preference data leading to the largest improvements, followed by the choice of learning algorithm, the use of improved reward models, and finally the use of additional unlabeled prompts for policy training. Notably, PPO outperforms DPO by up to 2.5\% in math and 1.2\% in general domains. High-quality preference data leads to improvements of up to 8\% in instruction following and truthfulness. Despite significant gains of up to 5\% in mathematical evaluation when scaling up reward models, we surprisingly observe marginal improvements in other categories. We publicly release the code used for training (https://github.com/hamishivi/EasyLM) and evaluating (https://github.com/allenai/open-instruct) our models, along with the models and datasets themselves (https://huggingface.co/collections/allenai/tulu-v25-suite-66676520fd578080e126f618).},
-  archiveprefix = {arXiv},
-  keywords = {Computer Science - Computation and Language},
-  file = {/Users/mig217/Zotero/storage/23TT4GB3/Ivison et al. - 2024 - Unpacking DPO and PPO Disentangling Best Practices for Learning from Preference Feedback.pdf;/Users/mig217/Zotero/storage/NXD6HU5R/2406.html}
 }
 
 @misc{ivisonUnpackingDPOPPO2024a,
@@ -674,6 +686,24 @@
   howpublished = {https://openai.com/index/learning-to-reason-with-llms/},
   langid = {american},
   file = {/Users/mig217/Zotero/storage/I6M4DL74/learning-to-reason-with-llms.html}
+}
+
+@misc{LearningReasonLLMsa,
+  title = {Learning to Reason with {{LLMs}}},
+  urldate = {2025-06-14},
+  abstract = {We are introducing OpenAI o1, a new large language model trained with reinforcement learning to perform complex reasoning. o1 thinks before it answers---it can produce a long internal chain of thought before responding to the user.},
+  howpublished = {https://openai.com/index/learning-to-reason-with-llms/},
+  langid = {american},
+  file = {/Users/mig217/Zotero/storage/CS7Y6ZK9/learning-to-reason-with-llms.html}
+}
+
+@misc{LearningReasonLLMsb,
+  title = {Learning to Reason with {{LLMs}}},
+  urldate = {2025-06-14},
+  abstract = {We are introducing OpenAI o1, a new large language model trained with reinforcement learning to perform complex reasoning. o1 thinks before it answers---it can produce a long internal chain of thought before responding to the user.},
+  howpublished = {https://openai.com/index/learning-to-reason-with-llms/},
+  langid = {american},
+  file = {/Users/mig217/Zotero/storage/Q3HZ2XRK/learning-to-reason-with-llms.html}
 }
 
 @article{liCompetitionLevelCodeGeneration2022,
@@ -1013,24 +1043,6 @@
   file = {/Users/mig217/Zotero/storage/DIMFC8IT/Rafailov et al. - 2024 - Direct Preference Optimization Your Language Model is Secretly a Reward Model.pdf;/Users/mig217/Zotero/storage/U6Y9NZJD/2305.html}
 }
 
-@misc{rafailovDirectPreferenceOptimization2024a,
-  title = {Direct {{Preference Optimization}}: {{Your Language Model}} Is {{Secretly}} a {{Reward Model}}},
-  shorttitle = {Direct {{Preference Optimization}}},
-  author = {Rafailov, Rafael and Sharma, Archit and Mitchell, Eric and Ermon, Stefano and Manning, Christopher D. and Finn, Chelsea},
-  year = {2024},
-  month = jul,
-  number = {arXiv:2305.18290},
-  eprint = {2305.18290},
-  primaryclass = {cs},
-  publisher = {arXiv},
-  doi = {10.48550/arXiv.2305.18290},
-  urldate = {2025-06-06},
-  abstract = {While large-scale unsupervised language models (LMs) learn broad world knowledge and some reasoning skills, achieving precise control of their behavior is difficult due to the completely unsupervised nature of their training. Existing methods for gaining such steerability collect human labels of the relative quality of model generations and fine-tune the unsupervised LM to align with these preferences, often with reinforcement learning from human feedback (RLHF). However, RLHF is a complex and often unstable procedure, first fitting a reward model that reflects the human preferences, and then fine-tuning the large unsupervised LM using reinforcement learning to maximize this estimated reward without drifting too far from the original model. In this paper we introduce a new parameterization of the reward model in RLHF that enables extraction of the corresponding optimal policy in closed form, allowing us to solve the standard RLHF problem with only a simple classification loss. The resulting algorithm, which we call Direct Preference Optimization (DPO), is stable, performant, and computationally lightweight, eliminating the need for sampling from the LM during fine-tuning or performing significant hyperparameter tuning. Our experiments show that DPO can fine-tune LMs to align with human preferences as well as or better than existing methods. Notably, fine-tuning with DPO exceeds PPO-based RLHF in ability to control sentiment of generations, and matches or improves response quality in summarization and single-turn dialogue while being substantially simpler to implement and train.},
-  archiveprefix = {arXiv},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Computation and Language,Computer Science - Machine Learning},
-  file = {/Users/mig217/Zotero/storage/EPU5IU82/Rafailov et al. - 2024 - Direct Preference Optimization Your Language Model is Secretly a Reward Model.pdf;/Users/mig217/Zotero/storage/68RBE5ZW/2305.html}
-}
-
 @misc{rafailovDirectPreferenceOptimization2024b,
   title = {Direct {{Preference Optimization}}: {{Your Language Model}} Is {{Secretly}} a {{Reward Model}}},
   shorttitle = {Direct {{Preference Optimization}}},
@@ -1054,6 +1066,18 @@
   urldate = {2025-03-09},
   howpublished = {https://react-lm.github.io/},
   file = {/Users/mig217/Zotero/storage/98AS5RJA/react-lm.github.io.html}
+}
+
+@misc{ReasoningSeriesPart2024,
+  title = {Reasoning {{Series}}, {{Part}} 1: {{Understanding OpenAI}} O1},
+  shorttitle = {Reasoning {{Series}}, {{Part}} 1},
+  year = {2024},
+  month = oct,
+  urldate = {2025-06-14},
+  abstract = {OpenAI's o1-preview, released in September 2024, introduces "reasoning tokens" to enhance complex problem-solving capabilities. This post explores the model'...},
+  howpublished = {https://leehanchung.github.io/blogs/2024/10/08/reasoning-understanding-o1/},
+  langid = {english},
+  file = {/Users/mig217/Zotero/storage/K9NNH55U/reasoning-understanding-o1.html}
 }
 
 @misc{sahaBranchSolveMergeImprovesLarge2024,
@@ -1171,6 +1195,14 @@
   file = {/Users/mig217/Zotero/storage/2YBLKCLE/Shinn et al. - 2023 - Reflexion Language Agents with Verbal Reinforcement Learning.pdf;/Users/mig217/Zotero/storage/76YS4C4G/2303.html}
 }
 
+@article{shojaeeIllusionThinkingUnderstanding,
+  title = {The {{Illusion}} of {{Thinking}}: {{Understanding}} the {{Strengths}} and {{Limitations}} of {{Reasoning Models}} via the {{Lens}} of {{Problem Complexity}}},
+  author = {Shojaee, Parshin and Mirzadeh, Iman and Alizadeh, Keivan and Horton, Maxwell and Bengio, Samy and Farajtabar, Mehrdad},
+  abstract = {Recent generations of frontier language models have introduced Large Reasoning Models (LRMs) that generate detailed thinking processes before providing answers. While these models demonstrate improved performance on reasoning benchmarks, their fundamental capabilities, scaling properties, and limitations remain insufficiently understood. Current evaluations primarily focus on established mathematical and coding benchmarks, emphasizing final answer accuracy. However, this evaluation paradigm often suffers from data contamination and does not provide insights into the reasoning traces' structure and quality. In this work, we systematically investigate these gaps with the help of controllable puzzle environments that allow precise manipulation of compositional complexity while maintaining consistent logical structures. This setup enables the analysis of not only final answers but also the internal reasoning traces, offering insights into how LRMs ``think''. Through extensive experimentation across diverse puzzles, we show that frontier LRMs face a complete accuracy collapse beyond certain complexities. Moreover, they exhibit a counterintuitive scaling limit: their reasoning effort increases with problem complexity up to a point, then declines despite having an adequate token budget. By comparing LRMs with their standard LLM counterparts under equivalent inference compute, we identify three performance regimes: (1) lowcomplexity tasks where standard models surprisingly outperform LRMs, (2) medium-complexity tasks where additional thinking in LRMs demonstrates advantage, and (3) high-complexity tasks where both models experience complete collapse. We found that LRMs have limitations in exact computation: they fail to use explicit algorithms and reason inconsistently across puzzles. We also investigate the reasoning traces in more depth, studying the patterns of explored solutions and analyzing the models' computational behavior, shedding light on their strengths, limitations, and ultimately raising crucial questions about their true reasoning capabilities.},
+  langid = {english},
+  file = {/Users/mig217/Zotero/storage/H8L97X66/Shojaee et al. - The Illusion of Thinking Understanding the Strengths and Limitations of Reasoning Models via the Le.pdf}
+}
+
 @misc{singhalLongWayGo2023,
   title = {A {{Long Way}} to {{Go}}: {{Investigating Length Correlations}} in {{RLHF}}},
   shorttitle = {A {{Long Way}} to {{Go}}},
@@ -1241,16 +1273,6 @@
   langid = {english},
   pmid = {3008780},
   keywords = {Animals,Association,Brain Mapping,Cats,Cerebral Cortex,Hippocampus,Humans,Limbic System,Memory,Models Neurological,Neural Pathways,Psychophysics,Rabbits,Rats,Synaptic Transmission}
-}
-
-@misc{THUDMGLMZ1Rumination32B0414Hugging2025,
-  title = {{{THUDM}}/{{GLM-Z1-Rumination-32B-0414}} {$\cdot$} {{Hugging Face}}},
-  year = {2025},
-  month = apr,
-  urldate = {2025-06-05},
-  abstract = {We're on a journey to advance and democratize artificial intelligence through open source and open science.},
-  howpublished = {https://huggingface.co/THUDM/GLM-Z1-Rumination-32B-0414},
-  file = {/Users/mig217/Zotero/storage/9VBSCJLT/GLM-Z1-Rumination-32B-0414.html}
 }
 
 @misc{touvronLlama2Open2023,
@@ -1340,24 +1362,6 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Computation and Language},
   file = {/Users/mig217/Zotero/storage/MHBQP2G2/Wang et al. - 2024 - Grokked Transformers are Implicit Reasoners A Mechanistic Journey to the Edge of Generalization.pdf;/Users/mig217/Zotero/storage/HJTVNQ7Z/2405.html}
-}
-
-@misc{wangHowFarCan2023,
-  title = {How {{Far Can Camels Go}}? {{Exploring}} the {{State}} of {{Instruction Tuning}} on {{Open Resources}}},
-  shorttitle = {How {{Far Can Camels Go}}?},
-  author = {Wang, Yizhong and Ivison, Hamish and Dasigi, Pradeep and Hessel, Jack and Khot, Tushar and Chandu, Khyathi Raghavi and Wadden, David and MacMillan, Kelsey and Smith, Noah A. and Beltagy, Iz and Hajishirzi, Hannaneh},
-  year = {2023},
-  month = oct,
-  number = {arXiv:2306.04751},
-  eprint = {2306.04751},
-  primaryclass = {cs},
-  publisher = {arXiv},
-  doi = {10.48550/arXiv.2306.04751},
-  urldate = {2025-05-18},
-  abstract = {In this work we explore recent advances in instruction-tuning language models on a range of open instruction-following datasets. Despite recent claims that open models can be on par with state-of-the-art proprietary models, these claims are often accompanied by limited evaluation, making it difficult to compare models across the board and determine the utility of various resources. We provide a large set of instruction-tuned models from 6.7B to 65B parameters in size, trained on 12 instruction datasets ranging from manually curated (e.g., OpenAssistant) to synthetic and distilled (e.g., Alpaca) and systematically evaluate them on their factual knowledge, reasoning, multilinguality, coding, and open-ended instruction following abilities through a collection of automatic, model-based, and human-based metrics. We further introduce T{\textbackslash}"ulu, our best performing instruction-tuned model suite finetuned on a combination of high-quality open resources. Our experiments show that different instruction-tuning datasets can uncover or enhance specific skills, while no single dataset (or combination) provides the best performance across all evaluations. Interestingly, we find that model and human preference-based evaluations fail to reflect differences in model capabilities exposed by benchmark-based evaluations, suggesting the need for the type of systemic evaluation performed in this work. Our evaluations show that the best model in any given evaluation reaches on average 87\% of ChatGPT performance, and 73\% of GPT-4 performance, suggesting that further investment in building better base models and instruction-tuning data is required to close the gap. We release our instruction-tuned models, including a fully finetuned 65B T{\textbackslash}"ulu, along with our code, data, and evaluation framework at https://github.com/allenai/open-instruct to facilitate future research.},
-  archiveprefix = {arXiv},
-  keywords = {Computer Science - Computation and Language},
-  file = {/Users/mig217/Zotero/storage/WPMZ9SSK/Wang et al. - 2023 - How Far Can Camels Go Exploring the State of Instruction Tuning on Open Resources.pdf;/Users/mig217/Zotero/storage/FPX4MZJA/2306.html}
 }
 
 @misc{wangHowFarCan2023a,
@@ -1757,6 +1761,24 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Computation and Language},
   file = {/Users/mig217/Zotero/storage/NHIQPUPZ/Zhou et al. - 2023 - Least-to-Most Prompting Enables Complex Reasoning in Large Language Models.pdf;/Users/mig217/Zotero/storage/DI2Q5DY2/2205.html}
+}
+
+@misc{zhouMultiAgentDesignOptimizing2025,
+  title = {Multi-{{Agent Design}}: {{Optimizing Agents}} with {{Better Prompts}} and {{Topologies}}},
+  shorttitle = {Multi-{{Agent Design}}},
+  author = {Zhou, Han and Wan, Xingchen and Sun, Ruoxi and Palangi, Hamid and Iqbal, Shariq and Vuli{\'c}, Ivan and Korhonen, Anna and Ar{\i}k, Sercan {\"O}},
+  year = {2025},
+  month = feb,
+  number = {arXiv:2502.02533},
+  eprint = {2502.02533},
+  primaryclass = {cs},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.2502.02533},
+  urldate = {2025-06-13},
+  abstract = {Large language models, employed as multiple agents that interact and collaborate with each other, have excelled at solving complex tasks. The agents are programmed with prompts that declare their functionality, along with the topologies that orchestrate interactions across agents. Designing prompts and topologies for multi-agent systems (MAS) is inherently complex. To automate the entire design process, we first conduct an in-depth analysis of the design space aiming to understand the factors behind building effective MAS. We reveal that prompts together with topologies play critical roles in enabling more effective MAS design. Based on the insights, we propose Multi-Agent System Search (MASS), a MAS optimization framework that efficiently exploits the complex MAS design space by interleaving its optimization stages, from local to global, from prompts to topologies, over three stages: 1) block-level (local) prompt optimization; 2) workflow topology optimization; 3) workflow-level (global) prompt optimization, where each stage is conditioned on the iteratively optimized prompts/topologies from former stages. We show that MASS-optimized multi-agent systems outperform a spectrum of existing alternatives by a substantial margin. Based on the MASS-found systems, we finally propose design principles behind building effective multi-agent systems.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Computation and Language,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
+  file = {/Users/mig217/Zotero/storage/YMCUY83U/Zhou et al. - 2025 - Multi-Agent Design Optimizing Agents with Better Prompts and Topologies.pdf;/Users/mig217/Zotero/storage/6RE5FJ9J/2502.html}
 }
 
 @misc{zhouSelfDiscoverLargeLanguage2024,
