@@ -11,13 +11,6 @@ math: true
 ---
 
 
-<style>
-pre code {
-  white-space: pre;
-  overflow-x: auto;
-}
-</style>
-
 <p style="color: #1E90FF;">
   The following insights are drawn from the <em>Reasoning with o1</em> video course by <a href="https://learn.deeplearning.ai/courses/reasoning-with-o1/lesson/h8dkv/introduction" style="color: #1E90FF;">DeepLearning.ai</a>.
 </p>
@@ -153,12 +146,12 @@ For example: Suppose you need a function that outputs SMILES IDs for all molecul
 
 **Good Prompt**
 
-```yaml
+```
 "Generate a function that outputs the SMILES IDs for all the molecules involved in insulin."
 ```
 
 **Bad Prompt**
-```yaml
+```
 "Generate a function that outputs the SMILES IDs for all the molecules involved in insulin."
 "Think through this step by step, and don't skip any steps:"
 "- Identify all the molecules involve in insulin"
@@ -173,7 +166,7 @@ When your prompt content becomes complex, **use separators (like Markdown, XML t
 
 Example: Customer service assistant scenario
 
-```yaml
+```XML
    "<instructions>You are a customer service assistant for AnyCorp, a provider"
    "of fine storage solutions. Your role is to follow your policy to answer the user's question. "
    "Be kind and respectful at all times.</instructions>\n"
@@ -215,7 +208,7 @@ Instead of explaining your requirements through lengthy text descriptions, **pro
 
 Here's and example: We still use `<prompt>` and `<policy>` to define roles and rules, but we add an `<example>` tag that directly provides a sample question-answer pair to help the model understand the expected response format and citation style. 
 
-```python
+```XML
 "<prompt>You are a lawyer specializing in competition law, "
 "assisting business owners with their questions.</prompt>\n"
 "<policy>As a legal professional, provide clear and accurate "
