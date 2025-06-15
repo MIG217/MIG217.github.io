@@ -6,8 +6,15 @@
     <description>Recent content in Tags on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 30 May 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Jun 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://mig217.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reasoning Models</title>
+      <link>https://mig217.github.io/tags/reasoning-models/</link>
+      <pubDate>Sun, 15 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>https://mig217.github.io/tags/reasoning-models/</guid>
+      <description></description>
+    </item>
     <item>
       <title>LLM</title>
       <link>https://mig217.github.io/tags/llm/</link>

@@ -4,7 +4,7 @@ author: ["Mingrui Guo"]
 date: "2025-06-15"
 categories: ["AI"]
 tags: ["Reasoning Models"]
-draft: true
+draft: false
 ShowToc: true
 TocOpen: false
 math: true
