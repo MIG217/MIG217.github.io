@@ -13,10 +13,15 @@
       <link>https://mig217.github.io/post/2025-06-21-a-guide-to-reasoning-models/</link>
       <pubDate>Sun, 15 Jun 2025 00:00:00 +0000</pubDate>
       <guid>https://mig217.github.io/post/2025-06-21-a-guide-to-reasoning-models/</guid>
-      <description>&lt;p style=&#34;color: #1E90FF;&#34;&gt;
-  The following insights are drawn from the &lt;em&gt;Reasoning with o1&lt;/em&gt; video course by &lt;a href=&#34;https://learn.deeplearning.ai/courses/reasoning-with-o1/lesson/h8dkv/introduction&#34; style=&#34;color: #1E90FF; text-decoration: underline;&#34;&gt;DeepLearning.ai&lt;/a&gt;.
+      <description>&lt;style&gt;
+pre code {
+  white-space: pre;
+  overflow-x: auto;
+}
+&lt;/style&gt;
+&lt;p style=&#34;color: #1E90FF;&#34;&gt;
+  The following insights are drawn from the &lt;em&gt;Reasoning with o1&lt;/em&gt; video course by &lt;a href=&#34;https://learn.deeplearning.ai/courses/reasoning-with-o1/lesson/h8dkv/introduction&#34; style=&#34;color: #1E90FF;&#34;&gt;DeepLearning.ai&lt;/a&gt;.
 &lt;/p&gt;
-&lt;br&gt;
 &lt;br&gt;
 &lt;p&gt;This article explores how to effectively prompt and utilize the new generation of reasoning models. Models released over the past year have demonstrated remarkable progress in reasoning and planning tasks. OpenAI has deeply optimized Chain of Thought (CoT) processing, using reinforcement learning to fine-tune models so they automatically integrate step-by-step reasoning into their response process.&lt;/p&gt;</description>
     </item>

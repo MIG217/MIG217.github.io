@@ -8,8 +8,8 @@
 <title>How to Use Reasoning Models? | Mig&#39;s Blog</title>
 <meta name="keywords" content="Reasoning Models">
 <meta name="description" content="
-  The following insights are drawn from the Reasoning with o1 video course by DeepLearning.ai.
 
+  The following insights are drawn from the Reasoning with o1 video course by DeepLearning.ai.
 
 
 This article explores how to effectively prompt and utilize the new generation of reasoning models. Models released over the past year have demonstrated remarkable progress in reasoning and planning tasks. OpenAI has deeply optimized Chain of Thought (CoT) processing, using reinforcement learning to fine-tune models so they automatically integrate step-by-step reasoning into their response process.">
@@ -73,8 +73,8 @@ This article explores how to effectively prompt and utilize the new generation o
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How to Use Reasoning Models?">
 <meta name="twitter:description" content="
-  The following insights are drawn from the Reasoning with o1 video course by DeepLearning.ai.
 
+  The following insights are drawn from the Reasoning with o1 video course by DeepLearning.ai.
 
 
 This article explores how to effectively prompt and utilize the new generation of reasoning models. Models released over the past year have demonstrated remarkable progress in reasoning and planning tasks. OpenAI has deeply optimized Chain of Thought (CoT) processing, using reinforcement learning to fine-tune models so they automatically integrate step-by-step reasoning into their response process.">
@@ -256,10 +256,15 @@ This article explores how to effectively prompt and utilize the new generation o
     </details>
 </div>
 
-  <div class="post-content"><p style="color: #1E90FF;">
-  The following insights are drawn from the <em>Reasoning with o1</em> video course by <a href="https://learn.deeplearning.ai/courses/reasoning-with-o1/lesson/h8dkv/introduction" style="color: #1E90FF; text-decoration: underline;">DeepLearning.ai</a>.
+  <div class="post-content"><style>
+pre code {
+  white-space: pre;
+  overflow-x: auto;
+}
+</style>
+<p style="color: #1E90FF;">
+  The following insights are drawn from the <em>Reasoning with o1</em> video course by <a href="https://learn.deeplearning.ai/courses/reasoning-with-o1/lesson/h8dkv/introduction" style="color: #1E90FF;">DeepLearning.ai</a>.
 </p>
-<br>
 <br>
 <p>This article explores how to effectively prompt and utilize the new generation of reasoning models. Models released over the past year have demonstrated remarkable progress in reasoning and planning tasks. OpenAI has deeply optimized Chain of Thought (CoT) processing, using reinforcement learning to fine-tune models so they automatically integrate step-by-step reasoning into their response process.</p>
 <p>While current model performance is already impressive, the more significant long-term development is <strong>reasoning-time scalability</strong>. Reasoning model performance improves not only with increased training compute but also with the thinking time allocated during <strong>inference (test-time or inference-time compute)</strong>. This provides an entirely new dimension for scaling large model performance.</p>
@@ -374,54 +379,54 @@ This article explores how to effectively prompt and utilize the new generation o
 <p>Of course, for highly specialized tasks or complex contexts, you might still consider adding CoT-style step-by-step peompts. However, it&rsquo;s recommended to <strong>start with simple prompts and adjust details based on output quality</strong>.</p>
 <p>For example: Suppose you need a function that outputs SMILES IDs for all molecules related to insulin.</p>
 <p><strong>Good Prompt</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="s2">&#34;Generate a function that outputs the SMILES IDs for all the molecules involved in insulin.&#34;</span>
-</span></span></code></pre></div><p><strong>Bad Prompt</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="s2">&#34;Generate a function that outputs the SMILES IDs for all the molecules involved in insulin.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="s2">&#34;Think through this step by step, and don&#39;t skip any steps:&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="s2">&#34;- Identify all the molecules involve in insulin&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="s2">&#34;- Make the function&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="s2">&#34;- Loop through each molecule, outputting each into the function and returning a SMILES ID&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="s2">&#34;Molecules:&#34;</span>
-</span></span></code></pre></div><h3 id="3-use-structured-prompts">3. Use Structured Prompts<a hidden class="anchor" aria-hidden="true" href="#3-use-structured-prompts">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="s2">&#34;Generate a function that outputs the SMILES IDs for all the molecules involved in insulin.&#34;</span><span class="w">
+</span></span></span></code></pre></div><p><strong>Bad Prompt</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="s2">&#34;Generate a function that outputs the SMILES IDs for all the molecules involved in insulin.&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="s2">&#34;Think through this step by step, and don&#39;t skip any steps:&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="s2">&#34;- Identify all the molecules involve in insulin&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="s2">&#34;- Make the function&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="s2">&#34;- Loop through each molecule, outputting each into the function and returning a SMILES ID&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="s2">&#34;Molecules:&#34;</span><span class="w">
+</span></span></span></code></pre></div><h3 id="3-use-structured-prompts">3. Use Structured Prompts<a hidden class="anchor" aria-hidden="true" href="#3-use-structured-prompts">#</a></h3>
 <p>When your prompt content becomes complex, <strong>use separators (like Markdown, XML tags, or quotes) to break it into different sections</strong>. This structured format not only improves model accuracy but also makes troubleshooting much easier.</p>
 <p>Example: Customer service assistant scenario</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl">   <span class="s2">&#34;&lt;instructions&gt;You are a customer service assistant for AnyCorp, a provider&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;of fine storage solutions. Your role is to follow your policy to answer the user&#39;s question. &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;Be kind and respectful at all times.&lt;/instructions&gt;</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;&lt;policy&gt;**AnyCorp Customer Service Assistant Policy**</span><span class="se">\n\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;1. **Refunds**</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - You are authorized to offer refunds to customers in accordance &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;with AnyCorp&#39;s refund guidelines.</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - Ensure all refund transactions are properly documented and &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;processed promptly.</span><span class="se">\n\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;2. **Recording Complaints**</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - Listen attentively to customer complaints and record all relevant &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;details accurately.</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - Provide assurance that their concerns will be addressed and &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;escalate issues when necessary.</span><span class="se">\n\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;3. **Providing Product Information**</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - Supply accurate and helpful information about AnyCorp&#39;s storage &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;solutions.</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - Stay informed about current products, features, and any updates &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;to assist customers effectively.</span><span class="se">\n\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;4. **Professional Conduct**</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - Maintain a polite, respectful, and professional demeanor in all &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;customer interactions.</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - Address customer inquiries promptly and follow up as needed to &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;ensure satisfaction.</span><span class="se">\n\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;5. **Compliance**</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - Adhere to all AnyCorp policies and procedures during customer &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;interactions.</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - Protect customer privacy by handling personal information &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;Confidentially.</span><span class="se">\n\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;6. **Refusals**</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;   - If you receive questions about topics outside of these, refuse &#34;</span>
-</span></span><span class="line"><span class="cl">   <span class="s2">&#34;to answer them and remind them of the topics you can talk about.&lt;/policy&gt;</span><span class="se">\n</span><span class="s2">&#34;</span>
-</span></span></code></pre></div><p>We use <code>&lt;instructions&gt;</code> tags to clearly define the task role and behavioral guidelines. Then we provide structured policy content through <code>&lt;policy&gt;</code> tags, making it clear to the model what &ldquo;policy&rdquo; specifically refers to. This way, the model clearly understands its role, the rules it should follow, and the tasks it needs to complete, with clear boundaries and minimal confusion.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;&lt;instructions&gt;You are a customer service assistant for AnyCorp, a provider&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;of fine storage solutions. Your role is to follow your policy to answer the user&#39;s question. &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;Be kind and respectful at all times.&lt;/instructions&gt;\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;&lt;policy&gt;**AnyCorp Customer Service Assistant Policy**\n\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;1. **Refunds**\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - You are authorized to offer refunds to customers in accordance &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;with AnyCorp&#39;s refund guidelines.\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - Ensure all refund transactions are properly documented and &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;processed promptly.\n\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;2. **Recording Complaints**\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - Listen attentively to customer complaints and record all relevant &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;details accurately.\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - Provide assurance that their concerns will be addressed and &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;escalate issues when necessary.\n\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;3. **Providing Product Information**\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - Supply accurate and helpful information about AnyCorp&#39;s storage &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;solutions.\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - Stay informed about current products, features, and any updates &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;to assist customers effectively.\n\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;4. **Professional Conduct**\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - Maintain a polite, respectful, and professional demeanor in all &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;customer interactions.\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - Address customer inquiries promptly and follow up as needed to &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;ensure satisfaction.\n\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;5. **Compliance**\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - Adhere to all AnyCorp policies and procedures during customer &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;interactions.\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - Protect customer privacy by handling personal information &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;Confidentially.\n\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;6. **Refusals**\n&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;   - If you receive questions about topics outside of these, refuse &#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="s2">&#34;to answer them and remind them of the topics you can talk about.&lt;/policy&gt;\n&#34;</span><span class="w">
+</span></span></span></code></pre></div><p>We use <code>&lt;instructions&gt;</code> tags to clearly define the task role and behavioral guidelines. Then we provide structured policy content through <code>&lt;policy&gt;</code> tags, making it clear to the model what &ldquo;policy&rdquo; specifically refers to. This way, the model clearly understands its role, the rules it should follow, and the tasks it needs to complete, with clear boundaries and minimal confusion.</p>
 <h3 id="4-show-rather-than-tell">4. Show rather than Tell<a hidden class="anchor" aria-hidden="true" href="#4-show-rather-than-tell">#</a></h3>
 <p>Instead of explaining your requirements through lengthy text descriptions, <strong>provide a relevant example</strong> that allows the model to intuitively understand the task domain and output format you expect.</p>
 <p>Here&rsquo;s and example: We still use <code>&lt;prompt&gt;</code> and <code>&lt;policy&gt;</code> to define roles and rules, but we add an <code>&lt;example&gt;</code> tag that directly provides a sample question-answer pair to help the model understand the expected response format and citation style.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Python" data-lang="Python"><span class="line"><span class="cl"><span class="s2">&#34;&lt;prompt&gt;You are a lawyer specializing in competition law, &#34;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s2">&#34;&lt;prompt&gt;You are a lawyer specializing in competition law, &#34;</span>
 </span></span><span class="line"><span class="cl"><span class="s2">&#34;assisting business owners with their questions.&lt;/prompt&gt;</span><span class="se">\n</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="s2">&#34;&lt;policy&gt;As a legal professional, provide clear and accurate &#34;</span>
 </span></span><span class="line"><span class="cl"><span class="s2">&#34;information about competition law while maintaining &#34;</span>

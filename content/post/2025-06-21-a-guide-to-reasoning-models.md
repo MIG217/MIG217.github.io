@@ -10,11 +10,19 @@ TocOpen: false
 math: true
 ---
 
+
+<style>
+pre code {
+  white-space: pre;
+  overflow-x: auto;
+}
+</style>
+
 <p style="color: #1E90FF;">
-  The following insights are drawn from the <em>Reasoning with o1</em> video course by <a href="https://learn.deeplearning.ai/courses/reasoning-with-o1/lesson/h8dkv/introduction" style="color: #1E90FF; text-decoration: underline;">DeepLearning.ai</a>.
+  The following insights are drawn from the <em>Reasoning with o1</em> video course by <a href="https://learn.deeplearning.ai/courses/reasoning-with-o1/lesson/h8dkv/introduction" style="color: #1E90FF;">DeepLearning.ai</a>.
 </p>
 <br>
-<br>
+
 
 This article explores how to effectively prompt and utilize the new generation of reasoning models. Models released over the past year have demonstrated remarkable progress in reasoning and planning tasks. OpenAI has deeply optimized Chain of Thought (CoT) processing, using reinforcement learning to fine-tune models so they automatically integrate step-by-step reasoning into their response process. 
 
@@ -145,12 +153,12 @@ For example: Suppose you need a function that outputs SMILES IDs for all molecul
 
 **Good Prompt**
 
-```Python
+```yaml
 "Generate a function that outputs the SMILES IDs for all the molecules involved in insulin."
 ```
 
 **Bad Prompt**
-```Python
+```yaml
 "Generate a function that outputs the SMILES IDs for all the molecules involved in insulin."
 "Think through this step by step, and don't skip any steps:"
 "- Identify all the molecules involve in insulin"
@@ -165,7 +173,7 @@ When your prompt content becomes complex, **use separators (like Markdown, XML t
 
 Example: Customer service assistant scenario
 
-```Python
+```yaml
    "<instructions>You are a customer service assistant for AnyCorp, a provider"
    "of fine storage solutions. Your role is to follow your policy to answer the user's question. "
    "Be kind and respectful at all times.</instructions>\n"
@@ -207,7 +215,7 @@ Instead of explaining your requirements through lengthy text descriptions, **pro
 
 Here's and example: We still use `<prompt>` and `<policy>` to define roles and rules, but we add an `<example>` tag that directly provides a sample question-answer pair to help the model understand the expected response format and citation style. 
 
-```Python
+```python
 "<prompt>You are a lawyer specializing in competition law, "
 "assisting business owners with their questions.</prompt>\n"
 "<policy>As a legal professional, provide clear and accurate "
