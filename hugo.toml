@@ -46,7 +46,7 @@ pygmentsUseClasses = true
   [params.homeInfoParams]
     Title = "👋Welcome to Mig's Blog"
     Content = """
-    Hey, this is Mingrui. I started this blog in 2025 to track my thoughts on AI Agents and the books I’m reading. If the writing sounds a bit too polished, well… let’s just say ChatGPT did most of the work! 😆
+    Hey, this is Mingrui. I started this blog in 2025 to track my thoughts. If the writing sounds a bit too polished, well… let’s just say ChatGPT did most of the work! 😆
     """
 
    [[params.socialIcons]]

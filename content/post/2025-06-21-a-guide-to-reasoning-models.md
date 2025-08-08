@@ -467,3 +467,6 @@ scenario_text = ("We just received a major shipment of new orders. "
 messages = process_scenario(scenario_text)
 ```
 Finally, we pass this scenario to the system to generate a plan and observe how it autonomously executes the complex task from start to finish. 
+
+## LLM as a Judge
+

@@ -6,8 +6,31 @@
     <description>Recent content in LLM Agents on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 16 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 31 Jul 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://mig217.github.io/tags/llm-agents/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Coding Agents and AI for Vulnerability Detection</title>
+      <link>https://mig217.github.io/post/2025-07-31-coding-agents/</link>
+      <pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://mig217.github.io/post/2025-07-31-coding-agents/</guid>
+      <description>&lt;p&gt;随着人工智能技术的快速发展，LLM代理正在重塑软件开发和网络安全领域。从协助程序员编写代码的智能助手，到主动发现系统漏洞的安全专家，AI代理正展现出令人瞩目的潜力。&lt;/p&gt;
+&lt;p&gt;在深入探讨具体应用之前，我们需要理解LLM代理的本质。抛开那些时髦的术语，LLM代理实际上就是具备工具使用能力的多轮对话LLM。
+LLM Agent = 可以进行多轮对话的 LLM + 使用工具 (multi-turn LLMs with tool use)
+这个定义强调了以下几个核心特点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;动态计算时间（Dynamic Computation Time）：与传统的一次性问答不同，LLM Agents 允许“先思考再行动”。语言模型可以在作出最终回答前进行多轮推理，动态决定需要投入多少“思维时间”，从而处理更复杂的问题。&lt;/li&gt;
+&lt;li&gt;外部工具接入（External Tools）：这使得智能体不仅限于文本生成能力，而是能与外部世界互动。比如在编程场景中，代理可以实际运行代码、观察结果，然后基于执行反馈来优化代码，这种能力对复杂的代码生成任务极其重要。&lt;/li&gt;
+&lt;li&gt;假设验证能力（Hypothesis Testing）：工具的引入还带来了实验能力。Agent 可以先提出一个假设，比如“这段代码在第13行会出错”，然后通过实际运行代码来验证自己的想法，并根据结果调整后续行为。这种“试错-修正”的机制在复杂任务中尤为关键。&lt;/li&gt;
+&lt;li&gt;行动能力（Ability to Take Actions）：如果我们希望 LLM 真正完成某项任务，它最终必须走出文本生成本身，与真实世界产生连接。而工具的接入正是这种连接的媒介。、&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;基于这些核心能力，我们将介绍以下三部份内容：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编程代理：如SWE（软件工程）代理，它们能够理解需求、编写代码、调试程序&lt;/li&gt;
+&lt;li&gt;AI for computer security: 利用人工智能技术来检测威胁、分析漏洞、防御攻击&lt;/li&gt;
+&lt;li&gt;专门用于安全漏洞检测的LLM代理，这是一个新兴但极具前景的应用方向，代理可以主动分析代码、发现潜在的安全风险。
+在接下来的内容中，我们将深入探讨这些应用场景，看看AI代理如何在保障软件质量和系统安全方面发挥越来越重要的作用。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     <item>
       <title>Memory, Reasoning, and Planning of Language Agents</title>
       <link>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</link>

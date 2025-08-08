@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Context Engineering | Mig&#39;s Blog</title>
+<meta name="keywords" content="Context Engineering">
+<meta name="description" content="By 2025, existing models have already become remarkably intelligent. However, even the smartest system cannot perform effectively without understanding what it is being asked to do. Prompr engineering refers to the practice of phrasing tasks in an optimal way for large language model-based chatbots. Context engineering, on the other hand, represents the next stage - aiming to automate this process within dynamic systems.
+What is Context Engineering?
+
+  Tobi, from Shopify, shared an interesting post in which he expressed his appreciation for the term “Context Engineering.” 
+  Later, Karpathy followed up with a brilliant definition:
+">
+<meta name="author" content="Mingrui Guo">
+<link rel="canonical" href="https://mig217.github.io/post/context-engineering/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.88e0e1e906610daab900858530dbef3bb5c0b4fd2e637c77769aafb256b1009b.css" integrity="sha256-iODh6QZhDaq5AIWFMNvvO7XAtP0uY3x3dpqvslaxAJs=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://mig217.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://mig217.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://mig217.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://mig217.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://mig217.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://mig217.github.io/post/context-engineering/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://mig217.github.io/post/context-engineering/">
+  <meta property="og:site_name" content="Mig&#39;s Blog">
+  <meta property="og:title" content="Context Engineering">
+  <meta property="og:description" content="By 2025, existing models have already become remarkably intelligent. However, even the smartest system cannot perform effectively without understanding what it is being asked to do. Prompr engineering refers to the practice of phrasing tasks in an optimal way for large language model-based chatbots. Context engineering, on the other hand, represents the next stage - aiming to automate this process within dynamic systems.
+What is Context Engineering? Tobi, from Shopify, shared an interesting post in which he expressed his appreciation for the term “Context Engineering.” Later, Karpathy followed up with a brilliant definition: ">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2025-07-31T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-07-31T00:00:00+00:00">
+    <meta property="article:tag" content="Context Engineering">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Context Engineering">
+<meta name="twitter:description" content="By 2025, existing models have already become remarkably intelligent. However, even the smartest system cannot perform effectively without understanding what it is being asked to do. Prompr engineering refers to the practice of phrasing tasks in an optimal way for large language model-based chatbots. Context engineering, on the other hand, represents the next stage - aiming to automate this process within dynamic systems.
+What is Context Engineering?
+
+  Tobi, from Shopify, shared an interesting post in which he expressed his appreciation for the term “Context Engineering.” 
+  Later, Karpathy followed up with a brilliant definition:
+">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://mig217.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Context Engineering",
+      "item": "https://mig217.github.io/post/context-engineering/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Context Engineering",
+  "name": "Context Engineering",
+  "description": "By 2025, existing models have already become remarkably intelligent. However, even the smartest system cannot perform effectively without understanding what it is being asked to do. Prompr engineering refers to the practice of phrasing tasks in an optimal way for large language model-based chatbots. Context engineering, on the other hand, represents the next stage - aiming to automate this process within dynamic systems.\nWhat is Context Engineering? Tobi, from Shopify, shared an interesting post in which he expressed his appreciation for the term “Context Engineering.” Later, Karpathy followed up with a brilliant definition: ",
+  "keywords": [
+    "Context Engineering"
+  ],
+  "articleBody": "By 2025, existing models have already become remarkably intelligent. However, even the smartest system cannot perform effectively without understanding what it is being asked to do. Prompr engineering refers to the practice of phrasing tasks in an optimal way for large language model-based chatbots. Context engineering, on the other hand, represents the next stage - aiming to automate this process within dynamic systems.\nWhat is Context Engineering? Tobi, from Shopify, shared an interesting post in which he expressed his appreciation for the term “Context Engineering.” Later, Karpathy followed up with a brilliant definition: Context engineering is the art and science of filling the context window with just the right information at each step of an agent’s trajectory\nKarpathy made a powerful analogy: he compared LLMs to a computer’s CPU, and the context window to RAM. Just like memory is always limmited, and operating system decides what should be loaded into RAM to keep the system running effectivly. Similarly, the goal of context engineering is to determine what information should be placed into the limited context window at each step of the LLM’s reasoning process.\nTypes of Context Engineering Context Engineering is an umbrella discipline that encompasses several types of contextual inputs:\nInstructions: Commonly referred to as “prompts”, these specify what the AI should do. Knowledge: Facts and data retrieved from external files or databases. Memories: Previous converstaion history or reference examples that provide continuity. Tools: Information about which tools that AI can use (e.g., calculator, search engine) and the results returned by these tools. Why Is This Harder for Agents? There are two man reasons why context engineering becomes more challenging for agents:\nAgents typically handle longer-running or more complex tasks. Agents extensively use tool calling. Both characterstics lead to increased context load. For example, in multi-turn tasks, each tool call’s feedback gets written to the context window. The first round calls one tool, the second calls another tool… As the number of rounds increases, the accumulated tool feedback in the context grows continuously, consuming significant tokens.\nDrew Breunig provides an excellent summary of context failures in his blog post, including:\nContext Poisoning: Malicious or misleading information injected into the context.\nContext Distraction: Irrelevant information that diverts attention from the main task.\nContext Confusion/Curation Errors: Poor organization or conflicting information.\nContext Clash: Contradictory information that creates confusion.\nAs context length grows, models must process more information, increasing the likelihood of errors: they may become confused due to information conflicts or be misled by injected hallucinations, producing incorrect responses. As Cognition recently emphasized in a blog post:\nContext Engineering is effectively the #1 job of engineers building AI agents.\nApproaches Lance在blog post中提到，上下文工程的策略大致可以归纳为四类：\nWriting Context: 将信息保存在上下文窗口之外，以辅助智能体完成任务。 Selecting Context: 有选择地拉取上下文信息进入上下文窗口，辅助任务执行。 Compressing Context: 保留最相关的 tokens，丢弃冗余或无关内容，以节省上下文空间。 Isolating Context: 将上下文进行分段或模块化处理，以减少信息干扰、提升任务清晰度。 Writing Context Writing Context 的核心思想是：把信息保存在 AI 的“短期记忆”（即上下文窗口）之外，让它在需要的时候可以随时读取和参考。 这就像我们人类在处理复杂问题时的做法一样。我们会做两件事：记笔记和形成记忆。对应到智能体，也可以做这两件事：\n记笔记 -\u003e 使用 “暂存区” (Scratchpad) 形成记忆 -\u003e 使用 “长期记忆” (Memory) Scratchpad：临时笔记\n当 Agent 正在执行一个具体的、单一的任务时，它可以把中间过程的想法、计划或关键信息写到这个暂存区里，供稍后自己查阅。\nExample：Anthropic’s multi-agent researcher\nThe LeadResearcher begins by thinking through the approach and saving its plan to Memory to persist the context, since if the context window exceeds 200,000 tokens it will be truncated and it is important to retain the plan.\n技术实现方式：\n把草稿保存到一个文件中（例如 JSON、TXT） 将它保存到一个运行时的 state 对象（如 LangGraph 的 state）中 核心理念：让智能体“边做边写”，并在需要时查阅它刚刚写的内容;一旦当前任务完成，暂存区里的内容通常也就不再需要了。\nMemories：多次对话的经验\nMemory 则不同，它用来存放那些希望Agent 能在多次、不同的对话或任务中都能记住的信息。它更像是Agent积累的“经验”。\nExample:\nGenerative Agents：通过过去交互的反馈，自动合成“记忆块” ChatGPT 的记忆功能：自动记录用户喜好、语气、常用信息 Cursor \u0026 Windsurf：根据用户行为自动生成记忆，用于上下文补全 Agent 在和你的互动中产生了新的信息，它不断接收到新的上下文，也不断动态更新记忆库. 新的信息可以合并到旧的记忆中，形成一个更完整的“个性化背景”。\nSelecting Context 在Writing Context 中，我们把信息存了起来。现在，Selecting Context 要解决的问题是：如何从海量的信息中，挑出当前最需要的那一部分，然后放进 Agent 有限的“工作记忆”里。\nAgent 可以选择它自己刚刚“写入”暂存区的内容，但这只是最基本的操作。更有趣、也更微妙的是从“长期记忆”中进行选择。为了更好地理解，我们可以类比一下人类的记忆类型：\nMemory Type What is Stored Human Example Agent Example Semantic Facts Things I learned in school. Facts about a user Episodic Experiences Things I did. Past agent actions Procedural Instructions Instincts or motor skills. Agent system prompt 这些记忆类型可以通过不同方式拉入上下文窗口，帮助智能体解决特定类型的问题。\n实际应用场景 1. Instructions\n指令或程序记忆通常被记录在规则文件中，比如使用代码智能体时的 CLAUDE.md 文件。这通常是一个包含风格指南或特定项目工具使用通用指令的文件。很多时候，这些内容会被全部拉入上下文中。例如，当你启动 Claude Code 时，它会拉入你项目和组织中的文件。\n2. Facts\n当信息库非常庞大时（比如全公司的文档、所有的历史邮件），我们必须精准地只挑出与当前问题相关的事实。例如企业内部知识库问答，常用技术有2种：\nEmbedding-based Similarity Search： 把所有文档都转换成数学向量，当用户提问时，系统会去寻找“意思上”最相近的文档片段。 Graph Databases： 把信息和它们之间的关系存成一张图，可以进行更复杂的逻辑查询。 3. Tools\nAgent 在使用多个工具时，如果不加选择地加载所有工具描述，会造成性能下降;有研究表明，当工具数量超过 30 个时，LLM 开始性能下降，100 个时几乎完全失效. 因此提出了在工具描述上使用RAG技术。\n对每一个工具的描述进行处理，就像处理知识库文档一样。当任务需要时（比如用户说“帮我看看明天北京天气怎么样”），系统会先通过语义搜索，在所有工具中发现“查询天气”这个工具与任务最相关。然后，它只把这一个被“选择”出来的工具的使用说明放进上下文。\n4. Knowledge\nRAG是一个庞大的话题，你可以将记忆视为RAG的一个子集，但RAG的范围当然要广泛得多。\n例子：CodiumAI 的代码检索策略\nWindsurf 的 CEO Varun 曾分享过他们是如何为编程助手做知识选择的,他们的流程非常精细：\nSmart Chunking：他们不是随机地把代码切成一块块，而是沿着代码的语义边界（比如一个完整的函数、一个类）进行切分，保证了检索到的上下文是完整的。\nHybrid Search：他们发现，单纯依赖向量搜索有时并不可靠。因此，他们会结合使用多种技术，比如传统的关键字搜索（grep）、知识图谱，以及向量搜索。\nLLM-based Re-ranking：从上述所有渠道检索到一堆候选代码片段后，他们会再用一个 LLM 对这些结果进行打分和排序，挑出最优的一个或几个，最后才把这个“精选”出的结果放入最终的上下文窗口。\n从这个例子可以看出，Selecting Context 是一个经过层层优化的、高度工程化的过程。\nCompressing Context 当我们已经写入并选择了信息后，有时会发现，即使是精挑细选出来的内容，也还是太长了，上下文窗口依然放不下。这时，就需要Compressing Context。\nCompressing Context的核心是：只保留执行任务所必需的 Tokens（文本单元），去除冗余信息。\nSummarization 总结是上下文压缩中最常见的方式，可以应用在不同范围和时机上：\n1. 对整个对话进行摘要\n这是一种“兜底”策略，防止对话过长导致系统崩溃。\nExample：Claude Code “auto compact”\n当你在和 Claude 的代码助手进行长时间对话，快要接近它 20 万 Tokens 的上下文窗口上限时（达到 95%），它会自动触发一个叫“auto compact”的功能。这个功能会把你们之前的整个对话历史进行一次总结，用一段更简短的摘要来代替冗长的原文，从而释放出空间。\n2. 对特定部分进行摘要\n这是一种更巧妙的方法，不在最后时刻才压缩全部内容，而是在过程中对特定部分进行精准压缩。\nCompleted work sections\n在 AnthropicAI的文章 How we built our multi-agent research system当一个子任务或一个研究部分完成后，系统只会对这个已完成的部分进行摘要。这样做既保留了这部分工作的结论，又避免了其冗长的过程细节占据宝贵的上下文空间。\nPassing context to linear sub-agents\nCognition的post Don’t Build Multi-Agents提到agent在处理复杂任务时，把任务分解给不同的子代理。这时，摘要就成了一种信息交接的方式。当主代理把任务交给子代理 1 时，它不会把所有原始上下文都传过去，而是先生成一个摘要，子代理 1 只需要读取这个压缩后的精简版上下文，就能理解任务并开始工作。\nTrimming 除了生成摘要，还有一种更直接的压缩方式叫“修剪”。它不是重写内容，而是选择性地直接删除那些我们认为不那么重要的 Tokens。\nHeuristics: 这是最简单的方法。比如，我们可以设定一个简单的规则：“只保留最近的 10 轮对话”，直接丢弃更早的记录。 Learned Pruning: 我们可以利用另一个（通常是更小更快的）LLM 模型，让它来判断上下文中的哪些部分与当前任务关系不大，然后将它们“修剪”掉。 Isolating Context Isolating Context 的核心思想是：将上下文划分成多个独立部分，让每个 agent 或任务模块只处理自己需要的那一块上下文，从而提升效率和可扩展性。这种方法对于处理极其复杂的任务尤其有效。\nMulti-Agent Systems 我们不再依赖一个“全能”的 Agent，而是组建一个“Agent 团队”，每个成员都有自己独立的上下文窗口、工具和指令，各司其职:\n1. OpenAI Swarm library\n框架的设计是基于separation of concerns。一个复杂的任务被分解，分配给团队里不同的 AI 代理，每个代理都在自己的独立的上下文窗口里工作，互不打扰。\n2. Anthropic Multi-Agent Research System\nAnthropic的研究中把这一点阐述得更明确。他们让多个子代理并行工作，每个代理都有自己的上下文窗口，去同时探索同一个问题的不同方面。\nSubagents facilitate compression by operating in parallel with their own context windows, exploring different aspects of the question simultaneously before condensing the most important tokens for the lead research agent.\n这带来的最大好处是：极大地扩展了整个系统能够处理的信息总量。每个代理都有自己独立的上下文窗口，系统总的处理能力不再受限于单个模型的窗口大小。一个代理可以深入研究子主题 A，另一个代理深入研究子主题 B，最后将各自的研究成果汇总，就能生成一份内容更丰富、更深入的报告。\nSandboxed Execution 这种方法是将 AI 的“思考”和“执行”隔离开。\nHuggingFace 的 Open Deep Research\nAgent 负责生成一段包含它想运行的工具和逻辑的代码。 这段代码在一个隔离的“沙盒”环境中被执行。 沙盒环境可以处理各种“重资产”，比如加载大型文件、图片或音频，这些东西非常消耗 Tokens，但它们始终停留在沙盒里，从未进入过 LLM 的上下文窗口。 沙盒执行完毕后，只把最关键、最简洁的结果（比如一个计算结果、一个文件路径、一个状态变量）选择性地传递回 LLM，供它进行下一步的“思考”。 这个方法的精妙之处在于，沙盒可以跨越多轮对话持续保持状态。这意味着你不必在每一轮交互中都把所有东西重新加载进 LLM 的上下文，极大地节省了成本和 Tokens，实现了对 Token 密集型对象和 LLM 上下文的完美隔离。\nRuntime State Objects 这是一种在代码层面实现隔离的、非常直观的方法。\nModels-Pydantic\n我们可以创建一个专门用于管理状态的数据模型（比如 Python 中的 Pydantic 模型）。这个模型可以有很多个字段，你可以把每个字段想象成一个独立的“桶”。\n可以把对话历史放进“历史桶”。 可以把从数据库检索到的文件内容放进“文件桶”。 可以把工具的输出结果放进“工具结果桶”。 class AgentState(BaseModel): user_goal: str # The user's task goal plan_summary: str # Summary of the current plan tool_outputs: Dict[str, Any] # Tool output bucket recent_messages: List[str] # History bucket (dialogue history) retrieved_files: Dict[str, str] # File bucket (retrieved document contents) 在 Agent 运行的任何阶段，你都可以根据需要，决定要从哪个“桶”里捞出哪些信息，然后组合起来传递给 LLM。\n",
+  "wordCount" : "849",
+  "inLanguage": "en",
+  "datePublished": "2025-07-31T00:00:00Z",
+  "dateModified": "2025-07-31T00:00:00Z",
+  "author":[{
+    "@type": "Person",
+    "name": "Mingrui Guo"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mig217.github.io/post/context-engineering/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Mig's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://mig217.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://mig217.github.io/" accesskey="h" title="Mig&#39;s Blog (Alt + H)">Mig&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://mig217.github.io/post/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/faq/" title="FAQ">
+                    <span>FAQ</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://mig217.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://mig217.github.io/post/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Context Engineering
+    </h1>
+    <div class="post-meta"><span title='2025-07-31 00:00:00 +0000 UTC'>July 31, 2025</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;849 words&nbsp;·&nbsp;Mingrui Guo
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#what-is-context-engineering" aria-label="What is Context Engineering?">What is Context Engineering?</a><ul>
+                        
+                <li>
+                    <a href="#types-of-context-engineering" aria-label="Types of Context Engineering">Types of Context Engineering</a></li>
+                <li>
+                    <a href="#why-is-this-harder-for-agents" aria-label="Why Is This Harder for Agents?">Why Is This Harder for Agents?</a></li>
+                <li>
+                    <a href="#approaches" aria-label="Approaches">Approaches</a></li></ul>
+                </li>
+                <li>
+                    <a href="#writing-context" aria-label="Writing Context">Writing Context</a></li>
+                <li>
+                    <a href="#selecting-context" aria-label="Selecting Context">Selecting Context</a><ul>
+                        
+                <li>
+                    <a href="#%e5%ae%9e%e9%99%85%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="实际应用场景">实际应用场景</a></li></ul>
+                </li>
+                <li>
+                    <a href="#compressing-context" aria-label="Compressing Context">Compressing Context</a><ul>
+                        
+                <li>
+                    <a href="#summarization" aria-label="Summarization">Summarization</a></li>
+                <li>
+                    <a href="#trimming" aria-label="Trimming">Trimming</a></li></ul>
+                </li>
+                <li>
+                    <a href="#isolating-context" aria-label="Isolating Context">Isolating Context</a><ul>
+                        
+                <li>
+                    <a href="#multi-agent-systems" aria-label="Multi-Agent Systems">Multi-Agent Systems</a></li>
+                <li>
+                    <a href="#sandboxed-execution" aria-label="Sandboxed Execution">Sandboxed Execution</a></li>
+                <li>
+                    <a href="#runtime-state-objects" aria-label="Runtime State Objects">Runtime State Objects</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>By 2025, existing models have already become remarkably intelligent. However, even the smartest system cannot perform effectively without understanding what it is being asked to do. <strong>Prompr engineering</strong> refers to the practice of phrasing tasks in an optimal way for large language model-based chatbots. <strong>Context engineering</strong>, on the other hand, represents the next stage - aiming to automate this process within dynamic systems.</p>
+<h2 id="what-is-context-engineering">What is Context Engineering?<a hidden class="anchor" aria-hidden="true" href="#what-is-context-engineering">#</a></h2>
+<p>
+  <a href="https://x.com/tobi/status/1935533422589399127" target="_blank" rel="noopener">Tobi</a>, from Shopify, shared an interesting post in which he expressed his appreciation for the term “Context Engineering.” 
+  Later, <a href="https://x.com/karpathy/status/1937902205765607626" target="_blank" rel="noopener">Karpathy</a> followed up with a brilliant definition:
+</p>
+<blockquote>
+<p>Context engineering is the art and science of filling the context window with just the right information at each step of an agent’s trajectory</p></blockquote>
+<p><a href="https://www.youtube.com/watch?v=LCEmiRjPEtQ" target="_blank" rel="noopener">Karpathy</a> made a powerful analogy: he compared LLMs to a computer&rsquo;s CPU, and the context window to RAM. Just like memory is always limmited, and operating system decides what should be loaded into RAM to keep the  system running effectivly. Similarly, the goal of context engineering is to determine what information should be placed into the limited context window at each step of the LLM&rsquo;s reasoning process.</p>
+<p><img loading="lazy" src="https://substackcdn.com/image/fetch/$s_!vWTB!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa43aafb2-6c01-42b1-9842-bdf5cfdc1092_775x435.png"></p>
+<h3 id="types-of-context-engineering">Types of Context Engineering<a hidden class="anchor" aria-hidden="true" href="#types-of-context-engineering">#</a></h3>
+<p><strong>Context Engineering</strong> is an <a href="https://x.com/dexhorthy/status/1933283008863482067" target="_blank" rel="noopener">umbrella discipline</a> that encompasses several types of contextual inputs:</p>
+<ul>
+<li><strong>Instructions</strong>: Commonly referred to as &ldquo;prompts&rdquo;, these specify what the AI should do.</li>
+<li><strong>Knowledge</strong>: Facts and data retrieved from external files or databases.</li>
+<li><strong>Memories</strong>: Previous converstaion history or reference examples that provide continuity.</li>
+<li><strong>Tools</strong>: Information about which tools that AI can use (e.g., calculator, search engine) and the results returned by these tools.</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="https://pbs.twimg.com/media/GtRmoOqaUAEXH2i?format=jpg&name=large"></p>
+<h3 id="why-is-this-harder-for-agents">Why Is This Harder for Agents?<a hidden class="anchor" aria-hidden="true" href="#why-is-this-harder-for-agents">#</a></h3>
+<p>There are two man reasons why context engineering becomes more challenging for agents:</p>
+<ol>
+<li><strong>Agents typically handle longer-running or more complex tasks.</strong></li>
+<li><strong>Agents extensively use tool calling.</strong></li>
+</ol>
+<p><img loading="lazy" src="https://rlancemartin.github.io/assets/agent_flow.png"></p>
+<p>Both characterstics lead to <strong>increased context load</strong>. For example, in multi-turn tasks, each tool call&rsquo;s feedback gets written to the context window. The first round calls one tool, the second calls another tool&hellip; As the number of rounds increases, the accumulated tool feedback in the context grows continuously, consuming significant tokens.</p>
+<p><img loading="lazy" src="../../static/images/context_engineering.png"></p>
+<p><a href="https://www.dbreunig.com/2025/06/22/how-contexts-fail-and-how-to-fix-them.html">Drew Breunig</a> provides an excellent summary of context failures in his blog post, including:</p>
+<ul>
+<li>
+<p><strong>Context Poisoning</strong>: Malicious or misleading information injected into the context.</p>
+</li>
+<li>
+<p><strong>Context Distraction</strong>: Irrelevant information that diverts attention from the main task.</p>
+</li>
+<li>
+<p><strong>Context Confusion/Curation Errors</strong>: Poor organization or conflicting information.</p>
+</li>
+<li>
+<p><strong>Context Clash</strong>: Contradictory information that creates confusion.</p>
+</li>
+</ul>
+<p>As context length grows, models must process more information, increasing the likelihood of errors: they may become confused due to information conflicts or be misled by injected hallucinations, producing incorrect responses. As Cognition recently emphasized in a blog post:</p>
+<blockquote>
+<p>Context Engineering is effectively the #1 job of engineers building AI agents.</p></blockquote>
+<h3 id="approaches">Approaches<a hidden class="anchor" aria-hidden="true" href="#approaches">#</a></h3>
+<p><a href="https://rlancemartin.github.io/2025/06/23/context_engineering/">Lance</a>在blog post中提到，上下文工程的策略大致可以归纳为四类：</p>
+<ul>
+<li>Writing Context: 将信息保存在上下文窗口之外，以辅助智能体完成任务。</li>
+<li>Selecting Context: 有选择地拉取上下文信息进入上下文窗口，辅助任务执行。</li>
+<li>Compressing Context: 保留最相关的 tokens，丢弃冗余或无关内容，以节省上下文空间。</li>
+<li>Isolating Context: 将上下文进行分段或模块化处理，以减少信息干扰、提升任务清晰度。</li>
+</ul>
+<p><img loading="lazy" src="https://rlancemartin.github.io/assets/context_eng_overview.png"></p>
+<h2 id="writing-context">Writing Context<a hidden class="anchor" aria-hidden="true" href="#writing-context">#</a></h2>
+<p>Writing Context 的核心思想是：把信息保存在 AI 的“短期记忆”（即上下文窗口）之外，让它在需要的时候可以随时读取和参考。
+这就像我们人类在处理复杂问题时的做法一样。我们会做两件事：记笔记和形成记忆。对应到智能体，也可以做这两件事：</p>
+<ul>
+<li>记笔记 -&gt; 使用 “暂存区” (Scratchpad)</li>
+<li>形成记忆 -&gt; 使用 “长期记忆” (Memory)</li>
+</ul>
+<p><strong>Scratchpad：临时笔记</strong></p>
+<p>当 Agent 正在执行一个具体的、单一的任务时，它可以把中间过程的想法、计划或关键信息写到这个暂存区里，供稍后自己查阅。</p>
+<p>Example：<a href="https://www.anthropic.com/engineering/built-multi-agent-research-system">Anthropic’s multi-agent researcher</a></p>
+<blockquote>
+<p>The LeadResearcher begins by thinking through the approach and saving its plan to Memory to persist the context, since if the context window exceeds 200,000 tokens it will be truncated and it is important to retain the plan.</p></blockquote>
+<p>技术实现方式：</p>
+<ul>
+<li>把草稿保存到一个文件中（例如 JSON、TXT）</li>
+<li>将它保存到一个运行时的 state 对象（如 LangGraph 的 state）中</li>
+</ul>
+<p>核心理念：<strong>让智能体“边做边写”，并在需要时查阅它刚刚写的内容</strong>;一旦当前任务完成，暂存区里的内容通常也就不再需要了。</p>
+<p><strong>Memories：多次对话的经验</strong></p>
+<p>Memory 则不同，它用来存放那些希望Agent 能在多次、不同的对话或任务中都能记住的信息。它更像是Agent积累的“经验”。</p>
+<p>Example:</p>
+<ul>
+<li><a href="https://ar5iv.labs.arxiv.org/html/2304.03442">Generative Agents</a>：通过过去交互的反馈，自动合成“记忆块”</li>
+<li><a href="https://help.openai.com/en/articles/8590148-memory-faq">ChatGPT 的记忆功能</a>：自动记录用户喜好、语气、常用信息</li>
+<li><a href="https://forum.cursor.com/t/0-51-memories-feature/98509">Cursor</a> &amp; <a href="https://docs.windsurf.com/windsurf/cascade/memories">Windsurf</a>：根据用户行为自动生成记忆，用于上下文补全</li>
+</ul>
+<p>Agent 在和你的互动中产生了新的信息，它不断接收到新的上下文，也不断动态更新记忆库. 新的信息可以合并到旧的记忆中，形成一个更完整的“个性化背景”。</p>
+<h2 id="selecting-context">Selecting Context<a hidden class="anchor" aria-hidden="true" href="#selecting-context">#</a></h2>
+<p>在Writing Context 中，我们把信息存了起来。现在，Selecting Context 要解决的问题是：如何从海量的信息中，挑出当前最需要的那一部分，然后放进 Agent 有限的“工作记忆”里。</p>
+<p>Agent 可以选择它自己刚刚“写入”暂存区的内容，但这只是最基本的操作。更有趣、也更微妙的是从“长期记忆”中进行选择。为了更好地理解，我们可以类比一下人类的记忆类型：</p>
+<table>
+  <thead>
+      <tr>
+          <th>Memory Type</th>
+          <th>What is Stored</th>
+          <th>Human Example</th>
+          <th>Agent Example</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Semantic</td>
+          <td>Facts</td>
+          <td>Things I learned in school.</td>
+          <td>Facts about a user</td>
+      </tr>
+      <tr>
+          <td>Episodic</td>
+          <td>Experiences</td>
+          <td>Things I did.</td>
+          <td>Past agent actions</td>
+      </tr>
+      <tr>
+          <td>Procedural</td>
+          <td>Instructions</td>
+          <td>Instincts or motor skills.</td>
+          <td>Agent system prompt</td>
+      </tr>
+  </tbody>
+</table>
+<p>这些记忆类型可以通过不同方式拉入上下文窗口，帮助智能体解决特定类型的问题。</p>
+<h3 id="实际应用场景">实际应用场景<a hidden class="anchor" aria-hidden="true" href="#实际应用场景">#</a></h3>
+<p><strong>1. Instructions</strong></p>
+<p>指令或程序记忆通常被记录在规则文件中，比如使用代码智能体时的 CLAUDE.md 文件。这通常是一个包含风格指南或特定项目工具使用通用指令的文件。很多时候，这些内容会被全部拉入上下文中。例如，当你启动 Claude Code 时，它会拉入你项目和组织中的文件。</p>
+<p><strong>2. Facts</strong></p>
+<p>当信息库非常庞大时（比如全公司的文档、所有的历史邮件），我们必须精准地只挑出与当前问题相关的事实。例如企业内部知识库问答，常用技术有2种：</p>
+<ul>
+<li>Embedding-based Similarity Search： 把所有文档都转换成数学向量，当用户提问时，系统会去寻找“意思上”最相近的文档片段。</li>
+<li>Graph Databases： 把信息和它们之间的关系存成一张图，可以进行更复杂的逻辑查询。</li>
+</ul>
+<p><strong>3. Tools</strong></p>
+<p>Agent 在使用多个工具时，如果不加选择地加载所有工具描述，会造成性能下降;有<a href="https://arxiv.org/abs/2505.03275">研究表明</a>，当工具数量超过 30 个时，LLM 开始性能下降，100 个时几乎完全失效. 因此提出了在工具描述上使用RAG技术。</p>
+<p>对每一个工具的描述进行处理，就像处理知识库文档一样。当任务需要时（比如用户说“帮我看看明天北京天气怎么样”），系统会先通过语义搜索，在所有工具中发现“查询天气”这个工具与任务最相关。然后，它只把这一个被“选择”出来的工具的使用说明放进上下文。</p>
+<p><strong>4. Knowledge</strong></p>
+<p>RAG是一个庞大的话题，你可以将记忆视为RAG的一个子集，但RAG的范围当然要广泛得多。</p>
+<p>例子：CodiumAI 的代码检索策略</p>
+<p><a href="https://x.com/_mohansolo?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1899630246862966837%7Ctwgr%5Efb30cffd54a1c3d0097bdc5472f1ace48bfd0fb5%7Ctwcon%5Es2_&amp;ref_url=https%3A%2F%2Fwww.notion.so%2FContext-Engineering-for-Agents-22e785c1c51f80db8d6dc19ebbc9edbc">Windsurf 的 CEO Varun</a> 曾分享过他们是如何为编程助手做知识选择的,他们的流程非常精细：</p>
+<ul>
+<li>
+<p>Smart Chunking：他们不是随机地把代码切成一块块，而是沿着代码的语义边界（比如一个完整的函数、一个类）进行切分，保证了检索到的上下文是完整的。</p>
+</li>
+<li>
+<p>Hybrid Search：他们发现，单纯依赖向量搜索有时并不可靠。因此，他们会结合使用多种技术，比如传统的关键字搜索（grep）、知识图谱，以及向量搜索。</p>
+</li>
+<li>
+<p>LLM-based Re-ranking：从上述所有渠道检索到一堆候选代码片段后，他们会再用一个 LLM 对这些结果进行打分和排序，挑出最优的一个或几个，最后才把这个“精选”出的结果放入最终的上下文窗口。</p>
+</li>
+</ul>
+<p>从这个例子可以看出，Selecting Context 是一个经过层层优化的、高度工程化的过程。</p>
+<h2 id="compressing-context">Compressing Context<a hidden class="anchor" aria-hidden="true" href="#compressing-context">#</a></h2>
+<p>当我们已经写入并选择了信息后，有时会发现，即使是精挑细选出来的内容，也还是太长了，上下文窗口依然放不下。这时，就需要Compressing Context。</p>
+<p>Compressing Context的核心是：只保留执行任务所必需的 Tokens（文本单元），去除冗余信息。</p>
+<h3 id="summarization">Summarization<a hidden class="anchor" aria-hidden="true" href="#summarization">#</a></h3>
+<p>总结是上下文压缩中最常见的方式，可以应用在不同范围和时机上：</p>
+<p><strong>1. 对整个对话进行摘要</strong></p>
+<p>这是一种“兜底”策略，防止对话过长导致系统崩溃。</p>
+<p>Example：<a href="https://docs.anthropic.com/en/docs/claude-code/costs">Claude Code “auto compact”</a></p>
+<p>当你在和 Claude 的代码助手进行长时间对话，快要接近它 20 万 Tokens 的上下文窗口上限时（达到 95%），它会自动触发一个叫“auto compact”的功能。这个功能会把你们之前的整个对话历史进行一次总结，用一段更简短的摘要来代替冗长的原文，从而释放出空间。</p>
+<p><strong>2. 对特定部分进行摘要</strong></p>
+<p>这是一种更巧妙的方法，不在最后时刻才压缩全部内容，而是在过程中对特定部分进行精准压缩。</p>
+<ul>
+<li>
+<p><strong>Completed work sections</strong></p>
+<p>在 AnthropicAI的文章 <a href="https://www.anthropic.com/engineering/built-multi-agent-research-system">How we built our multi-agent research system</a>当一个子任务或一个研究部分完成后，系统只会对这个已完成的部分进行摘要。这样做既保留了这部分工作的结论，又避免了其冗长的过程细节占据宝贵的上下文空间。</p>
+</li>
+<li>
+<p><strong>Passing context to linear sub-agents</strong></p>
+<p><a href="https://cognition.ai/blog/dont-build-multi-agents">Cognition的post Don’t Build Multi-Agents</a>提到agent在处理复杂任务时，把任务分解给不同的子代理。这时，摘要就成了一种信息交接的方式。当主代理把任务交给子代理 1 时，它不会把所有原始上下文都传过去，而是先生成一个摘要，子代理 1 只需要读取这个压缩后的精简版上下文，就能理解任务并开始工作。</p>
+<p><img loading="lazy" src="https://cdn.sanity.io/images/2mc9cv2v/production/836a7407ddf3dfacc0715c0502b4f3ffc7388829-1406x1230.png"></p>
+<h3 id="trimming">Trimming<a hidden class="anchor" aria-hidden="true" href="#trimming">#</a></h3>
+<p>除了生成摘要，还有一种更直接的压缩方式叫“修剪”。它不是重写内容，而是选择性地直接删除那些我们认为不那么重要的 Tokens。</p>
+<ul>
+<li><strong>Heuristics:</strong> 这是最简单的方法。比如，我们可以设定一个简单的规则：“只保留最近的 10 轮对话”，直接丢弃更早的记录。</li>
+<li><strong>Learned Pruning:</strong> 我们可以利用另一个（通常是更小更快的）LLM 模型，让它来判断上下文中的哪些部分与当前任务关系不大，然后将它们“修剪”掉。</li>
+</ul>
+</li>
+</ul>
+<h2 id="isolating-context">Isolating Context<a hidden class="anchor" aria-hidden="true" href="#isolating-context">#</a></h2>
+<p>Isolating Context 的核心思想是：将上下文划分成多个独立部分，让每个 agent 或任务模块只处理自己需要的那一块上下文，从而提升效率和可扩展性。这种方法对于处理极其复杂的任务尤其有效。</p>
+<h3 id="multi-agent-systems">Multi-Agent Systems<a hidden class="anchor" aria-hidden="true" href="#multi-agent-systems">#</a></h3>
+<p>我们不再依赖一个“全能”的 Agent，而是组建一个“Agent 团队”，每个成员都有自己独立的<strong>上下文窗口、工具和指令</strong>，各司其职:</p>
+<p><strong>1. OpenAI Swarm library</strong></p>
+<p>框架的设计是基于<a href="https://openai.github.io/openai-agents-python/ref/agent/">separation of concerns</a>。一个复杂的任务被分解，分配给团队里不同的 AI 代理，每个代理都在自己的独立的上下文窗口里工作，互不打扰。</p>
+<p><strong>2. Anthropic Multi-Agent Research System</strong></p>
+<p><a href="https://www.anthropic.com/engineering/built-multi-agent-research-system">Anthropic的研究</a>中把这一点阐述得更明确。他们让多个子代理并行工作，每个代理都有自己的上下文窗口，去同时探索同一个问题的不同方面。</p>
+<blockquote>
+<p>Subagents facilitate compression by operating in parallel with their own context windows, exploring different aspects of the question simultaneously before condensing the most important tokens for the lead research agent.</p></blockquote>
+<p><img loading="lazy" src="https://www.anthropic.com/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F1198befc0b33726c45692ac40f764022f4de1bf2-4584x2579.png&w=3840&q=75"></p>
+<p>这带来的最大好处是：极大地扩展了整个系统能够处理的信息总量。每个代理都有自己独立的上下文窗口，系统总的处理能力不再受限于单个模型的窗口大小。一个代理可以深入研究子主题 A，另一个代理深入研究子主题 B，最后将各自的研究成果汇总，就能生成一份内容更丰富、更深入的报告。</p>
+<h3 id="sandboxed-execution">Sandboxed Execution<a hidden class="anchor" aria-hidden="true" href="#sandboxed-execution">#</a></h3>
+<p>这种方法是将 AI 的“思考”和“执行”隔离开。</p>
+<p><strong><a href="https://huggingface.co/blog/open-deep-research#:~:text=From%20building%20,it%20can%20still%20use%20it">HuggingFace 的 Open Deep Research</a></strong></p>
+<p><img loading="lazy" src="../../static/images/image.png"></p>
+<ol>
+<li>Agent 负责生成一段包含它想运行的工具和逻辑的代码。</li>
+<li>这段代码在一个隔离的“沙盒”环境中被执行。</li>
+<li>沙盒环境可以处理各种“重资产”，比如加载大型文件、图片或音频，这些东西非常消耗 Tokens，但它们始终停留在沙盒里，从未进入过 LLM 的上下文窗口。</li>
+<li>沙盒执行完毕后，只把最关键、最简洁的结果（比如一个计算结果、一个文件路径、一个状态变量）选择性地传递回 LLM，供它进行下一步的“思考”。</li>
+</ol>
+<p>这个方法的精妙之处在于，沙盒可以跨越多轮对话持续保持状态。这意味着你不必在每一轮交互中都把所有东西重新加载进 LLM 的上下文，极大地节省了成本和 Tokens，实现了对 Token 密集型对象和 LLM 上下文的完美隔离。</p>
+<h3 id="runtime-state-objects">Runtime State Objects<a hidden class="anchor" aria-hidden="true" href="#runtime-state-objects">#</a></h3>
+<p>这是一种在代码层面实现隔离的、非常直观的方法。</p>
+<p><strong><a href="https://docs.pydantic.dev/latest/concepts/models/">Models-Pydantic</a></strong></p>
+<p>我们可以创建一个专门用于管理状态的数据模型（比如 Python 中的 Pydantic 模型）。这个模型可以有很多个字段，你可以把每个字段想象成一个独立的“桶”。</p>
+<ul>
+<li>可以把对话历史放进“历史桶”。</li>
+<li>可以把从数据库检索到的文件内容放进“文件桶”。</li>
+<li>可以把工具的输出结果放进“工具结果桶”。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Py" data-lang="Py"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">AgentState</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">user_goal</span><span class="p">:</span> <span class="nb">str</span>                       <span class="c1"># The user&#39;s task goal</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plan_summary</span><span class="p">:</span> <span class="nb">str</span>                    <span class="c1"># Summary of the current plan</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tool_outputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>         <span class="c1"># Tool output bucket</span>
+</span></span><span class="line"><span class="cl">    <span class="n">recent_messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>           <span class="c1"># History bucket (dialogue history)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">retrieved_files</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>      <span class="c1"># File bucket (retrieved document contents)</span>
+</span></span></code></pre></div><p>在 Agent 运行的任何阶段，你都可以根据需要，决定要从哪个“桶”里捞出哪些信息，然后组合起来传递给 LLM。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://mig217.github.io/tags/context-engineering/">Context Engineering</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://mig217.github.io/post/2025-07-31-coding-agents/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Coding Agents and AI for Vulnerability Detection</span>
+  </a>
+  <a class="next" href="https://mig217.github.io/post/2025-06-21-a-guide-to-reasoning-models/">
+    <span class="title">Next »</span>
+    <br>
+    <span>How to Use Reasoning Models?</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Context Engineering on x"
+            href="https://x.com/intent/tweet/?text=Context%20Engineering&amp;url=https%3a%2f%2fmig217.github.io%2fpost%2fcontext-engineering%2f&amp;hashtags=ContextEngineering">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Context Engineering on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmig217.github.io%2fpost%2fcontext-engineering%2f&amp;title=Context%20Engineering&amp;summary=Context%20Engineering&amp;source=https%3a%2f%2fmig217.github.io%2fpost%2fcontext-engineering%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Context Engineering on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fmig217.github.io%2fpost%2fcontext-engineering%2f&title=Context%20Engineering">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Context Engineering on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmig217.github.io%2fpost%2fcontext-engineering%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Context Engineering on whatsapp"
+            href="https://api.whatsapp.com/send?text=Context%20Engineering%20-%20https%3a%2f%2fmig217.github.io%2fpost%2fcontext-engineering%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Context Engineering on telegram"
+            href="https://telegram.me/share/url?text=Context%20Engineering&amp;url=https%3a%2f%2fmig217.github.io%2fpost%2fcontext-engineering%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Context Engineering on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Context%20Engineering&u=https%3a%2f%2fmig217.github.io%2fpost%2fcontext-engineering%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://mig217.github.io/">Mig&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
