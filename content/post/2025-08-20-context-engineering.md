@@ -1,7 +1,7 @@
 ---
 title: "Context Engineering"
 author: ["Mingrui Guo"]
-date: "2025-07-31"
+date: "2025-08-20"
 categories: ["AI"]
 tags: ["Context Engineering"]
 draft: false

@@ -153,6 +153,24 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Introduction to training LLMs for AI agents
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：这些模型到底是如何训练的？
+本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。
+LLM Training Pipeline LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: 预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。
+General LLM Training Pipeline 从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：
+Pre-training：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。 Classic Post-training / RLHF：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。 RL for Reasoning：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。 三个阶段对比
+阶段 核心目标 数据规模 训练时间 成本级别 主要瓶颈 预训练（Pre-training） 学习预测下一个词，构建知识底座 ~10 万亿 tokens 数月 千万美元级 高质量数据、算力资源 经典后训练 / RLHF（Classic Post-training / RLHF） 让模型符合用户偏好 ~10 万个问题 几天 数万–十万美元 人类反馈数据、评测体系 推理型 RL（RL for Reasoning） 提升推理和思考能力 百万级问题 数周 百万美元级 RL 环境设计、防止自我黑客 成功的关键要素 了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-10-02 00:00:00 +0000 UTC'>October 2, 2025</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;1291 words&nbsp;·&nbsp;Mingrui Guo</footer>
+  <a class="entry-link" aria-label="post link to Introduction to training LLMs for AI agents" href="https://mig217.github.io/post/2025-10-30-training-llms-for-agents/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Memory, Reasoning, and Planning of Language Agents
     </h2>
   </header>

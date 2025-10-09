@@ -6,13 +6,13 @@
     <description>Recent content in Context Engineering on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 31 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 20 Aug 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://mig217.github.io/tags/context-engineering/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Context Engineering</title>
-      <link>https://mig217.github.io/post/context-engineering/</link>
-      <pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/context-engineering/</guid>
+      <link>https://mig217.github.io/post/2025-08-20-context-engineering/</link>
+      <pubDate>Wed, 20 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>https://mig217.github.io/post/2025-08-20-context-engineering/</guid>
       <description>&lt;p&gt;By 2025, existing models have already become remarkably intelligent. However, even the smartest system cannot perform effectively without understanding what it is being asked to do. &lt;strong&gt;Prompr engineering&lt;/strong&gt; refers to the practice of phrasing tasks in an optimal way for large language model-based chatbots. &lt;strong&gt;Context engineering&lt;/strong&gt;, on the other hand, represents the next stage - aiming to automate this process within dynamic systems.&lt;/p&gt;
 &lt;h2 id=&#34;what-is-context-engineering&#34;&gt;What is Context Engineering?&lt;/h2&gt;
 &lt;p&gt;
