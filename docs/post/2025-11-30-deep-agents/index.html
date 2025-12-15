@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Deep Agents From LangGraph | Mig&#39;s Blog</title>
+<meta name="keywords" content="LLM Agents">
+<meta name="description" content="在过去的一年里，AI Agent 的演进出现了两个非常重要的趋势：
+
+智能体正在变得更通用（Generalist）：可以承担越来越多类型的任务；
+智能体的任务时长变得更长（Long-horizon）：能够连续执行几十甚至上百个步骤的复杂任务。
+
+根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。
+
+     
+
+
+与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够组织研究流程、规划任务、调用大量工具，并产出复杂成果。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：
+
+Manus：典型任务需要调用约 50 次工具
+Anthropic Production Agents：实际生产系统常常会进行 数百轮对话与推理
+
+这些长周期、多步骤、工具密集型的系统，被称为 Agentic System。尽管不同项目的具体实现差别较大，但它们普遍遵循以下四个核心原则：
+
+使用 Planning 保证任务方向正确
+
+在超长任务中，如果缺乏规划，模型非常容易偏航。因此 Agentic System 普遍采用明确的任务计划来做“航向控制”。
+常见做法包括：
+
+Manus：使用 todo.md 保存任务清单，并在执行过程中不断读写更新；
+Claude Code：要求用户先批准计划，再执行工具与操作；
+Gemini Deep Research：在执行前强制生成计划、并请求用户确认；
+Anthropic Multi-Agent Researcher：将 research plan 写入文件系统，在关键流程中重新读取，确保最终报告“遵循原计划”；
+
+
+使用 Filesystem 进行 Offload Context
+
+随着工具调用次数、搜索结果、观察内容不断增多，把所有内容保存在消息历史里会快速耗尽上下文窗口。
+因此，可以采用“外部化记忆”机制：
+
+将庞大中间结果（如搜索原始结果）保存到磁盘
+在上下文中只放简短摘要，节省 Tokens
+在需要时再从文件读取完整内容
+长期记忆可以独立保存，不随对话窗口消失
+
+Example:
+
+Anthropic Multi-Agent Researcher：将研究计划写到文件里 → 调研完成后再读回来 → 保证报告结构与原计划一致；
+Manus：将 todo.md 持久化，多次更新、反复读取
+
+文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。">
+<meta name="author" content="Mingrui Guo">
+<link rel="canonical" href="https://mig217.github.io/post/2025-11-30-deep-agents/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.88e0e1e906610daab900858530dbef3bb5c0b4fd2e637c77769aafb256b1009b.css" integrity="sha256-iODh6QZhDaq5AIWFMNvvO7XAtP0uY3x3dpqvslaxAJs=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://mig217.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://mig217.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://mig217.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://mig217.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://mig217.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://mig217.github.io/post/2025-11-30-deep-agents/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://mig217.github.io/post/2025-11-30-deep-agents/">
+  <meta property="og:site_name" content="Mig&#39;s Blog">
+  <meta property="og:title" content="Deep Agents From LangGraph">
+  <meta property="og:description" content="在过去的一年里，AI Agent 的演进出现了两个非常重要的趋势：
+智能体正在变得更通用（Generalist）：可以承担越来越多类型的任务； 智能体的任务时长变得更长（Long-horizon）：能够连续执行几十甚至上百个步骤的复杂任务。 根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。
+与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够组织研究流程、规划任务、调用大量工具，并产出复杂成果。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：
+Manus：典型任务需要调用约 50 次工具 Anthropic Production Agents：实际生产系统常常会进行 数百轮对话与推理 这些长周期、多步骤、工具密集型的系统，被称为 Agentic System。尽管不同项目的具体实现差别较大，但它们普遍遵循以下四个核心原则：
+使用 Planning 保证任务方向正确 在超长任务中，如果缺乏规划，模型非常容易偏航。因此 Agentic System 普遍采用明确的任务计划来做“航向控制”。
+常见做法包括：
+Manus：使用 todo.md 保存任务清单，并在执行过程中不断读写更新； Claude Code：要求用户先批准计划，再执行工具与操作； Gemini Deep Research：在执行前强制生成计划、并请求用户确认； Anthropic Multi-Agent Researcher：将 research plan 写入文件系统，在关键流程中重新读取，确保最终报告“遵循原计划”； 使用 Filesystem 进行 Offload Context 随着工具调用次数、搜索结果、观察内容不断增多，把所有内容保存在消息历史里会快速耗尽上下文窗口。
+因此，可以采用“外部化记忆”机制：
+将庞大中间结果（如搜索原始结果）保存到磁盘 在上下文中只放简短摘要，节省 Tokens 在需要时再从文件读取完整内容 长期记忆可以独立保存，不随对话窗口消失 Example:
+Anthropic Multi-Agent Researcher：将研究计划写到文件里 → 调研完成后再读回来 → 保证报告结构与原计划一致； Manus：将 todo.md 持久化，多次更新、反复读取 文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2025-11-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-11-30T00:00:00+00:00">
+    <meta property="article:tag" content="LLM Agents">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deep Agents From LangGraph">
+<meta name="twitter:description" content="在过去的一年里，AI Agent 的演进出现了两个非常重要的趋势：
+
+智能体正在变得更通用（Generalist）：可以承担越来越多类型的任务；
+智能体的任务时长变得更长（Long-horizon）：能够连续执行几十甚至上百个步骤的复杂任务。
+
+根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。
+
+     
+
+
+与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够组织研究流程、规划任务、调用大量工具，并产出复杂成果。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：
+
+Manus：典型任务需要调用约 50 次工具
+Anthropic Production Agents：实际生产系统常常会进行 数百轮对话与推理
+
+这些长周期、多步骤、工具密集型的系统，被称为 Agentic System。尽管不同项目的具体实现差别较大，但它们普遍遵循以下四个核心原则：
+
+使用 Planning 保证任务方向正确
+
+在超长任务中，如果缺乏规划，模型非常容易偏航。因此 Agentic System 普遍采用明确的任务计划来做“航向控制”。
+常见做法包括：
+
+Manus：使用 todo.md 保存任务清单，并在执行过程中不断读写更新；
+Claude Code：要求用户先批准计划，再执行工具与操作；
+Gemini Deep Research：在执行前强制生成计划、并请求用户确认；
+Anthropic Multi-Agent Researcher：将 research plan 写入文件系统，在关键流程中重新读取，确保最终报告“遵循原计划”；
+
+
+使用 Filesystem 进行 Offload Context
+
+随着工具调用次数、搜索结果、观察内容不断增多，把所有内容保存在消息历史里会快速耗尽上下文窗口。
+因此，可以采用“外部化记忆”机制：
+
+将庞大中间结果（如搜索原始结果）保存到磁盘
+在上下文中只放简短摘要，节省 Tokens
+在需要时再从文件读取完整内容
+长期记忆可以独立保存，不随对话窗口消失
+
+Example:
+
+Anthropic Multi-Agent Researcher：将研究计划写到文件里 → 调研完成后再读回来 → 保证报告结构与原计划一致；
+Manus：将 todo.md 持久化，多次更新、反复读取
+
+文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://mig217.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Deep Agents From LangGraph",
+      "item": "https://mig217.github.io/post/2025-11-30-deep-agents/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Deep Agents From LangGraph",
+  "name": "Deep Agents From LangGraph",
+  "description": "在过去的一年里，AI Agent 的演进出现了两个非常重要的趋势：\n智能体正在变得更通用（Generalist）：可以承担越来越多类型的任务； 智能体的任务时长变得更长（Long-horizon）：能够连续执行几十甚至上百个步骤的复杂任务。 根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。\n与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够组织研究流程、规划任务、调用大量工具，并产出复杂成果。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：\nManus：典型任务需要调用约 50 次工具 Anthropic Production Agents：实际生产系统常常会进行 数百轮对话与推理 这些长周期、多步骤、工具密集型的系统，被称为 Agentic System。尽管不同项目的具体实现差别较大，但它们普遍遵循以下四个核心原则：\n使用 Planning 保证任务方向正确 在超长任务中，如果缺乏规划，模型非常容易偏航。因此 Agentic System 普遍采用明确的任务计划来做“航向控制”。\n常见做法包括：\nManus：使用 todo.md 保存任务清单，并在执行过程中不断读写更新； Claude Code：要求用户先批准计划，再执行工具与操作； Gemini Deep Research：在执行前强制生成计划、并请求用户确认； Anthropic Multi-Agent Researcher：将 research plan 写入文件系统，在关键流程中重新读取，确保最终报告“遵循原计划”； 使用 Filesystem 进行 Offload Context 随着工具调用次数、搜索结果、观察内容不断增多，把所有内容保存在消息历史里会快速耗尽上下文窗口。\n因此，可以采用“外部化记忆”机制：\n将庞大中间结果（如搜索原始结果）保存到磁盘 在上下文中只放简短摘要，节省 Tokens 在需要时再从文件读取完整内容 长期记忆可以独立保存，不随对话窗口消失 Example:\nAnthropic Multi-Agent Researcher：将研究计划写到文件里 → 调研完成后再读回来 → 保证报告结构与原计划一致； Manus：将 todo.md 持久化，多次更新、反复读取 文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。\n",
+  "keywords": [
+    "LLM Agents"
+  ],
+  "articleBody": "在过去的一年里，AI Agent 的演进出现了两个非常重要的趋势：\n智能体正在变得更通用（Generalist）：可以承担越来越多类型的任务； 智能体的任务时长变得更长（Long-horizon）：能够连续执行几十甚至上百个步骤的复杂任务。 根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。\n与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够组织研究流程、规划任务、调用大量工具，并产出复杂成果。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：\nManus：典型任务需要调用约 50 次工具 Anthropic Production Agents：实际生产系统常常会进行 数百轮对话与推理 这些长周期、多步骤、工具密集型的系统，被称为 Agentic System。尽管不同项目的具体实现差别较大，但它们普遍遵循以下四个核心原则：\n使用 Planning 保证任务方向正确 在超长任务中，如果缺乏规划，模型非常容易偏航。因此 Agentic System 普遍采用明确的任务计划来做“航向控制”。\n常见做法包括：\nManus：使用 todo.md 保存任务清单，并在执行过程中不断读写更新； Claude Code：要求用户先批准计划，再执行工具与操作； Gemini Deep Research：在执行前强制生成计划、并请求用户确认； Anthropic Multi-Agent Researcher：将 research plan 写入文件系统，在关键流程中重新读取，确保最终报告“遵循原计划”； 使用 Filesystem 进行 Offload Context 随着工具调用次数、搜索结果、观察内容不断增多，把所有内容保存在消息历史里会快速耗尽上下文窗口。\n因此，可以采用“外部化记忆”机制：\n将庞大中间结果（如搜索原始结果）保存到磁盘 在上下文中只放简短摘要，节省 Tokens 在需要时再从文件读取完整内容 长期记忆可以独立保存，不随对话窗口消失 Example:\nAnthropic Multi-Agent Researcher：将研究计划写到文件里 → 调研完成后再读回来 → 保证报告结构与原计划一致； Manus：将 todo.md 持久化，多次更新、反复读取 文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。\n使用Sub-agents 隔离上下文与任务 Agentic System 另一个关键能力是：任务拆分与子智能体协同。原因很简单：每个子智能体都有独立的上下文窗口。\n主智能体无需承载所有推理上下文 子智能体可以专注于独立的子任务 可以并行化任务（如资料收集、数据比对） Example:\nClaude Code：代码分析和修复任务由不同子 agent 完成 Anthropic Multi-Agent Researcher：子 agent 专门负责检索、整理、验证 Manus：子 agent 负责某些并行可拆解的子任务 Open Deep Research：子智能体只负责“收集信息”，最终报告由主 agent 统一撰写，避免结构冲突 Cognition / Walden Yan 提到过“多智能体隐式决策冲突的问题”，如果多个子智能体分别撰写部分内容，那么最终合并会出现风格不统一、推理冲突、结构不一致。\n因此子智能体应该只做可并行、可聚合、无冲突的任务，例如：信息收集、文献爬取、数据提取、独立判断或评分，不建议独立撰写报告章节（容易冲突）。\n使用精心设计的 Prompt Engineering Agentic System 的 System Prompt 通常非常巨大、精细、迭代多次。\nExample:\nClaude Code几十次迭代 Manus长而复杂 Open-Deep-Research结构明确、角色分工清晰 尽管 Agentic System 在架构上看似只是：“LLM + 工具调用 + 循环”，但背后依赖的 Prompt 复杂度非常高，用于确保：\n工具调用顺序正确 输出格式一致 避免幻觉 长周期行为稳定 Sub-agent 的工作可被主 agent 正确整合 因此 Prompt 工程是 Agentic System 的“隐形关键工程”。\nSummery: Agentic System 的方法论矩阵\nAgent Filesystem Planning Sub-Agents Prompting Manus ✔ 使用文件系统 ✔ todo.md \u0026 重读计划 ✔ 多个并行子 agent ✔ 大量 prompt 迭代 Anthropic Researcher ✔ 保存计划与资料 ✔ 写计划并重复读取 ✔ delegated researcher – Open Deep Research ✔ 使用 LangGraph State ✔ think tool ✔ 信息收集子 agent ✔ 自定义 System Prompt Claude Code ✔ 使用文件系统存代码与补丁 ✔ plan mode ✔ 任务拆分 ✔ 强大的 prompt 体系 这些系统尽管背景不同，却共享了深度智能体的“四大原则”：\nPlanning：保持方向、避免偏航 FileSystem：外部化记忆、节省上下文窗口 Sub-Agent：上下文隔离、任务解耦 Prompt Engineering：确保整个系统稳定运行 Planning 随着智能体承担的任务越来越复杂，例如多文件代码修改、多轮研究任务、产品设计等，仅依靠“下一步该做什么”的即时推理已经完全不够。Agentic System 都引入了 Planning 工具：\nClaude Code: 使用 TodoWrite 工具生成带审批的任务计划，允许用户确认再执行。 Manus: 自动生成并持续更新 todo.md 文件，贯穿整个任务流程。 智能体需要一个结构化、可追踪、可更新的任务计划（TODO 列表），并将其保存到“状态”（State）中。\n构建 State Planning 需要在State中维护以下信息:\nmessages: 对话历史\ntodos: 任务规划和进度追踪\nfiles: 上下文信息存储\n因此，我们扩展默认的 AgentState，创建 DeepAgentState：\n定义 TODO 数据结构 from typing import Literal from typing_extensions import TypedDict class Todo(TypedDict): \"\"\"结构化的任务项,用于追踪复杂工作流的进度 属性: content: 简短、具体的任务描述 status: 当前状态 - pending(待处理)、in_progress(进行中)或 completed(已完成) \"\"\" content: str status: Literal[\"pending\", \"in_progress\", \"completed\"] 文件系统Reducer 为了支持增量式的文件更新,我们需要一个 reducer function:\ndef file_reducer(left, right): \"\"\"合并两个文件字典,右侧优先 作为 files 字段的归约函数,允许对虚拟文件系统进行增量更新 参数: left: 左侧字典(现有文件) right: 右侧字典(新增/更新的文件) 返回: 合并后的字典,右侧值覆盖左侧值 \"\"\" if left is None: return right elif right is None: return left else: return {**left, **right} 扩展Agent的State 通过继承 AgentState，我们保留 messages，同时加入 todos 和 files。这样，整个 Agent 就在一个统一的状态树中管理：对话内容、任务计划、虚拟文件。这极大增强了 agent 的能力与可控性。\nfrom typing import Annotated, NotRequired from langgraph.prebuilt.chat_agent_executor import AgentState class DeepAgentState(AgentState): \"\"\"扩展的代理状态,包含任务追踪和虚拟文件系统 继承自 LangGraph 的 AgentState 并添加: - todos: Todo 项列表,用于任务规划和进度追踪 - files: 虚拟文件系统,存储为文件名到内容的字典映射 \"\"\" todos: NotRequired[list[Todo]] files: Annotated[NotRequired[dict[str, str]], file_reducer] Planning 工具设计 为了让智能体能够管理自己的任务计划，我们需要设计两个基本工具：\nwrite_todos：写入或更新 TODO 列表\nread_todos：从 state 中读取当前 TODO，辅助决策\nwrite_todos 这个工具会将 LLM 生成的 Todo 列表直接写入 state：\n@tool(description=WRITE_TODOS_DESCRIPTION, parse_docstring=True) def write_todos(todos, tool_call_id): return Command( update={ \"todos\": todos, \"messages\": [ ToolMessage(f\"Updated todo list to {todos}\", tool_call_id=tool_call_id) ], } ) 工具返回 Command\n更新了 state.todos 写入了一条 ToolMessage 因此，执行 write_todos 后，智能体的状态自动包含新的任务计划。\nread_todos @tool(parse_docstring=True) def read_todos(state, tool_call_id): todos = state.get(\"todos\", []) ... 与 write_todos 不同，read_todos 返回的是字符串，不是 Command。\n但 create_react_agent 会自动将字符串包装成 ToolMessage 并更新 messages 字段。\n价值与优势 TODO 是智能体的“显式认知步骤（Explicit Cognition）”: 帮助模型在长任务中拆解、记忆、执行。\nTODO 是智能体的“规划工具”, 支持如下能力：\n多步骤执行 子任务跟踪 状态回溯 推理清晰化 避免遗忘中间步骤 TODO 是智能体的“可控接口”: 开发者或用户可以“审阅”智能体的计划，从而让智能体更可控、更稳定。 FileSystem 在长时间运行的代理任务中，代理可能需要执行数十次工具调用。在这个过程中，重要的上下文信息可能会丢失或被遗忘。通过将关键信息保存到文件中，我们可以：\n持久化重要信息 在多次工具调用后重新获取上下文 更好地引导代理完成复杂任务 虚拟文件系统设计 我们将定义三个工具，并为它们提供清晰的描述，以便 LLM 能够理解和使用它们：\nls：列出虚拟文件系统（即字典的 所有键）中的所有文件。\nread_file：根据指定的文件路径读取文件内容。\nwrite_file：将指定的内容写入指定的文件路径。\n核心实现 列出文件：ls 使用 Injected State 访问图状态 从状态中获取 files 字典并返回所有键（文件路径）的列表 @tool(description=LS_DESCRIPTION) def ls(state: Annotated[DeepAgentState, InjectedState]) -\u003e list[str]: return list(state.get(\"files\", {}).keys()) 读取文件：read_file 这个工具支持：\n根据路径读取内容 根据 offset 和 limit 分页读取 自动编号（方便调试） 长行截断 @tool(description=READ_FILE_DESCRIPTION, parse_docstring=True) def read_file(file_path, state, offset=0, limit=2000) -\u003e str: ... 读取流程：查看文件是否存在 -\u003e 将内容按行切分 -\u003e 按 offset、limit 截取 -\u003e 返回带行号的结果。\n效果：\n1 The MCP (Model Context Protocol) is... 2 It allows systems to... 写入文件：write_file 写文件需要更新 state，因此使用 Command：\n@tool(description=WRITE_FILE_DESCRIPTION, parse_docstring=True) def write_file(file_path, content, state, tool_call_id) -\u003e Command: files = state.get(\"files\", {}) files[file_path] = content return Command( update={ \"files\": files, \"messages\": [ ToolMessage(f\"Updated file {file_path}\", tool_call_id=tool_call_id) ], } ) 实现更新 state.files，写入 ToolMessage 到 state.messages\nSummary 虚拟文件系统是构建深度代理的重要基础设施。虽然在简单示例中可能显得不必要,但在处理复杂的多步骤任务时，它能够显著提升代理的可靠性和性能。\n✓ 防止 LLM 遗忘重要信息\n✓ 随时加载任意步骤的上下文\n✓ 支持多文件代码生成\n✓ 支持复杂研究任务（多次搜索、多次整合）\n✓ 支持“草稿—修改—再草稿”的循环\n✓ 支持在不同 agent 之间共享状态\n这套文件操作工具（ls、read_file、write_file）将是深度代理抽象的核心功能之一。通过理解其底层实现原理——基于 LangGraph 状态的模拟文件系统——你可以根据自己的需求进行定制和扩展。\n",
+  "wordCount" : "573",
+  "inLanguage": "en",
+  "datePublished": "2025-11-30T00:00:00Z",
+  "dateModified": "2025-11-30T00:00:00Z",
+  "author":[{
+    "@type": "Person",
+    "name": "Mingrui Guo"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mig217.github.io/post/2025-11-30-deep-agents/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Mig's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://mig217.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://mig217.github.io/" accesskey="h" title="Mig&#39;s Blog (Alt + H)">Mig&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://mig217.github.io/post/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/faq/" title="FAQ">
+                    <span>FAQ</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://mig217.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://mig217.github.io/post/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Deep Agents From LangGraph
+    </h1>
+    <div class="post-meta"><span title='2025-11-30 00:00:00 +0000 UTC'>November 30, 2025</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;573 words&nbsp;·&nbsp;Mingrui Guo
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#planning" aria-label="Planning">Planning</a><ul>
+                        
+                <li>
+                    <a href="#%e6%9e%84%e5%bb%ba-state" aria-label="构建 State">构建 State</a></li>
+                <li>
+                    <a href="#planning-%e5%b7%a5%e5%85%b7%e8%ae%be%e8%ae%a1" aria-label="Planning 工具设计">Planning 工具设计</a></li>
+                <li>
+                    <a href="#%e4%bb%b7%e5%80%bc%e4%b8%8e%e4%bc%98%e5%8a%bf" aria-label="价值与优势">价值与优势</a></li></ul>
+                </li>
+                <li>
+                    <a href="#filesystem" aria-label="FileSystem">FileSystem</a><ul>
+                        
+                <li>
+                    <a href="#%e8%99%9a%e6%8b%9f%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1" aria-label="虚拟文件系统设计">虚拟文件系统设计</a></li>
+                <li>
+                    <a href="#%e6%a0%b8%e5%bf%83%e5%ae%9e%e7%8e%b0" aria-label="核心实现">核心实现</a></li>
+                <li>
+                    <a href="#summary" aria-label="Summary">Summary</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>在过去的一年里，AI Agent 的演进出现了两个非常重要的趋势：</p>
+<ol>
+<li><strong>智能体正在变得更通用（Generalist）</strong>：可以承担越来越多类型的任务；</li>
+<li><strong>智能体的任务时长变得更长（Long-horizon）</strong>：能够连续执行几十甚至上百个步骤的复杂任务。</li>
+</ol>
+<p>根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。</p>
+<figure class="align-center">
+    <img loading="lazy" src="/static/images/length-of-tasks-log.png" width="700px"/> 
+</figure>
+
+<p>与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够<strong>组织研究流程、规划任务、调用大量工具，并产出复杂成果</strong>。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：</p>
+<ul>
+<li><strong>Manus</strong>：典型任务需要调用约 50 次工具</li>
+<li><strong>Anthropic Production Agents</strong>：实际生产系统常常会进行 数百轮对话与推理</li>
+</ul>
+<p>这些长周期、多步骤、工具密集型的系统，被称为 <strong>Agentic System</strong>。尽管不同项目的具体实现差别较大，但它们普遍遵循以下四个核心原则：</p>
+<ol>
+<li><strong>使用 Planning 保证任务方向正确</strong></li>
+</ol>
+<p>在超长任务中，如果缺乏规划，模型非常容易偏航。因此 Agentic System 普遍采用明确的任务计划来做“航向控制”。</p>
+<p>常见做法包括：</p>
+<ul>
+<li><strong>Manus</strong>：使用 <code>todo.md</code> 保存任务清单，并在执行过程中不断读写更新；</li>
+<li><strong>Claude Code</strong>：要求用户先批准计划，再执行工具与操作；</li>
+<li><strong>Gemini Deep Research</strong>：在执行前强制生成计划、并请求用户确认；</li>
+<li><strong>Anthropic Multi-Agent Researcher</strong>：将 research plan 写入文件系统，在关键流程中重新读取，确保最终报告“遵循原计划”；</li>
+</ul>
+<ol start="2">
+<li><strong>使用 Filesystem 进行 Offload Context</strong></li>
+</ol>
+<p>随着工具调用次数、搜索结果、观察内容不断增多，把所有内容保存在消息历史里会快速耗尽上下文窗口。</p>
+<p>因此，可以采用“外部化记忆”机制：</p>
+<ul>
+<li>将庞大中间结果（如搜索原始结果）保存到磁盘</li>
+<li>在上下文中只放简短摘要，节省 Tokens</li>
+<li>在需要时再从文件读取完整内容</li>
+<li>长期记忆可以独立保存，不随对话窗口消失</li>
+</ul>
+<p>Example:</p>
+<ul>
+<li><strong>Anthropic Multi-Agent Researcher</strong>：将研究计划写到文件里 → 调研完成后再读回来 → 保证报告结构与原计划一致；</li>
+<li><strong>Manus</strong>：将 <code>todo.md</code> 持久化，多次更新、反复读取</li>
+</ul>
+<p>文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。</p>
+<ol start="3">
+<li><strong>使用Sub-agents 隔离上下文与任务</strong></li>
+</ol>
+<p>Agentic System 另一个关键能力是：任务拆分与子智能体协同。原因很简单：每个子智能体都有独立的上下文窗口。</p>
+<ul>
+<li>主智能体无需承载所有推理上下文</li>
+<li>子智能体可以专注于独立的子任务</li>
+<li>可以并行化任务（如资料收集、数据比对）</li>
+</ul>
+<p>Example:</p>
+<ul>
+<li><strong>Claude Code</strong>：代码分析和修复任务由不同子 agent 完成</li>
+<li><strong>Anthropic Multi-Agent Researcher</strong>：子 agent 专门负责检索、整理、验证</li>
+<li><strong>Manus</strong>：子 agent 负责某些并行可拆解的子任务</li>
+<li><strong>Open Deep Research</strong>：子智能体只负责“收集信息”，最终报告由主 agent 统一撰写，避免结构冲突</li>
+</ul>
+<p>Cognition / Walden Yan 提到过“多智能体隐式决策冲突的问题”，如果多个子智能体分别撰写部分内容，那么最终合并会出现<strong>风格不统一、推理冲突、结构不一致</strong>。</p>
+<p>因此子智能体应该只做可并行、可聚合、无冲突的任务，例如：信息收集、文献爬取、数据提取、独立判断或评分，<strong>不建议独立撰写报告章节（容易冲突）</strong>。</p>
+<ol start="4">
+<li><strong>使用精心设计的 Prompt Engineering</strong></li>
+</ol>
+<p>Agentic System 的 System Prompt 通常非常巨大、精细、迭代多次。</p>
+<p>Example:</p>
+<ul>
+<li><strong>Claude Code</strong>几十次迭代</li>
+<li><strong>Manus</strong>长而复杂</li>
+<li><strong>Open-Deep-Research</strong>结构明确、角色分工清晰</li>
+</ul>
+<p>尽管 Agentic System 在架构上看似只是：“LLM + 工具调用 + 循环”，但背后依赖的 Prompt 复杂度非常高，用于确保：</p>
+<ul>
+<li>工具调用顺序正确</li>
+<li>输出格式一致</li>
+<li>避免幻觉</li>
+<li>长周期行为稳定</li>
+<li>Sub-agent 的工作可被主 agent 正确整合</li>
+</ul>
+<p>因此 Prompt 工程是 Agentic System 的“隐形关键工程”。</p>
+<p><strong>Summery: Agentic System 的方法论矩阵</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Agent</th>
+          <th>Filesystem</th>
+          <th>Planning</th>
+          <th>Sub-Agents</th>
+          <th>Prompting</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Manus</td>
+          <td>✔ 使用文件系统</td>
+          <td>✔ todo.md &amp; 重读计划</td>
+          <td>✔ 多个并行子 agent</td>
+          <td>✔ 大量 prompt 迭代</td>
+      </tr>
+      <tr>
+          <td>Anthropic Researcher</td>
+          <td>✔ 保存计划与资料</td>
+          <td>✔ 写计划并重复读取</td>
+          <td>✔ delegated researcher</td>
+          <td>–</td>
+      </tr>
+      <tr>
+          <td>Open Deep Research</td>
+          <td>✔ 使用 LangGraph State</td>
+          <td>✔ think tool</td>
+          <td>✔ 信息收集子 agent</td>
+          <td>✔ 自定义 System Prompt</td>
+      </tr>
+      <tr>
+          <td>Claude Code</td>
+          <td>✔ 使用文件系统存代码与补丁</td>
+          <td>✔ plan mode</td>
+          <td>✔ 任务拆分</td>
+          <td>✔ 强大的 prompt 体系</td>
+      </tr>
+  </tbody>
+</table>
+<p>这些系统尽管背景不同，却共享了深度智能体的“四大原则”：</p>
+<ul>
+<li>Planning：保持方向、避免偏航</li>
+<li>FileSystem：外部化记忆、节省上下文窗口</li>
+<li>Sub-Agent：上下文隔离、任务解耦</li>
+<li>Prompt Engineering：确保整个系统稳定运行</li>
+</ul>
+<h2 id="planning">Planning<a hidden class="anchor" aria-hidden="true" href="#planning">#</a></h2>
+<p>随着智能体承担的任务越来越复杂，例如多文件代码修改、多轮研究任务、产品设计等，仅依靠“下一步该做什么”的即时推理已经完全不够。Agentic System 都引入了 Planning 工具：</p>
+<ul>
+<li><strong>Claude Code</strong>: 使用 <code>TodoWrite</code> 工具生成带审批的任务计划，允许用户确认再执行。</li>
+<li><strong>Manus</strong>: 自动生成并持续更新 <code>todo.md</code> 文件，贯穿整个任务流程。</li>
+</ul>
+<p><strong>智能体需要一个结构化、可追踪、可更新的任务计划（TODO 列表），并将其保存到“状态”（State）中。</strong></p>
+<h3 id="构建-state">构建 State<a hidden class="anchor" aria-hidden="true" href="#构建-state">#</a></h3>
+<p>Planning 需要在State中维护以下信息:</p>
+<ul>
+<li>
+<p><code>messages</code>: 对话历史</p>
+</li>
+<li>
+<p><code>todos</code>: 任务规划和进度追踪</p>
+</li>
+<li>
+<p><code>files</code>: 上下文信息存储</p>
+</li>
+</ul>
+<p>因此，我们扩展默认的 <code>AgentState</code>，创建 <code>DeepAgentState</code>：</p>
+<ol>
+<li><strong>定义 TODO 数据结构</strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Todo</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;结构化的任务项,用于追踪复杂工作流的进度
+</span></span></span><span class="line"><span class="cl"><span class="s2">    
+</span></span></span><span class="line"><span class="cl"><span class="s2">    属性:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        content: 简短、具体的任务描述
+</span></span></span><span class="line"><span class="cl"><span class="s2">        status: 当前状态 - pending(待处理)、in_progress(进行中)或 completed(已完成)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span>
+</span></span><span class="line"><span class="cl">    <span class="n">status</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&#34;pending&#34;</span><span class="p">,</span> <span class="s2">&#34;in_progress&#34;</span><span class="p">,</span> <span class="s2">&#34;completed&#34;</span><span class="p">]</span>
+</span></span></code></pre></div><ol start="2">
+<li><strong>文件系统Reducer</strong></li>
+</ol>
+<p>为了支持增量式的文件更新,我们需要一个 reducer function:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Py" data-lang="Py"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">file_reducer</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;合并两个文件字典,右侧优先
+</span></span></span><span class="line"><span class="cl"><span class="s2">    
+</span></span></span><span class="line"><span class="cl"><span class="s2">    作为 files 字段的归约函数,允许对虚拟文件系统进行增量更新
+</span></span></span><span class="line"><span class="cl"><span class="s2">    
+</span></span></span><span class="line"><span class="cl"><span class="s2">    参数:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        left: 左侧字典(现有文件)
+</span></span></span><span class="line"><span class="cl"><span class="s2">        right: 右侧字典(新增/更新的文件)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    
+</span></span></span><span class="line"><span class="cl"><span class="s2">    返回:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        合并后的字典,右侧值覆盖左侧值
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">left</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">right</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">right</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">left</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">{</span><span class="o">**</span><span class="n">left</span><span class="p">,</span> <span class="o">**</span><span class="n">right</span><span class="p">}</span>
+</span></span></code></pre></div><ol start="3">
+<li><strong>扩展Agent的State</strong></li>
+</ol>
+<p>通过继承 <code>AgentState</code>，我们保留 <code>messages</code>，同时加入 <code>todos</code> 和 <code>files</code>。这样，整个 Agent 就在一个统一的状态树中管理：对话内容、任务计划、虚拟文件。这极大增强了 agent 的能力与可控性。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Py" data-lang="Py"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">NotRequired</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langgraph.prebuilt.chat_agent_executor</span> <span class="kn">import</span> <span class="n">AgentState</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">DeepAgentState</span><span class="p">(</span><span class="n">AgentState</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;扩展的代理状态,包含任务追踪和虚拟文件系统
+</span></span></span><span class="line"><span class="cl"><span class="s2">    
+</span></span></span><span class="line"><span class="cl"><span class="s2">    继承自 LangGraph 的 AgentState 并添加:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - todos: Todo 项列表,用于任务规划和进度追踪
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - files: 虚拟文件系统,存储为文件名到内容的字典映射
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">todos</span><span class="p">:</span> <span class="n">NotRequired</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Todo</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">files</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">NotRequired</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span> <span class="n">file_reducer</span><span class="p">]</span>
+</span></span></code></pre></div><h3 id="planning-工具设计">Planning 工具设计<a hidden class="anchor" aria-hidden="true" href="#planning-工具设计">#</a></h3>
+<p>为了让智能体能够管理自己的任务计划，我们需要设计两个基本工具：</p>
+<ul>
+<li>
+<p><code>write_todos</code>：写入或更新 TODO 列表</p>
+</li>
+<li>
+<p><code>read_todos</code>：从 state 中读取当前 TODO，辅助决策</p>
+</li>
+</ul>
+<ol>
+<li><strong><code>write_todos</code></strong></li>
+</ol>
+<p>这个工具会将 LLM 生成的 Todo 列表直接写入 state：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Py" data-lang="Py"><span class="line"><span class="cl"><span class="nd">@tool</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">WRITE_TODOS_DESCRIPTION</span><span class="p">,</span> <span class="n">parse_docstring</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">write_todos</span><span class="p">(</span><span class="n">todos</span><span class="p">,</span> <span class="n">tool_call_id</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">Command</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">update</span><span class="o">=</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;todos&#34;</span><span class="p">:</span> <span class="n">todos</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;messages&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ToolMessage</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Updated todo list to </span><span class="si">{</span><span class="n">todos</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">tool_call_id</span><span class="o">=</span><span class="n">tool_call_id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span></code></pre></div><p>工具返回 <code>Command</code></p>
+<ul>
+<li>更新了 <code>state.todos</code></li>
+<li>写入了一条 <code>ToolMessage</code></li>
+</ul>
+<p>因此，执行 <code>write_todos</code> 后，智能体的状态自动包含新的任务计划。</p>
+<ol start="2">
+<li><strong><code>read_todos</code></strong></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Py" data-lang="Py"><span class="line"><span class="cl"><span class="nd">@tool</span><span class="p">(</span><span class="n">parse_docstring</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read_todos</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">tool_call_id</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">todos</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;todos&#34;</span><span class="p">,</span> <span class="p">[])</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span></code></pre></div><p>与 <code>write_todos</code> 不同，<code>read_todos</code> 返回的是字符串，不是 <code>Command</code>。</p>
+<p>但 <code>create_react_agent</code> 会自动将字符串包装成 <code>ToolMessage</code> 并更新 <code>messages</code> 字段。</p>
+<h3 id="价值与优势">价值与优势<a hidden class="anchor" aria-hidden="true" href="#价值与优势">#</a></h3>
+<ol>
+<li>
+<p>TODO 是智能体的“显式认知步骤（Explicit Cognition）”: 帮助模型在长任务中拆解、记忆、执行。</p>
+</li>
+<li>
+<p>TODO 是智能体的“规划工具”, 支持如下能力：</p>
+</li>
+</ol>
+<ul>
+<li>多步骤执行</li>
+<li>子任务跟踪</li>
+<li>状态回溯</li>
+<li>推理清晰化</li>
+<li>避免遗忘中间步骤</li>
+</ul>
+<ol start="3">
+<li>TODO 是智能体的“可控接口”: 开发者或用户可以“审阅”智能体的计划，从而让智能体更可控、更稳定。</li>
+</ol>
+<h2 id="filesystem">FileSystem<a hidden class="anchor" aria-hidden="true" href="#filesystem">#</a></h2>
+<p>在长时间运行的代理任务中，代理可能需要执行数十次工具调用。在这个过程中，重要的上下文信息可能会丢失或被遗忘。通过将关键信息保存到文件中，我们可以：</p>
+<ul>
+<li>持久化重要信息</li>
+<li>在多次工具调用后重新获取上下文</li>
+<li>更好地引导代理完成复杂任务</li>
+</ul>
+<h3 id="虚拟文件系统设计">虚拟文件系统设计<a hidden class="anchor" aria-hidden="true" href="#虚拟文件系统设计">#</a></h3>
+<p>我们将定义三个工具，并为它们提供清晰的描述，以便 LLM 能够理解和使用它们：</p>
+<p><code>ls</code>：列出虚拟文件系统（即字典的 所有键）中的所有文件。</p>
+<p><code>read_file</code>：根据指定的文件路径读取文件内容。</p>
+<p><code>write_file</code>：将指定的内容写入指定的文件路径。</p>
+<h3 id="核心实现">核心实现<a hidden class="anchor" aria-hidden="true" href="#核心实现">#</a></h3>
+<ol>
+<li><strong>列出文件：<code>ls</code></strong></li>
+</ol>
+<ul>
+<li>使用 Injected State 访问图状态</li>
+<li>从状态中获取 files 字典并返回所有键（文件路径）的列表</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Py" data-lang="Py"><span class="line"><span class="cl"><span class="nd">@tool</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">LS_DESCRIPTION</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">ls</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">DeepAgentState</span><span class="p">,</span> <span class="n">InjectedState</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;files&#34;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</span></span></code></pre></div><ol start="2">
+<li><strong>读取文件：<code>read_file</code></strong></li>
+</ol>
+<p>这个工具支持：</p>
+<ul>
+<li>根据路径读取内容</li>
+<li>根据 <code>offset</code> 和 <code>limit</code> 分页读取</li>
+<li>自动编号（方便调试）</li>
+<li>长行截断</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Py" data-lang="Py"><span class="line"><span class="cl"><span class="nd">@tool</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">READ_FILE_DESCRIPTION</span><span class="p">,</span> <span class="n">parse_docstring</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span></code></pre></div><p>读取流程：查看文件是否存在 -&gt; 将内容按行切分 -&gt; 按 <code>offset</code>、<code>limit</code> 截取 -&gt; 返回带行号的结果。</p>
+<p>效果：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vbnet" data-lang="vbnet"><span class="line"><span class="cl">     <span class="n">1</span>   <span class="n">The</span> <span class="n">MCP</span> <span class="p">(</span><span class="n">Model</span> <span class="n">Context</span> <span class="n">Protocol</span><span class="p">)</span> <span class="ow">is</span><span class="p">...</span>
+</span></span><span class="line"><span class="cl">     <span class="n">2</span>   <span class="n">It</span> <span class="n">allows</span> <span class="n">systems</span> <span class="k">to</span><span class="p">...</span>
+</span></span></code></pre></div><ol start="3">
+<li><strong>写入文件：<code>write_file</code></strong></li>
+</ol>
+<p>写文件需要更新 <code>state</code>，因此使用 <code>Command</code>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Py" data-lang="Py"><span class="line"><span class="cl"><span class="nd">@tool</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">WRITE_FILE_DESCRIPTION</span><span class="p">,</span> <span class="n">parse_docstring</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">write_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">tool_call_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Command</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">files</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;files&#34;</span><span class="p">,</span> <span class="p">{})</span>
+</span></span><span class="line"><span class="cl">    <span class="n">files</span><span class="p">[</span><span class="n">file_path</span><span class="p">]</span> <span class="o">=</span> <span class="n">content</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">Command</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">update</span><span class="o">=</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;files&#34;</span><span class="p">:</span> <span class="n">files</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;messages&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ToolMessage</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Updated file </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">tool_call_id</span><span class="o">=</span><span class="n">tool_call_id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span></code></pre></div><p>实现更新 <code>state.files</code>，写入 <code>ToolMessage</code> 到 <code>state.messages</code></p>
+<h3 id="summary">Summary<a hidden class="anchor" aria-hidden="true" href="#summary">#</a></h3>
+<p>虚拟文件系统是构建深度代理的重要基础设施。虽然在简单示例中可能显得不必要,但在处理复杂的多步骤任务时，它能够显著提升代理的可靠性和性能。</p>
+<p>✓ 防止 LLM 遗忘重要信息</p>
+<p>✓ 随时加载任意步骤的上下文</p>
+<p>✓ 支持多文件代码生成</p>
+<p>✓ 支持复杂研究任务（多次搜索、多次整合）</p>
+<p>✓ 支持“草稿—修改—再草稿”的循环</p>
+<p>✓ 支持在不同 agent 之间共享状态</p>
+<p>这套文件操作工具（ls、read_file、write_file）将是深度代理抽象的核心功能之一。通过理解其底层实现原理——基于 LangGraph 状态的模拟文件系统——你可以根据自己的需求进行定制和扩展。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://mig217.github.io/tags/llm-agents/">LLM Agents</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://mig217.github.io/post/2025-10-30-training-llms-for-agents/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Introduction to training LLMs for AI agents</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Deep Agents From LangGraph on x"
+            href="https://x.com/intent/tweet/?text=Deep%20Agents%20From%20LangGraph&amp;url=https%3a%2f%2fmig217.github.io%2fpost%2f2025-11-30-deep-agents%2f&amp;hashtags=LLMAgents">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Deep Agents From LangGraph on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmig217.github.io%2fpost%2f2025-11-30-deep-agents%2f&amp;title=Deep%20Agents%20From%20LangGraph&amp;summary=Deep%20Agents%20From%20LangGraph&amp;source=https%3a%2f%2fmig217.github.io%2fpost%2f2025-11-30-deep-agents%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Deep Agents From LangGraph on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fmig217.github.io%2fpost%2f2025-11-30-deep-agents%2f&title=Deep%20Agents%20From%20LangGraph">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Deep Agents From LangGraph on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmig217.github.io%2fpost%2f2025-11-30-deep-agents%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Deep Agents From LangGraph on whatsapp"
+            href="https://api.whatsapp.com/send?text=Deep%20Agents%20From%20LangGraph%20-%20https%3a%2f%2fmig217.github.io%2fpost%2f2025-11-30-deep-agents%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Deep Agents From LangGraph on telegram"
+            href="https://telegram.me/share/url?text=Deep%20Agents%20From%20LangGraph&amp;url=https%3a%2f%2fmig217.github.io%2fpost%2f2025-11-30-deep-agents%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Deep Agents From LangGraph on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Deep%20Agents%20From%20LangGraph&u=https%3a%2f%2fmig217.github.io%2fpost%2f2025-11-30-deep-agents%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="https://mig217.github.io/">Mig&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

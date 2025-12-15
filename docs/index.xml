@@ -6,8 +6,58 @@
     <description>Recent content in PaperMod on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 02 Oct 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://mig217.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Deep Agents From LangGraph</title>
+      <link>https://mig217.github.io/post/2025-11-30-deep-agents/</link>
+      <pubDate>Sun, 30 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>https://mig217.github.io/post/2025-11-30-deep-agents/</guid>
+      <description>&lt;p&gt;在过去的一年里，AI Agent 的演进出现了两个非常重要的趋势：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;智能体正在变得更通用（Generalist）&lt;/strong&gt;：可以承担越来越多类型的任务；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;智能体的任务时长变得更长（Long-horizon）&lt;/strong&gt;：能够连续执行几十甚至上百个步骤的复杂任务。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。&lt;/p&gt;
+&lt;figure class=&#34;align-center&#34;&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/static/images/length-of-tasks-log.png&#34; width=&#34;700px&#34;/&gt; 
+&lt;/figure&gt;
+
+&lt;p&gt;与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够&lt;strong&gt;组织研究流程、规划任务、调用大量工具，并产出复杂成果&lt;/strong&gt;。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Manus&lt;/strong&gt;：典型任务需要调用约 50 次工具&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Anthropic Production Agents&lt;/strong&gt;：实际生产系统常常会进行 数百轮对话与推理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些长周期、多步骤、工具密集型的系统，被称为 &lt;strong&gt;Agentic System&lt;/strong&gt;。尽管不同项目的具体实现差别较大，但它们普遍遵循以下四个核心原则：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;使用 Planning 保证任务方向正确&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在超长任务中，如果缺乏规划，模型非常容易偏航。因此 Agentic System 普遍采用明确的任务计划来做“航向控制”。&lt;/p&gt;
+&lt;p&gt;常见做法包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Manus&lt;/strong&gt;：使用 &lt;code&gt;todo.md&lt;/code&gt; 保存任务清单，并在执行过程中不断读写更新；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Claude Code&lt;/strong&gt;：要求用户先批准计划，再执行工具与操作；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Gemini Deep Research&lt;/strong&gt;：在执行前强制生成计划、并请求用户确认；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Anthropic Multi-Agent Researcher&lt;/strong&gt;：将 research plan 写入文件系统，在关键流程中重新读取，确保最终报告“遵循原计划”；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;&lt;strong&gt;使用 Filesystem 进行 Offload Context&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;随着工具调用次数、搜索结果、观察内容不断增多，把所有内容保存在消息历史里会快速耗尽上下文窗口。&lt;/p&gt;
+&lt;p&gt;因此，可以采用“外部化记忆”机制：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;将庞大中间结果（如搜索原始结果）保存到磁盘&lt;/li&gt;
+&lt;li&gt;在上下文中只放简短摘要，节省 Tokens&lt;/li&gt;
+&lt;li&gt;在需要时再从文件读取完整内容&lt;/li&gt;
+&lt;li&gt;长期记忆可以独立保存，不随对话窗口消失&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Anthropic Multi-Agent Researcher&lt;/strong&gt;：将研究计划写到文件里 → 调研完成后再读回来 → 保证报告结构与原计划一致；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Manus&lt;/strong&gt;：将 &lt;code&gt;todo.md&lt;/code&gt; 持久化，多次更新、反复读取&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Introduction to training LLMs for AI agents</title>
       <link>https://mig217.github.io/post/2025-10-30-training-llms-for-agents/</link>

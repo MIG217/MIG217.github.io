@@ -168,6 +168,28 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Deep Agents From LangGraph
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>在过去的一年里，AI Agent 的演进出现了两个非常重要的趋势：
+智能体正在变得更通用（Generalist）：可以承担越来越多类型的任务； 智能体的任务时长变得更长（Long-horizon）：能够连续执行几十甚至上百个步骤的复杂任务。 根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。
+与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够组织研究流程、规划任务、调用大量工具，并产出复杂成果。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：
+Manus：典型任务需要调用约 50 次工具 Anthropic Production Agents：实际生产系统常常会进行 数百轮对话与推理 这些长周期、多步骤、工具密集型的系统，被称为 Agentic System。尽管不同项目的具体实现差别较大，但它们普遍遵循以下四个核心原则：
+使用 Planning 保证任务方向正确 在超长任务中，如果缺乏规划，模型非常容易偏航。因此 Agentic System 普遍采用明确的任务计划来做“航向控制”。
+常见做法包括：
+Manus：使用 todo.md 保存任务清单，并在执行过程中不断读写更新； Claude Code：要求用户先批准计划，再执行工具与操作； Gemini Deep Research：在执行前强制生成计划、并请求用户确认； Anthropic Multi-Agent Researcher：将 research plan 写入文件系统，在关键流程中重新读取，确保最终报告“遵循原计划”； 使用 Filesystem 进行 Offload Context 随着工具调用次数、搜索结果、观察内容不断增多，把所有内容保存在消息历史里会快速耗尽上下文窗口。
+因此，可以采用“外部化记忆”机制：
+将庞大中间结果（如搜索原始结果）保存到磁盘 在上下文中只放简短摘要，节省 Tokens 在需要时再从文件读取完整内容 长期记忆可以独立保存，不随对话窗口消失 Example:
+Anthropic Multi-Agent Researcher：将研究计划写到文件里 → 调研完成后再读回来 → 保证报告结构与原计划一致； Manus：将 todo.md 持久化，多次更新、反复读取 文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-11-30 00:00:00 +0000 UTC'>November 30, 2025</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;573 words&nbsp;·&nbsp;Mingrui Guo</footer>
+  <a class="entry-link" aria-label="post link to Deep Agents From LangGraph" href="https://mig217.github.io/post/2025-11-30-deep-agents/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Introduction to training LLMs for AI agents
     </h2>
   </header>
