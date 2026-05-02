@@ -17,8 +17,7 @@ math: true
 
 根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。
 
-{{< figure src="/static/images/length-of-tasks-log.png" width="700px" class="align-center" >}}
-
+{{< figure src="static/images/length-of-tasks-log.png" width="700px" class="align-center" >}}
 
 与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够**组织研究流程、规划任务、调用大量工具，并产出复杂成果**。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：
 
@@ -299,12 +298,10 @@ def read_file(file_path, state, offset=0, limit=2000) -> str:
 读取流程：查看文件是否存在 -> 将内容按行切分 -> 按 `offset`、`limit` 截取 -> 返回带行号的结果。
 
 效果：
-
 ```vbnet
      1   The MCP (Model Context Protocol) is...
      2   It allows systems to...
 ```
-
 
 3. **写入文件：`write_file`**
 

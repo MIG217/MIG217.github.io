@@ -6,8 +6,33 @@
     <description>Recent content in PaperMod on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 30 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 02 May 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://mig217.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在未知中前行：5 条原则</title>
+      <link>https://mig217.github.io/post/2026-05-01-guiding-principles-for-navigating-the-unknown/</link>
+      <pubDate>Sat, 02 May 2026 00:00:00 +0000</pubDate>
+      <guid>https://mig217.github.io/post/2026-05-01-guiding-principles-for-navigating-the-unknown/</guid>
+      <description>&lt;p&gt;——读 &lt;a href=&#34;https://blog.jaclynkonzelmann.com/p/looking-ahead-into-2026-my-guiding&#34;&gt;Jaclyn Konzelmann《Looking Ahead into 2026》&lt;/a&gt;笔记&lt;/p&gt;
+&lt;p&gt;她今年放弃了惯例的&amp;quot;AI 预测清单&amp;quot;——因为变化太快，预测毫无意义。改为定下几条原则：&lt;/p&gt;
+&lt;h2 id=&#34;1-边学边做&#34;&gt;1. 边学边做&lt;/h2&gt;
+&lt;p&gt;在快速变化的世界里，最有效的学习方式就是动手做。你不能只是空想，必须去构建。理解该构建什么、以及该如何构建，最佳的方式就是亲自上手。&lt;/p&gt;
+&lt;p&gt;真正的魔法时刻，往往是在做的过程中冒出来的：你以为方案 A 够用，做完才发现真正成立的是 B。这些东西，最初的 PRD 和策略文档里根本写不出来。&lt;/p&gt;
+&lt;p&gt;这就是边学边做的精髓：你学会了怎么做，但更重要的是，学会了做什么，并培养出对重要功能的直觉。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Building is the engine of discovery for both the &lt;em&gt;how&lt;/em&gt; and the &lt;em&gt;what&lt;/em&gt;.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;2-agency--intelligence&#34;&gt;2. Agency &amp;gt; Intelligence&lt;/h2&gt;
+&lt;p&gt;主动性（Agency）正在成为最有价值的特质。因为在一个智力可以被 AI 增强的世界里，主动性是去行动的能力、欲望、驱动力和内在动机。&lt;/p&gt;
+&lt;p&gt;Andrej Karpathy 的Twitter写过一句话&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Agency is significantly more powerful and significantly more scarce.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;我们需要的，是能说&amp;quot;我会想办法搞定&amp;quot;并真的去做的建造者。&lt;/p&gt;
+&lt;h2 id=&#34;3-培养产品直觉&#34;&gt;3. 培养产品直觉&lt;/h2&gt;
+&lt;p&gt;人们一直在谈数据驱动决策，但在一个 AI 可以生成无限数据和代码的世界里，终极的差异化在于产品直觉。&lt;/p&gt;
+&lt;p&gt;正如 Shopify 的 Tobi Lütke 所说，那是一种《黑客帝国》里 Neo 的瞬间：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The ability to look at a complex problem and suddenly see the entire system for what it is, and more importantly, what it could be.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Deep Agents From LangGraph</title>
       <link>https://mig217.github.io/post/2025-11-30-deep-agents/</link>
@@ -20,7 +45,7 @@
 &lt;/ol&gt;
 &lt;p&gt;根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。&lt;/p&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/static/images/length-of-tasks-log.png&#34; width=&#34;700px&#34;/&gt; 
+    &lt;img loading=&#34;lazy&#34; src=&#34;static/images/length-of-tasks-log.png&#34; width=&#34;700px&#34;/&gt; 
 &lt;/figure&gt;
 
 &lt;p&gt;与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够&lt;strong&gt;组织研究流程、规划任务、调用大量工具，并产出复杂成果&lt;/strong&gt;。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：&lt;/p&gt;

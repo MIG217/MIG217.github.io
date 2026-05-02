@@ -20,7 +20,7 @@
 &lt;/ol&gt;
 &lt;p&gt;根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。&lt;/p&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/static/images/length-of-tasks-log.png&#34; width=&#34;700px&#34;/&gt; 
+    &lt;img loading=&#34;lazy&#34; src=&#34;static/images/length-of-tasks-log.png&#34; width=&#34;700px&#34;/&gt; 
 &lt;/figure&gt;
 
 &lt;p&gt;与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够&lt;strong&gt;组织研究流程、规划任务、调用大量工具，并产出复杂成果&lt;/strong&gt;。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：&lt;/p&gt;
