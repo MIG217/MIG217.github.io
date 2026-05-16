@@ -4,7 +4,7 @@ author: ["Mingrui Guo"]
 date: "2026-05-02"
 categories: ["AI"]
 tags: ["PM"]
-draft: flase
+draft: true
 ShowToc: true
 TocOpen: false
 math: true
@@ -30,7 +30,7 @@ math: true
 
 Andrej Karpathy 的Twitter写过一句话
 > Agency is significantly more powerful and significantly more scarce.
-> 
+
 我们需要的，是能说"我会想办法搞定"并真的去做的建造者。
 
 ## 3. 培养产品直觉
@@ -43,7 +43,7 @@ Andrej Karpathy 的Twitter写过一句话
 这种直觉常常表现为一种审美信号或一种感觉，是本能在比大脑更快地完成一次权衡计算。
 
 打磨这个内部模型有两种方式：
-- **拓宽训练数据：**你无法在真空中培养品味。我 2026 年的目标是使用更多的产品：不只是看它们做什么，而是去感受它们是如何解决问题的。
+- **拓宽训练数据:** 你无法在真空中培养品味。我 2026 年的目标是使用更多的产品：不只是看它们做什么，而是去感受它们是如何解决问题的。
 - **解码"vibe":** 直觉是起点，但工作是挖掘并解码那个信号。我想从"我不喜欢这个"进步到"我不喜欢这个,因为我们违反了用户体验的某个具体原则"。
 
 ## 4. 写作即思考

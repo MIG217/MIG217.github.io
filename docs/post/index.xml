@@ -2,64 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on Mig&#39;s Blog</title>
-    <link>http://localhost:1313/post/</link>
+    <link>https://mig217.github.io/post/</link>
     <description>Recent content in Posts on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 05 May 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Prompt Caching</title>
-      <link>http://localhost:1313/post/2026-05-05-prompt-caching/</link>
-      <pubDate>Tue, 05 May 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2026-05-05-prompt-caching/</guid>
-      <description>&lt;p&gt;我们在讨论 LLM 应用优化的时候，大多数人第一反应是&lt;strong&gt;换模型、调参数、改架构&lt;/strong&gt;。但有一件事几乎被所有人忽略，它不需要改任何模型代码，不影响输出质量，却能让&lt;strong&gt;首 Token 延迟最高降低 80%、输出成本最高降低 90%&lt;/strong&gt;。这件事就是 &lt;strong&gt;Prompt Caching&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;1-prompt-caching-基本概念&#34;&gt;1. Prompt Caching 基本概念&lt;/h2&gt;
-&lt;p&gt;跟模型打交道，本质上就三件事可以优化：&lt;strong&gt;intelligence、latency、cost&lt;/strong&gt;。三者通常此消彼长，但 Prompt Caching 是个例外：&lt;strong&gt;它只动后两个，完全不影响第一个&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;模型的提示词中往往包含大量重复内容——系统指令、工具定义、对话历史。OpenAI 会把请求路由到最近处理过相同前缀的服务器，&lt;strong&gt;复用之前的计算结果，而不是从头重算&lt;/strong&gt;。这就是 prompt caching 的本质：&lt;strong&gt;计算复用&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;它带来的收益：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;成本&lt;/strong&gt;：cached input token 最高便宜 90%（比如 gpt-5.2 从 $1.75/1M 降到 $0.175/1M）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;延迟&lt;/strong&gt;：TTFT（首 token 时间）最高减少 80%，prompt 越长效果越明显&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img alt=&#34;image&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;2-prompt-caching-运行机制&#34;&gt;2. Prompt Caching 运行机制&lt;/h2&gt;
-&lt;p&gt;要理解 prompt caching，需要从两个层次来看：&lt;strong&gt;底层（模型内部为什么能复用）&lt;/strong&gt; 和 &lt;strong&gt;上层（一次 API 请求经过哪些步骤）&lt;/strong&gt;。&lt;/p&gt;
-&lt;h3 id=&#34;21-底层为什么-kv-可以被复用&#34;&gt;2.1 底层：为什么 K/V 可以被复用&lt;/h3&gt;
-&lt;p&gt;Prompt caching 能成立，根本原因要追溯到 Transformer 的核心机制：&lt;strong&gt;注意力（Attention）&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;1. Attention 在做什么&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Attention 是 Transformer 的灵魂。它让模型在处理每个 token 时，能有选择地关注输入中的相关部分，从而为当前 token 构建出最佳的语义表征——而正是这个表征，决定了模型如何预测下一个 token。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>在未知中前行：5 条原则</title>
-      <link>http://localhost:1313/post/2026-05-01-guiding-principles-for-navigating-the-unknown/</link>
-      <pubDate>Sat, 02 May 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2026-05-01-guiding-principles-for-navigating-the-unknown/</guid>
-      <description>&lt;p&gt;——读 &lt;a href=&#34;https://blog.jaclynkonzelmann.com/p/looking-ahead-into-2026-my-guiding&#34;&gt;Jaclyn Konzelmann《Looking Ahead into 2026》&lt;/a&gt;笔记&lt;/p&gt;
-&lt;p&gt;她今年放弃了惯例的&amp;quot;AI 预测清单&amp;quot;——因为变化太快，预测毫无意义。改为定下几条原则：&lt;/p&gt;
-&lt;h2 id=&#34;1-边学边做&#34;&gt;1. 边学边做&lt;/h2&gt;
-&lt;p&gt;在快速变化的世界里，最有效的学习方式就是动手做。你不能只是空想，必须去构建。理解该构建什么、以及该如何构建，最佳的方式就是亲自上手。&lt;/p&gt;
-&lt;p&gt;真正的魔法时刻，往往是在做的过程中冒出来的：你以为方案 A 够用，做完才发现真正成立的是 B。这些东西，最初的 PRD 和策略文档里根本写不出来。&lt;/p&gt;
-&lt;p&gt;这就是边学边做的精髓：你学会了怎么做，但更重要的是，学会了做什么，并培养出对重要功能的直觉。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Building is the engine of discovery for both the &lt;em&gt;how&lt;/em&gt; and the &lt;em&gt;what&lt;/em&gt;.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;h2 id=&#34;2-agency--intelligence&#34;&gt;2. Agency &amp;gt; Intelligence&lt;/h2&gt;
-&lt;p&gt;主动性（Agency）正在成为最有价值的特质。因为在一个智力可以被 AI 增强的世界里，主动性是去行动的能力、欲望、驱动力和内在动机。&lt;/p&gt;
-&lt;p&gt;Andrej Karpathy 的Twitter写过一句话&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Agency is significantly more powerful and significantly more scarce.&lt;/p&gt;&lt;/blockquote&gt;
-&lt;p&gt;我们需要的，是能说&amp;quot;我会想办法搞定&amp;quot;并真的去做的建造者。&lt;/p&gt;
-&lt;h2 id=&#34;3-培养产品直觉&#34;&gt;3. 培养产品直觉&lt;/h2&gt;
-&lt;p&gt;人们一直在谈数据驱动决策，但在一个 AI 可以生成无限数据和代码的世界里，终极的差异化在于产品直觉。&lt;/p&gt;
-&lt;p&gt;正如 Shopify 的 Tobi Lütke 所说，那是一种《黑客帝国》里 Neo 的瞬间：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;The ability to look at a complex problem and suddenly see the entire system for what it is, and more importantly, what it could be.&lt;/p&gt;</description>
-    </item>
+    <lastBuildDate>Sun, 30 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://mig217.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Deep Agents From LangGraph</title>
-      <link>http://localhost:1313/post/2025-11-30-deep-agents/</link>
+      <link>https://mig217.github.io/post/2025-11-30-deep-agents/</link>
       <pubDate>Sun, 30 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-11-30-deep-agents/</guid>
+      <guid>https://mig217.github.io/post/2025-11-30-deep-agents/</guid>
       <description>&lt;p&gt;在过去的一年里，AI Agent 的演进出现了两个非常重要的趋势：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;智能体正在变得更通用（Generalist）&lt;/strong&gt;：可以承担越来越多类型的任务；&lt;/li&gt;
@@ -106,146 +59,10 @@
 &lt;p&gt;文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Multimodal Autonomous AI Agents</title>
-      <link>http://localhost:1313/post/2025-11-30-multimodal-autonomous-ai-agents/</link>
-      <pubDate>Sun, 30 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-11-30-multimodal-autonomous-ai-agents/</guid>
-      <description>&lt;p&gt;近年来 LLM 取得了令人瞩目的进展。从 &lt;strong&gt;上下文学习（in-context learning）&lt;/strong&gt;、&lt;strong&gt;零样本学习（zero-shot learning）&lt;/strong&gt; 到生成连贯且知识丰富的长文本，LLM 在语言理解与生成方面展现出惊人的能力。&lt;/p&gt;
-&lt;p&gt;然而，语言模型本身仍然停留在“被动回答”的阶段。真正的智能，应当&lt;strong&gt;能够主动行动（Act）、自主决策（Decide）、并完成任务（Execute）&lt;/strong&gt;。这正是 &lt;strong&gt;Autonomous AI Agents&lt;/strong&gt; 所要实现的目标。&lt;/p&gt;
-&lt;p&gt;我们的大部分生产性工作都发生在计算机和网络上——撰写文档、处理数据、预订服务、甚至编程与科研。  如果这些任务能被智能体部分或完全自动化，人类的生产力将获得显著提升。&lt;/p&gt;
-&lt;p&gt;设想一下，一个智能体可以帮你自动配置 AWS 实例、生成论文展示的 PowerPoint、或在网页上查找并预约餐厅。这类系统不再只是回答问题，而是能&lt;strong&gt;理解网页结构、分析视觉信息，并执行真实操作&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;在众多智能体形态中，&lt;strong&gt;Web Agents&lt;/strong&gt; 是当前研究的核心方向之一。让智能体在复杂的网络环境中执行任务，仅依靠语言理解还远远不够。它必须具备两种关键能力：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;文本理解&lt;/strong&gt;：能够解析网页的 HTML 结构，识别内容层级与交互元素；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;视觉理解&lt;/strong&gt;：能够理解网页截图或 GUI 的视觉布局与语义信息。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;通过融合文本与视觉信息，智能体才能在网络上建立起“感知与理解”的能力（即 &lt;em&gt;web grounding&lt;/em&gt;），从而正确地解析指令并执行操作。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;本文重点：如何构建更可靠的 Web Agent？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;要让 Web Agent 从“演示级”走向“实用化”，还需要解决一系列核心问题。  本文将聚焦三个关键方向：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Evaluation&lt;/strong&gt;：如何在贴近真实网页环境的复杂场景中，科学评估 Multimodal Agents的表现？&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Algorithm&lt;/strong&gt;：在推理阶段，如何利用 Tree Search 等算法提升Agents执行任务的成功率？&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Data&lt;/strong&gt;：Agents 高度依赖高质量数据，如何实现互联网规模的数据采集与训练？&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    <item>
-      <title>Introduction to training LLMs for AI agents</title>
-      <link>http://localhost:1313/post/2025-10-30-training-llms-for-agents/</link>
-      <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-10-30-training-llms-for-agents/</guid>
-      <description>&lt;p&gt;大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：&lt;strong&gt;这些模型到底是如何训练的？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。&lt;/p&gt;
-&lt;h2 id=&#34;llm-training-pipeline&#34;&gt;LLM Training Pipeline&lt;/h2&gt;
-&lt;p&gt;LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: &lt;strong&gt;预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)&lt;/strong&gt;。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。&lt;/p&gt;
-&lt;h3 id=&#34;general-llm-training-pipeline&#34;&gt;General LLM Training Pipeline&lt;/h3&gt;
-&lt;p&gt;从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Pre-training&lt;/strong&gt;：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Classic Post-training / RLHF&lt;/strong&gt;：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;RL for Reasoning&lt;/strong&gt;：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../docs/images/general-llm-training-pipeline.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;三个阶段对比&lt;/strong&gt;&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;阶段&lt;/th&gt;
-          &lt;th&gt;核心目标&lt;/th&gt;
-          &lt;th&gt;数据规模&lt;/th&gt;
-          &lt;th&gt;训练时间&lt;/th&gt;
-          &lt;th&gt;成本级别&lt;/th&gt;
-          &lt;th&gt;主要瓶颈&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;预训练（Pre-training）&lt;/td&gt;
-          &lt;td&gt;学习预测下一个词，构建知识底座&lt;/td&gt;
-          &lt;td&gt;~10 万亿 tokens&lt;/td&gt;
-          &lt;td&gt;数月&lt;/td&gt;
-          &lt;td&gt;千万美元级&lt;/td&gt;
-          &lt;td&gt;高质量数据、算力资源&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;经典后训练 / RLHF（Classic Post-training / RLHF）&lt;/td&gt;
-          &lt;td&gt;让模型符合用户偏好&lt;/td&gt;
-          &lt;td&gt;~10 万个问题&lt;/td&gt;
-          &lt;td&gt;几天&lt;/td&gt;
-          &lt;td&gt;数万–十万美元&lt;/td&gt;
-          &lt;td&gt;人类反馈数据、评测体系&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;推理型 RL（RL for Reasoning）&lt;/td&gt;
-          &lt;td&gt;提升推理和思考能力&lt;/td&gt;
-          &lt;td&gt;百万级问题&lt;/td&gt;
-          &lt;td&gt;数周&lt;/td&gt;
-          &lt;td&gt;百万美元级&lt;/td&gt;
-          &lt;td&gt;RL 环境设计、防止自我黑客&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;成功的关键要素&#34;&gt;成功的关键要素&lt;/h3&gt;
-&lt;p&gt;了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>AI Research</title>
-      <link>http://localhost:1313/post/ai-research/</link>
-      <pubDate>Mon, 01 Sep 2025 07:55:36 +0800</pubDate>
-      <guid>http://localhost:1313/post/ai-research/</guid>
-      <description>&lt;p&gt;在 AI 领域里，&lt;strong&gt;如何开展一项研究&lt;/strong&gt;，往往比研究本身更让初学者困惑。很多人会卡在最初的几个问题：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;我该如何找到一个有价值的研究点子？&lt;/li&gt;
-&lt;li&gt;面对海量的论文，怎样高效地阅读？&lt;/li&gt;
-&lt;li&gt;有了想法之后，应该如何落实并推进研究？&lt;/li&gt;
-&lt;li&gt;最后，又该如何把成果写成一篇论文或报告？&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;本篇内容梳理了从 &lt;strong&gt;产生研究想法&lt;/strong&gt;、&lt;strong&gt;阅读文献&lt;/strong&gt;、&lt;strong&gt;执行研究&lt;/strong&gt; 到 &lt;strong&gt;写作论文&lt;/strong&gt; 的完整流程。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Mcp Architecture</title>
-      <link>http://localhost:1313/post/mcp-architecture/</link>
-      <pubDate>Mon, 01 Sep 2025 07:54:35 +0800</pubDate>
-      <guid>http://localhost:1313/post/mcp-architecture/</guid>
-      <description>&lt;p&gt;在当下的 AI 应用开发中，模型本身的智能水平固然重要，但如果无法高效接入外部数据和工具，模型的价值就会大打折扣。很多开发者不得不为不同的数据源、API 或工具重复实现集成逻辑，这不仅增加了开发成本，也让应用难以复用和扩展。&lt;/p&gt;
-&lt;p&gt;为了解决这一问题，Anthropic 团队与开源社区共同推动了 Model Context Protocol（MCP）。&lt;strong&gt;MCP 是一种开放协议，旨在标准化 LLM 应用与外部系统的连接方式，让模型可以像调用 REST API 一样，统一地访问各类工具与数据源。&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&#34;mcp-architecture&#34;&gt;MCP Architecture&lt;/h2&gt;
-&lt;p&gt;MCP 遵循经典的客户端-服务器 (Client-Server) 架构模式。在这个模式中，主要有三个核心角色：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Host&lt;/strong&gt;: 指希望通过 MCP 访问数据的大模型应用，例如 Claude Desktop、IDE、AI Agent 等。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MCP Servers&lt;/strong&gt;: 是一些 轻量级程序，通过 MCP 协议对外暴露特定功能（capabilities），比如访问数据库、调用搜索服务或执行 API。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MCP Clients&lt;/strong&gt;: 在宿主应用内部，与 MCP Server 保持 1:1 连接，用于管理通信。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/static/images/mcp-architecture.png&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;mcp-核心要素&#34;&gt;MCP 核心要素&lt;/h3&gt;
-&lt;p&gt;在进一步讨论客户端和服务器的职责之前，我们需要先了解 MCP 协议中几个最核心的组成部分：工具（Tools）、资源（Resources） 和 提示模板（Prompt Templates）。&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/static/images/how-does-it-work.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Tools&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;如果您熟悉大模型领域的“工具使用 (Tool Use)”，那么 MCP 中的工具概念会非常亲切。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;定义：工具本质上是可由客户端调用的函数，通常用于执行修改性或写入型的操作。&lt;/li&gt;
-&lt;li&gt;功能：检索数据、执行搜索、发送消息、更新数据库记录等。&lt;/li&gt;
-&lt;li&gt;类比：可以将其理解为 &lt;code&gt;POST&lt;/code&gt; 或 &lt;code&gt;UPDATE&lt;/code&gt; 请求，代表着一个需要服务器去执行的“动作”。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Resources&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;与工具不同，资源是服务器提供的只读数据或上下文。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;定义：由服务器暴露的只读数据。客户端可以选择是否使用这些资源，但不会对其进行修改。&lt;/li&gt;
-&lt;li&gt;功能：提供上下文信息，例如数据库记录、API 响应、文件内容、PDF 文档等。&lt;/li&gt;
-&lt;li&gt;类比：类似于一个 &lt;code&gt;GET&lt;/code&gt; 请求，目的是获取“信息”而非执行操作。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Prompt Template&lt;/strong&gt;&lt;/p&gt;</description>
-    </item>
-    <item>
       <title>Context Engineering</title>
-      <link>http://localhost:1313/post/2025-08-20-context-engineering/</link>
+      <link>https://mig217.github.io/post/2025-08-20-context-engineering/</link>
       <pubDate>Wed, 20 Aug 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-08-20-context-engineering/</guid>
+      <guid>https://mig217.github.io/post/2025-08-20-context-engineering/</guid>
       <description>&lt;p&gt;By 2025, existing models have already become remarkably intelligent. However, even the smartest system cannot perform effectively without understanding what it is being asked to do. &lt;strong&gt;Prompr engineering&lt;/strong&gt; refers to the practice of phrasing tasks in an optimal way for large language model-based chatbots. &lt;strong&gt;Context engineering&lt;/strong&gt;, on the other hand, represents the next stage - aiming to automate this process within dynamic systems.&lt;/p&gt;
 &lt;h2 id=&#34;what-is-context-engineering&#34;&gt;What is Context Engineering?&lt;/h2&gt;
 &lt;p&gt;
@@ -254,123 +71,10 @@
 &lt;/p&gt;</description>
     </item>
     <item>
-      <title>Coding Agents and AI for Vulnerability Detection</title>
-      <link>http://localhost:1313/post/2025-09-30-coding-agents/</link>
-      <pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-09-30-coding-agents/</guid>
-      <description>&lt;p&gt;随着人工智能技术的快速发展，LLM代理正在重塑软件开发和网络安全领域。从协助程序员编写代码的智能助手，到主动发现系统漏洞的安全专家，AI代理正展现出令人瞩目的潜力。&lt;/p&gt;
-&lt;p&gt;在深入探讨具体应用之前，我们需要理解LLM代理的本质。抛开那些时髦的术语，LLM代理实际上就是具备工具使用能力的多轮对话LLM。
-LLM Agent = 可以进行多轮对话的 LLM + 使用工具 (multi-turn LLMs with tool use)
-这个定义强调了以下几个核心特点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;动态计算时间（Dynamic Computation Time）：与传统的一次性问答不同，LLM Agents 允许“先思考再行动”。语言模型可以在作出最终回答前进行多轮推理，动态决定需要投入多少“思维时间”，从而处理更复杂的问题。&lt;/li&gt;
-&lt;li&gt;外部工具接入（External Tools）：这使得智能体不仅限于文本生成能力，而是能与外部世界互动。比如在编程场景中，代理可以实际运行代码、观察结果，然后基于执行反馈来优化代码，这种能力对复杂的代码生成任务极其重要。&lt;/li&gt;
-&lt;li&gt;假设验证能力（Hypothesis Testing）：工具的引入还带来了实验能力。Agent 可以先提出一个假设，比如“这段代码在第13行会出错”，然后通过实际运行代码来验证自己的想法，并根据结果调整后续行为。这种“试错-修正”的机制在复杂任务中尤为关键。&lt;/li&gt;
-&lt;li&gt;行动能力（Ability to Take Actions）：如果我们希望 LLM 真正完成某项任务，它最终必须走出文本生成本身，与真实世界产生连接。而工具的接入正是这种连接的媒介。、&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;基于这些核心能力，我们将介绍以下三部份内容：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;编程代理：如SWE（软件工程）代理，它们能够理解需求、编写代码、调试程序&lt;/li&gt;
-&lt;li&gt;AI for computer security: 利用人工智能技术来检测威胁、分析漏洞、防御攻击&lt;/li&gt;
-&lt;li&gt;专门用于安全漏洞检测的LLM代理，这是一个新兴但极具前景的应用方向，代理可以主动分析代码、发现潜在的安全风险。
-在接下来的内容中，我们将深入探讨这些应用场景，看看AI代理如何在保障软件质量和系统安全方面发挥越来越重要的作用。&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    <item>
-      <title>RAG Overview</title>
-      <link>http://localhost:1313/post/rag-overview/</link>
-      <pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/rag-overview/</guid>
-      <description>&lt;p&gt;检索增强生成（Retrieval Augmented Generation，RAG）是目前应用最广泛的技术之一，用于提升LLM的回答质量和准确性。LLM 开始仅依赖训练时的公共互联网数据，而 RAG 能通过检索外部数据源（如企业文档、专有数据）为模型提供额外信息，从而回答其未接触过的事实性问题。例如，像 ChatGPT、Claude 或 Gemini 这类聊天机器人会搜索网络以确保回答的时效性与准确性。如今，大型公司常用 RAG 为客户和员工提供精准的信息支持，而初创企业也在医疗、教育等领域构建 RAG 应用，帮助解决行业特定问题。&lt;/p&gt;
-&lt;p&gt;随着 LLM 技术的进步，RAG 系统的能力也在不断进化。新一代模型能更好地基于提供的文档进行回答，显著降低了幻觉率。同时，推理模型的兴起和 LLM 输入上下文窗口的扩大，使 RAG 的超参数调优更加精细，如选择哪些内容被检索和如何切分文档片段。&lt;/p&gt;
-&lt;p&gt;模块概览：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;RAG 简介：了解 RAG 的基本概念、核心价值，以及它如何提升大语言模型的回答质量&lt;/li&gt;
-&lt;li&gt;RAG 架构解析：拆解 RAG 的核心组件，包括 LLM、检索器（retriever）、向量数据库（vector database）等&lt;/li&gt;
-&lt;li&gt;应用案例：真实场景中的 RAG 系统应用，包括企业知识问答、医疗问答、教育辅导等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;introduction-to-rag&#34;&gt;Introduction to RAG&lt;/h2&gt;
-&lt;h2 id=&#34;rag-简介&#34;&gt;RAG 简介&lt;/h2&gt;
-&lt;p&gt;LLM 能够回答问题、总结和改写文本、对文档提供反馈、生成代码等等。RAG是一种能够进一步提升 LLM 表现的方法，它通过为模型提供训练中未包含的外部信息来增强回答的准确性。&lt;/p&gt;
-&lt;p&gt;为了更好地理解这个概念，让我们来看几个例子：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;“为什么酒店在周末会更贵？”
-&lt;ul&gt;
-&lt;li&gt;因为周末旅行的人更多，房间竞争更激烈。&lt;br&gt;
--“为什么这个周末温哥华的酒店特别贵？”
-需要额外信息来回答。查阅网络后，你可能会发现国际巨星 Taylor Swift 本周末将在温哥华举办两场演唱会，有了这个信息，你就能给出答案。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;“为什么温哥华市中心附近没有更多的酒店容量？”
-&lt;ul&gt;
-&lt;li&gt;要回答这个问题，需要深入研究温哥华的发展历史、城市规划等专业信息。换句话说，需要先获取大量的专业信息。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;回答这些问题的过程可以分为两个阶段：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;信息收集（retrieval）&lt;/strong&gt;：获取必要的信息。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;信息推理与回答（generation）&lt;/strong&gt;：基于收集到的信息进行推理并生成答案。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;在 RAG 中，收集信息的过程被称为 &lt;strong&gt;检索（retrieval）&lt;/strong&gt;，而基于这些信息生成回答的过程被称为 &lt;strong&gt;生成（generation）&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;LLM 和人类类似，无法覆盖所有知识，尤其对近期事件或私有数据存在盲区，&lt;strong&gt;LLM 不知道的东西&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;私有数据库&lt;/strong&gt;：LLM 无法访问机密信息。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;难以获取的信息&lt;/strong&gt;：某些信息并不广泛公开，LLM 无法直接获得。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;实时数据&lt;/strong&gt;：LLM 的训练数据是过去的快照，它不会自动更新。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;RAG 系统的关键思想就是：在将问题发送给 LLM 之前，可以先修改和增强提示词。&lt;br&gt;
-除了用户的原始问题，还可以加入帮助 LLM 回答的检索信息。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Deep Research</title>
-      <link>http://localhost:1313/post/deep-research/</link>
-      <pubDate>Mon, 21 Jul 2025 19:42:45 +0800</pubDate>
-      <guid>http://localhost:1313/post/deep-research/</guid>
-      <description>&lt;p&gt;Langchain Open Deep Research Agent 具有高度可配置性，支持添加自定义 MCP 服务器，并且是开源的，因此可以根据自己的具体需求进行定制。&lt;/p&gt;
-&lt;h2 id=&#34;open-deep-research-architecture&#34;&gt;Open Deep Research Architecture&lt;/h2&gt;
-&lt;p&gt;Langchain Deep Research Agent 的运行可分为 三个阶段：&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://blog.langchain.com/content/images/size/w1600/2025/07/overview.png&#34;&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Scoping the Problem&lt;/strong&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;代理可以向用户提出澄清性问题，然后将整个对话历史压缩为一份Research Brief&lt;/p&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;&lt;strong&gt;Research Phase&lt;/strong&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;在研究阶段，系统会有一个 主管代理（Supervisor） 来统筹全局，它会派出多个 子代理（Sub Agents），每个子代理专注于不同的子问题。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;子代理完成研究后，将结果返回给主管代理。&lt;/li&gt;
-&lt;li&gt;主管代理会综合分析这些结果，决定是否需要进一步研究，或结束研究。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;&lt;strong&gt;Report Writing&lt;/strong&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;当研究完成后，代理会将所有结果整合，并通过一次性调用写作 LLM，生成一份 最终报告。这份报告会直接返回给用户.&lt;/p&gt;
-&lt;h2 id=&#34;phase-1-scope&#34;&gt;Phase 1: Scope&lt;/h2&gt;
-&lt;p&gt;在 范围界定阶段，我们的目标是让代理真正理解用户的需求，这个过程主要分为 两步：&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://blog.langchain.com/content/images/2025/07/scope.png&#34;&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;与用户进行澄清性问答&lt;/li&gt;
-&lt;li&gt;生成研究简报（Research Brief）&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;user-clarification&#34;&gt;User Clarification&lt;/h3&gt;
-&lt;p&gt;用户往往在最初的请求中遗漏重要信息。因此，代理的第一步是主动提问，以获取足够的上下文。我们还允许代理根据需要提出后续问题，直到它认为已经收集到所有关键信息。&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://blog.langchain.com/content/images/2025/07/brief.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;如果开始给出的提问过于模糊，代理便自动生成了一个澄清性问题。在我提供了详细信息后，代理会确认上下文是否完整，判断是否需再追问。&lt;/p&gt;
-&lt;h3 id=&#34;brief-generation&#34;&gt;Brief Generation&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;核心目标： 将沟通内容压缩成一个清晰、可执行的任务目标。&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;当澄清性对话结束后，我们可能会得到一个包含多轮问答的聊天记录。为了避免 Agent 在冗长的对话中迷失方向，我们会执行一个关键操作：将至今为止的所有对话（包括最初的请求和后续的补充信息）合成为一份研究简报 (Research Brief)。&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://blog.langchain.com/content/images/2025/07/actualbrief.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;这份简报会被保存到代理的状态中，并在后续的 研究阶段和写作阶段多次引用,确保每一步行动都与最初确定的目标保持一致。&lt;/p&gt;
-&lt;h2 id=&#34;phase-2-research&#34;&gt;Phase 2: Research&lt;/h2&gt;
-&lt;p&gt;研究阶段是一个高度开放的过程，因为深度研究代理所面对的问题类型千差万别，需要足够的灵活性来应对。为了适应这种多样性，我们在初始研究阶段采用了 极简的框架设计。&lt;/p&gt;</description>
-    </item>
-    <item>
       <title>How to Use Reasoning Models?</title>
-      <link>http://localhost:1313/post/2025-06-21-a-guide-to-reasoning-models/</link>
+      <link>https://mig217.github.io/post/2025-06-21-a-guide-to-reasoning-models/</link>
       <pubDate>Sun, 15 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-06-21-a-guide-to-reasoning-models/</guid>
+      <guid>https://mig217.github.io/post/2025-06-21-a-guide-to-reasoning-models/</guid>
       <description>&lt;p style=&#34;color: #1E90FF;&#34;&gt;
   The following insights are drawn from the &lt;em&gt;Reasoning with o1&lt;/em&gt; video course by &lt;a href=&#34;https://learn.deeplearning.ai/courses/reasoning-with-o1/lesson/h8dkv/introduction&#34; style=&#34;color: #1E90FF;&#34;&gt;DeepLearning.ai&lt;/a&gt;.
 &lt;/p&gt;
@@ -379,33 +83,26 @@ LLM Agent = 可以进行多轮对话的 LLM + 使用工具 (multi-turn LLMs with
     </item>
     <item>
       <title> Open Training Recipes for Reasoning in Language Models</title>
-      <link>http://localhost:1313/post/2025-05-30-open-training-recipes/</link>
+      <link>https://mig217.github.io/post/2025-05-30-open-training-recipes/</link>
       <pubDate>Fri, 30 May 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-05-30-open-training-recipes/</guid>
+      <guid>https://mig217.github.io/post/2025-05-30-open-training-recipes/</guid>
       <description>&lt;p&gt;In today&amp;rsquo;s rapidly evolving AI landscape, the remarkable progress we&amp;rsquo;ve witnessed is largely attributed to open scientific research and fully open models. However, as time progresses, more and more research and development work is becoming increasingly closed off.&lt;/p&gt;
 &lt;p&gt;We still need to delve deeper into &lt;strong&gt;how language models work, improve their capabilities, and make them safer, more efficient, and more reliable&lt;/strong&gt;. Simultaneously, we need to extend language models&amp;rsquo; abilities beyond text into domains like &lt;strong&gt;healthcare, science, and even complex decision-making processes&lt;/strong&gt;. Most importantly, we must bring these models into real-world applications, ensuring they are &lt;strong&gt;deployable, interpretable, and effectively mitigate biases and risks&lt;/strong&gt;.&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Agentic AI Frameworks</title>
-      <link>http://localhost:1313/post/2025-04-19-agentic/</link>
-      <pubDate>Wed, 16 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-04-19-agentic/</guid>
-      <description>&lt;p&gt;Starting from around the year 2022, we see the big power of language models and other generative models. So the generative AI, people have seen a superior capability of generating content like text and images. They are much better than the generative techniques 20 years ago or 15 years ago. Apparently, these days the new technique has passed  the bar that we can think about more creative applications, higher level of AI capabilities. And so what&amp;rsquo;s the next? What are the best way to leverage these generative AI techniques?&lt;/p&gt;</description>
-    </item>
-    <item>
       <title>Memory, Reasoning, and Planning of Language Agents</title>
-      <link>http://localhost:1313/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</link>
+      <link>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</link>
       <pubDate>Wed, 16 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</guid>
+      <guid>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</guid>
       <description>&lt;p&gt;Language Agents have emerged as one of the most exciting research directions in AI over the past two years. This article explores three core components: &lt;strong&gt;long-term memory via HippoRAG, reasoning capabilities with Grokked Transformers, and world modeling through WebDreamer&lt;/strong&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;why-agents-again&#34;&gt;Why Agents Again?&lt;/h2&gt;
 &lt;p&gt;Russell &amp;amp; Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “&lt;strong&gt;anything that can perceive its environment through sensors and act upon that environment through actions.&lt;/strong&gt;”（@ArtificialIntelligenceModern）&lt;/p&gt;</description>
     </item>
     <item>
       <title>LLM Agents: Brief History and Overview</title>
-      <link>http://localhost:1313/post/2025-03-10-llm-agents-overview/</link>
+      <link>https://mig217.github.io/post/2025-03-10-llm-agents-overview/</link>
       <pubDate>Fri, 14 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-03-10-llm-agents-overview/</guid>
+      <guid>https://mig217.github.io/post/2025-03-10-llm-agents-overview/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;To understand LLM agents, we need to break the term into two foundational components: &lt;strong&gt;Large Language Models (LLMs)&lt;/strong&gt; and &lt;strong&gt;Agents&lt;/strong&gt;. While LLMs have gained widespread recognition, the concept of &amp;ldquo;agent&amp;rdquo; in this context requires deeper exploration.&lt;/p&gt;
 &lt;h3 id=&#34;what-is-an-agent&#34;&gt;What is an Agent?&lt;/h3&gt;
@@ -413,15 +110,15 @@ LLM Agent = 可以进行多轮对话的 LLM + 使用工具 (multi-turn LLMs with
     </item>
     <item>
       <title>大语言模型的自我提升与推理能力进化(Jason Weston, Meta)</title>
-      <link>http://localhost:1313/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</link>
+      <link>https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</link>
       <pubDate>Sat, 01 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</guid>
+      <guid>https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</guid>
       <description>&lt;p&gt;本文内容来自 &lt;a href=&#34;https://rdi.berkeley.edu/adv-llm-agents/slides/Jason-Weston-Reasoning-Alignment-Berkeley-Talk.pdf&#34;&gt;Jason Weston (Meta) 在 UC Berkeley Advanced Large Language Model Agents 课程中的分享，探讨了大语言模型的推理能力提升&lt;/a&gt; 。以下为讲座内容：&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;AI 能力正在快速发展，如 O1、R1 等模型在推理基准测试中取得的突破性进展。本文将聚焦于模型的&lt;strong&gt;自我提升能力(self-improvement)&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;为了更好地理解AI的推理机制，我们首先需要区分两种基本的思维模式：&lt;strong&gt;System 1和 System 2&lt;/strong&gt;：&lt;/p&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/System1&amp;amp;System2.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/System1&amp;amp;System2.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
             Fig.1: Hybrid Reasoning Framework: System 1 and System 2 Collaboration in LLMs
         &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -450,7 +147,7 @@ LLM Agent = 可以进行多轮对话的 LLM + 使用工具 (multi-turn LLMs with
 &lt;h3 id=&#34;instrcut-gpt&#34;&gt;Instrcut GPT&lt;/h3&gt;
 &lt;p&gt;InstructGPT 是在 2022 年提出的一种语言模型优化方法[1]，它&lt;strong&gt;结合了监督学习和基于人类反馈的强化学习（RLHF）&lt;/strong&gt;，比单纯的监督微调更为先进。这种方法包含三个关键步骤(如图)：&lt;/p&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/illustrating.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/illustrating.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
             Fig.2: Reinforcement Learning from Human Feedback (RLHF) Training Pipeline
         &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -464,16 +161,16 @@ LLM Agent = 可以进行多轮对话的 LLM + 使用工具 (multi-turn LLMs with
     </item>
     <item>
       <title>如何优化大语言模型（LLM）的推理能力？</title>
-      <link>http://localhost:1313/post/2025-02-16-improving-llm-reasoning/</link>
+      <link>https://mig217.github.io/post/2025-02-16-improving-llm-reasoning/</link>
       <pubDate>Sun, 16 Feb 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/2025-02-16-improving-llm-reasoning/</guid>
+      <guid>https://mig217.github.io/post/2025-02-16-improving-llm-reasoning/</guid>
       <description>&lt;p&gt;2024年，大语言模型在推理能力方面取得了显著突破。以O系列模型为例，在ARC-AGI评估任务中展现了令人瞩目的性能【1】：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;O3模型达到了87.5%的准确率&lt;/strong&gt;，尽管每个任务的计算成本较高（超过$1,000）&lt;/li&gt;
 &lt;li&gt;相比之下，&lt;strong&gt;未采用特殊推理技术的传统LLMs准确率通常低于25%&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/o-series-performance.jpg&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/o-series-performance.jpg&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
             Fig.1: O-Series Performance
         &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -500,7 +197,7 @@ LLM Agent = 可以进行多轮对话的 LLM + 使用工具 (multi-turn LLMs with
 &lt;li&gt;&lt;strong&gt;CoT Prompting&lt;/strong&gt;：展示完整的推理过程，让&lt;strong&gt;模型清晰地说明从问题到答案的推导步骤&lt;/strong&gt;。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/CotvsSd.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/CotvsSd.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
             Fig.2: Chain-of-thought prompting enables large language models to tackle complex arithmetic commonsense, and symbolic reasoning tasks. Chain-of-thought reasoning processes are highlighted.
         &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -508,7 +205,7 @@ LLM Agent = 可以进行多轮对话的 LLM + 使用工具 (multi-turn LLMs with
 &lt;h3 id=&#34;zero-shot-cot-prompting通过指令引导生成思维链推理&#34;&gt;Zero-shot CoT Prompting：通过指令引导生成思维链推理&lt;/h3&gt;
 &lt;p&gt;0-shot CoT 是一种通过简短指令引导LLM进行推理的方法，无需依赖任何示例。在这种方法中，模型不需要看到具体的示范或训练数据，仅&lt;strong&gt;通过一个简单的指令（如&amp;quot;Let&amp;rsquo;s think step by step.&amp;quot;）（Fig.3）即可开始推理&lt;/strong&gt;【4】。&lt;/p&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/0-shot-cot.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/0-shot-cot.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
             Fig.3: Example inputs and outputs of GPT-3
         &lt;/figcaption&gt;
 &lt;/figure&gt;

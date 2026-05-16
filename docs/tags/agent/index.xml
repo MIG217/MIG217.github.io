@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Agent on Mig&#39;s Blog</title>
-    <link>http://localhost:1313/tags/agent/</link>
+    <link>https://mig217.github.io/tags/agent/</link>
     <description>Recent content in Agent on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
     <lastBuildDate>Mon, 01 Jan 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/agent/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mig217.github.io/tags/agent/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>金融资讯智能体</title>
-      <link>http://localhost:1313/projects/financial-news-agent/</link>
+      <link>https://mig217.github.io/projects/financial-news-agent/</link>
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/projects/financial-news-agent/</guid>
+      <guid>https://mig217.github.io/projects/financial-news-agent/</guid>
       <description>覆盖 40+ 业务场景的金融资讯 Agent，从用户调研到数据 API 设计、Agent 架构、前端组件的完整建设过程。</description>
     </item>
   </channel>
