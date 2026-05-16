@@ -2,17 +2,63 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>RAG on Mig&#39;s Blog</title>
-    <link>https://mig217.github.io/tags/rag/</link>
+    <link>http://localhost:1313/tags/rag/</link>
     <description>Recent content in RAG on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 16 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://mig217.github.io/tags/rag/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/rag/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RAG Overview</title>
+      <link>http://localhost:1313/post/rag-overview/</link>
+      <pubDate>Thu, 31 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/rag-overview/</guid>
+      <description>&lt;p&gt;检索增强生成（Retrieval Augmented Generation，RAG）是目前应用最广泛的技术之一，用于提升LLM的回答质量和准确性。LLM 开始仅依赖训练时的公共互联网数据，而 RAG 能通过检索外部数据源（如企业文档、专有数据）为模型提供额外信息，从而回答其未接触过的事实性问题。例如，像 ChatGPT、Claude 或 Gemini 这类聊天机器人会搜索网络以确保回答的时效性与准确性。如今，大型公司常用 RAG 为客户和员工提供精准的信息支持，而初创企业也在医疗、教育等领域构建 RAG 应用，帮助解决行业特定问题。&lt;/p&gt;
+&lt;p&gt;随着 LLM 技术的进步，RAG 系统的能力也在不断进化。新一代模型能更好地基于提供的文档进行回答，显著降低了幻觉率。同时，推理模型的兴起和 LLM 输入上下文窗口的扩大，使 RAG 的超参数调优更加精细，如选择哪些内容被检索和如何切分文档片段。&lt;/p&gt;
+&lt;p&gt;模块概览：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;RAG 简介：了解 RAG 的基本概念、核心价值，以及它如何提升大语言模型的回答质量&lt;/li&gt;
+&lt;li&gt;RAG 架构解析：拆解 RAG 的核心组件，包括 LLM、检索器（retriever）、向量数据库（vector database）等&lt;/li&gt;
+&lt;li&gt;应用案例：真实场景中的 RAG 系统应用，包括企业知识问答、医疗问答、教育辅导等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;introduction-to-rag&#34;&gt;Introduction to RAG&lt;/h2&gt;
+&lt;h2 id=&#34;rag-简介&#34;&gt;RAG 简介&lt;/h2&gt;
+&lt;p&gt;LLM 能够回答问题、总结和改写文本、对文档提供反馈、生成代码等等。RAG是一种能够进一步提升 LLM 表现的方法，它通过为模型提供训练中未包含的外部信息来增强回答的准确性。&lt;/p&gt;
+&lt;p&gt;为了更好地理解这个概念，让我们来看几个例子：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;“为什么酒店在周末会更贵？”
+&lt;ul&gt;
+&lt;li&gt;因为周末旅行的人更多，房间竞争更激烈。&lt;br&gt;
+-“为什么这个周末温哥华的酒店特别贵？”
+需要额外信息来回答。查阅网络后，你可能会发现国际巨星 Taylor Swift 本周末将在温哥华举办两场演唱会，有了这个信息，你就能给出答案。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;“为什么温哥华市中心附近没有更多的酒店容量？”
+&lt;ul&gt;
+&lt;li&gt;要回答这个问题，需要深入研究温哥华的发展历史、城市规划等专业信息。换句话说，需要先获取大量的专业信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;回答这些问题的过程可以分为两个阶段：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;信息收集（retrieval）&lt;/strong&gt;：获取必要的信息。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;信息推理与回答（generation）&lt;/strong&gt;：基于收集到的信息进行推理并生成答案。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在 RAG 中，收集信息的过程被称为 &lt;strong&gt;检索（retrieval）&lt;/strong&gt;，而基于这些信息生成回答的过程被称为 &lt;strong&gt;生成（generation）&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;LLM 和人类类似，无法覆盖所有知识，尤其对近期事件或私有数据存在盲区，&lt;strong&gt;LLM 不知道的东西&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;私有数据库&lt;/strong&gt;：LLM 无法访问机密信息。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;难以获取的信息&lt;/strong&gt;：某些信息并不广泛公开，LLM 无法直接获得。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;实时数据&lt;/strong&gt;：LLM 的训练数据是过去的快照，它不会自动更新。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;RAG 系统的关键思想就是：在将问题发送给 LLM 之前，可以先修改和增强提示词。&lt;br&gt;
+除了用户的原始问题，还可以加入帮助 LLM 回答的检索信息。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Memory, Reasoning, and Planning of Language Agents</title>
-      <link>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</link>
+      <link>http://localhost:1313/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</link>
       <pubDate>Wed, 16 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</guid>
+      <guid>http://localhost:1313/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</guid>
       <description>&lt;p&gt;Language Agents have emerged as one of the most exciting research directions in AI over the past two years. This article explores three core components: &lt;strong&gt;long-term memory via HippoRAG, reasoning capabilities with Grokked Transformers, and world modeling through WebDreamer&lt;/strong&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;why-agents-again&#34;&gt;Why Agents Again?&lt;/h2&gt;
 &lt;p&gt;Russell &amp;amp; Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “&lt;strong&gt;anything that can perceive its environment through sensors and act upon that environment through actions.&lt;/strong&gt;”（@ArtificialIntelligenceModern）&lt;/p&gt;</description>

@@ -14,7 +14,7 @@ pygmentsUseClasses = true
 
 [params]
   env = "production"  # 启用 Google Analytics、OpenGraph、Twitter Cards 等
-  description = "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"
+  description = "Mingrui Guo's blog — AI research notes and PM thinking"
   author = "Mingrui Guo"  # 更新作者信息
   defaultTheme = "regular"
   mainSections = ["post"]  # 主页展示的文章目录
@@ -44,10 +44,19 @@ pygmentsUseClasses = true
     ]
 
   [params.homeInfoParams]
-    Title = "👋Welcome to Mig's Blog"
+    Title = "Hi, I’m Mingrui 👋"
     Content = """
-    Hey, this is Mingrui. I started this blog in 2025 to track my thoughts. If the writing sounds a bit too polished, well… let’s just say ChatGPT did most of the work! 😆
-    """
+AI Product Manager with 8 years of internet experience, the last 4 focused on building AI products.
+
+This blog has two threads: **AI research** — notes on LLM reasoning, agent architectures, and context engineering; and **PM thinking** — product decisions and lessons from building AI in a regulated industry.
+
+I believe understanding the technology makes you a better product manager.
+"""
+
+   [[params.socialIcons]]
+     name = "linkedin"
+     title = "LinkedIn"
+     url = "https://www.linkedin.com/in/mingrui-guo-3498a52b0"
 
    [[params.socialIcons]]
      name = "github"
@@ -81,21 +90,25 @@ pygmentsUseClasses = true
     url = "post/"
     weight = 1
   [[menu.main]]
+    name = "Projects"
+    url = "projects/"
+    weight = 2
+  [[menu.main]]
     name = "Archive"
     url = "archives/"
-    weight = 2
+    weight = 3
   [[menu.main]]
     name = "Search"
     url = "search/"
-    weight = 3
+    weight = 4
   [[menu.main]]
     name = "Tags"
     url = "tags/"
-    weight = 4
+    weight = 5
   [[menu.main]]
     name = "FAQ"
     url = "faq/"
-    weight = 5
+    weight = 6
 
 [languages]
   [languages.en]

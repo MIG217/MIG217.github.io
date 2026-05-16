@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Projects on Mig&#39;s Blog</title>
+    <link>http://localhost:1313/projects/</link>
+    <description>Recent content in Projects on Mig&#39;s Blog</description>
+    <generator>Hugo -- 0.147.7</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 01 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI 投资中台建设</title>
+      <link>http://localhost:1313/projects/ai-investment-platform/</link>
+      <pubDate>Sun, 01 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/ai-investment-platform/</guid>
+      <description>从 0 到 1 建设 AI 投资服务平台，月 PV 80w、UV 50w，直接带动营收破百万。</description>
+    </item>
+    <item>
+      <title>文档抽取平台优化</title>
+      <link>http://localhost:1313/projects/document-extraction-platform/</link>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/document-extraction-platform/</guid>
+      <description>主导文档结构化平台大模型接入，新模板上线从天级缩短至分钟级。</description>
+    </item>
+    <item>
+      <title>金融资讯智能体</title>
+      <link>http://localhost:1313/projects/financial-news-agent/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/financial-news-agent/</guid>
+      <description>覆盖 40+ 业务场景的金融资讯 Agent，从用户调研到数据 API 设计、Agent 架构、前端组件的完整建设过程。</description>
+    </item>
+  </channel>
+</rss>

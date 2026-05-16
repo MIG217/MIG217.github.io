@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>PM on Mig&#39;s Blog</title>
-    <link>https://mig217.github.io/tags/pm/</link>
+    <link>http://localhost:1313/tags/pm/</link>
     <description>Recent content in PM on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
     <lastBuildDate>Sat, 02 May 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://mig217.github.io/tags/pm/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/pm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>在未知中前行：5 条原则</title>
-      <link>https://mig217.github.io/post/2026-05-01-guiding-principles-for-navigating-the-unknown/</link>
+      <link>http://localhost:1313/post/2026-05-01-guiding-principles-for-navigating-the-unknown/</link>
       <pubDate>Sat, 02 May 2026 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/2026-05-01-guiding-principles-for-navigating-the-unknown/</guid>
+      <guid>http://localhost:1313/post/2026-05-01-guiding-principles-for-navigating-the-unknown/</guid>
       <description>&lt;p&gt;——读 &lt;a href=&#34;https://blog.jaclynkonzelmann.com/p/looking-ahead-into-2026-my-guiding&#34;&gt;Jaclyn Konzelmann《Looking Ahead into 2026》&lt;/a&gt;笔记&lt;/p&gt;
 &lt;p&gt;她今年放弃了惯例的&amp;quot;AI 预测清单&amp;quot;——因为变化太快，预测毫无意义。改为定下几条原则：&lt;/p&gt;
 &lt;h2 id=&#34;1-边学边做&#34;&gt;1. 边学边做&lt;/h2&gt;

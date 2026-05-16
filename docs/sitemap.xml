@@ -2,94 +2,157 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://mig217.github.io/categories/ai/</loc>
+    <loc>http://localhost:1313/categories/ai/</loc>
+    <lastmod>2026-05-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2026-05-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2026-05-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2026-05-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/2026-05-05-prompt-caching/</loc>
+    <lastmod>2026-05-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/prompt-engineering/</loc>
+    <lastmod>2026-05-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2026-05-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/pm/</loc>
     <lastmod>2026-05-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/categories/</loc>
+    <loc>http://localhost:1313/post/2026-05-01-guiding-principles-for-navigating-the-unknown/</loc>
     <lastmod>2026-05-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/</loc>
-    <lastmod>2026-05-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mig217.github.io/tags/pm/</loc>
-    <lastmod>2026-05-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mig217.github.io/post/</loc>
-    <lastmod>2026-05-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mig217.github.io/tags/</loc>
-    <lastmod>2026-05-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mig217.github.io/post/2026-05-01-guiding-principles-for-navigating-the-unknown/</loc>
-    <lastmod>2026-05-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mig217.github.io/post/2025-11-30-deep-agents/</loc>
+    <loc>http://localhost:1313/post/2025-11-30-deep-agents/</loc>
     <lastmod>2025-11-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/llm-agents/</loc>
+    <loc>http://localhost:1313/tags/llm-agents/</loc>
     <lastmod>2025-11-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/post/2025-10-30-training-llms-for-agents/</loc>
+    <loc>http://localhost:1313/post/2025-11-30-multimodal-autonomous-ai-agents/</loc>
+    <lastmod>2025-11-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/2025-10-30-training-llms-for-agents/</loc>
     <lastmod>2025-10-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/post/2025-08-20-context-engineering/</loc>
+    <loc>http://localhost:1313/post/ai-research/</loc>
+    <lastmod>2025-09-01T07:55:36+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/mcp-architecture/</loc>
+    <lastmod>2025-09-01T07:54:35+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/2025-08-20-context-engineering/</loc>
     <lastmod>2025-08-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/context-engineering/</loc>
+    <loc>http://localhost:1313/tags/context-engineering/</loc>
     <lastmod>2025-08-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/post/2025-06-21-a-guide-to-reasoning-models/</loc>
+    <loc>http://localhost:1313/post/2025-09-30-coding-agents/</loc>
+    <lastmod>2025-07-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/rag/</loc>
+    <lastmod>2025-07-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/rag-overview/</loc>
+    <lastmod>2025-07-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/deep-research/</loc>
+    <lastmod>2025-07-21T19:42:45+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/2025-06-21-a-guide-to-reasoning-models/</loc>
     <lastmod>2025-06-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/reasoning-models/</loc>
+    <loc>http://localhost:1313/tags/reasoning-models/</loc>
     <lastmod>2025-06-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/post/2025-05-30-open-training-recipes/</loc>
+    <loc>http://localhost:1313/post/2025-05-30-open-training-recipes/</loc>
     <lastmod>2025-05-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/llm/</loc>
+    <loc>http://localhost:1313/tags/llm/</loc>
     <lastmod>2025-05-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/open-traning-recipe/</loc>
+    <loc>http://localhost:1313/tags/open-traning-recipe/</loc>
     <lastmod>2025-05-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/post-training/</loc>
+    <loc>http://localhost:1313/tags/post-training/</loc>
     <lastmod>2025-05-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/pre-training/</loc>
+    <loc>http://localhost:1313/tags/pre-training/</loc>
     <lastmod>2025-05-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</loc>
+    <loc>http://localhost:1313/post/2025-04-19-agentic/</loc>
     <lastmod>2025-04-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/rag/</loc>
+    <loc>http://localhost:1313/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</loc>
     <lastmod>2025-04-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/reasoning/</loc>
+    <loc>http://localhost:1313/tags/reasoning/</loc>
     <lastmod>2025-04-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/world-models/</loc>
+    <loc>http://localhost:1313/tags/world-models/</loc>
     <lastmod>2025-04-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/post/2025-03-10-llm-agents-overview/</loc>
+    <loc>http://localhost:1313/post/2025-03-10-llm-agents-overview/</loc>
     <lastmod>2025-03-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/faq/</loc>
+    <loc>http://localhost:1313/faq/</loc>
     <lastmod>2025-03-11T12:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</loc>
+    <loc>http://localhost:1313/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</loc>
     <lastmod>2025-03-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/tags/prompting/</loc>
+    <loc>http://localhost:1313/tags/prompting/</loc>
     <lastmod>2025-02-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/post/2025-02-16-improving-llm-reasoning/</loc>
+    <loc>http://localhost:1313/post/2025-02-16-improving-llm-reasoning/</loc>
     <lastmod>2025-02-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/archives/</loc>
+    <loc>http://localhost:1313/tags/0-1/</loc>
+    <lastmod>2024-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/search/</loc>
+    <loc>http://localhost:1313/tags/ai/</loc>
+    <lastmod>2024-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mig217.github.io/search.fr/</loc>
+    <loc>http://localhost:1313/projects/ai-investment-platform/</loc>
+    <lastmod>2024-09-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/projects/</loc>
+    <lastmod>2024-09-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E4%B8%AD%E5%8F%B0/</loc>
+    <lastmod>2024-09-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/aigc/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/b%E7%AB%AF/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E5%B9%B3%E5%8F%B0%E4%BA%A7%E5%93%81/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/projects/document-extraction-platform/</loc>
+    <lastmod>2024-06-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/agent/</loc>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/</loc>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/projects/financial-news-agent/</loc>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/archives/</loc>
+  </url><url>
+    <loc>http://localhost:1313/search/</loc>
+  </url><url>
+    <loc>http://localhost:1313/search.fr/</loc>
   </url>
 </urlset>

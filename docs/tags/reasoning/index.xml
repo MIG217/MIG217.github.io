@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Reasoning on Mig&#39;s Blog</title>
-    <link>https://mig217.github.io/tags/reasoning/</link>
+    <link>http://localhost:1313/tags/reasoning/</link>
     <description>Recent content in Reasoning on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
     <lastBuildDate>Wed, 16 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://mig217.github.io/tags/reasoning/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/reasoning/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Memory, Reasoning, and Planning of Language Agents</title>
-      <link>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</link>
+      <link>http://localhost:1313/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</link>
       <pubDate>Wed, 16 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</guid>
+      <guid>http://localhost:1313/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</guid>
       <description>&lt;p&gt;Language Agents have emerged as one of the most exciting research directions in AI over the past two years. This article explores three core components: &lt;strong&gt;long-term memory via HippoRAG, reasoning capabilities with Grokked Transformers, and world modeling through WebDreamer&lt;/strong&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;why-agents-again&#34;&gt;Why Agents Again?&lt;/h2&gt;
 &lt;p&gt;Russell &amp;amp; Norvig in “Artificial Intelligence: A Modern Approach” define an agent as “&lt;strong&gt;anything that can perceive its environment through sensors and act upon that environment through actions.&lt;/strong&gt;”（@ArtificialIntelligenceModern）&lt;/p&gt;</description>
     </item>
     <item>
       <title>大语言模型的自我提升与推理能力进化(Jason Weston, Meta)</title>
-      <link>https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</link>
+      <link>http://localhost:1313/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</link>
       <pubDate>Sat, 01 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</guid>
+      <guid>http://localhost:1313/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</guid>
       <description>&lt;p&gt;本文内容来自 &lt;a href=&#34;https://rdi.berkeley.edu/adv-llm-agents/slides/Jason-Weston-Reasoning-Alignment-Berkeley-Talk.pdf&#34;&gt;Jason Weston (Meta) 在 UC Berkeley Advanced Large Language Model Agents 课程中的分享，探讨了大语言模型的推理能力提升&lt;/a&gt; 。以下为讲座内容：&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;AI 能力正在快速发展，如 O1、R1 等模型在推理基准测试中取得的突破性进展。本文将聚焦于模型的&lt;strong&gt;自我提升能力(self-improvement)&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;为了更好地理解AI的推理机制，我们首先需要区分两种基本的思维模式：&lt;strong&gt;System 1和 System 2&lt;/strong&gt;：&lt;/p&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/System1&amp;amp;System2.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/System1&amp;amp;System2.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
             Fig.1: Hybrid Reasoning Framework: System 1 and System 2 Collaboration in LLMs
         &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -56,7 +56,7 @@
 &lt;h3 id=&#34;instrcut-gpt&#34;&gt;Instrcut GPT&lt;/h3&gt;
 &lt;p&gt;InstructGPT 是在 2022 年提出的一种语言模型优化方法[1]，它&lt;strong&gt;结合了监督学习和基于人类反馈的强化学习（RLHF）&lt;/strong&gt;，比单纯的监督微调更为先进。这种方法包含三个关键步骤(如图)：&lt;/p&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/illustrating.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/illustrating.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
             Fig.2: Reinforcement Learning from Human Feedback (RLHF) Training Pipeline
         &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -70,16 +70,16 @@
     </item>
     <item>
       <title>如何优化大语言模型（LLM）的推理能力？</title>
-      <link>https://mig217.github.io/post/2025-02-16-improving-llm-reasoning/</link>
+      <link>http://localhost:1313/post/2025-02-16-improving-llm-reasoning/</link>
       <pubDate>Sun, 16 Feb 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/2025-02-16-improving-llm-reasoning/</guid>
+      <guid>http://localhost:1313/post/2025-02-16-improving-llm-reasoning/</guid>
       <description>&lt;p&gt;2024年，大语言模型在推理能力方面取得了显著突破。以O系列模型为例，在ARC-AGI评估任务中展现了令人瞩目的性能【1】：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;O3模型达到了87.5%的准确率&lt;/strong&gt;，尽管每个任务的计算成本较高（超过$1,000）&lt;/li&gt;
 &lt;li&gt;相比之下，&lt;strong&gt;未采用特殊推理技术的传统LLMs准确率通常低于25%&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/o-series-performance.jpg&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/o-series-performance.jpg&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
             Fig.1: O-Series Performance
         &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -106,7 +106,7 @@
 &lt;li&gt;&lt;strong&gt;CoT Prompting&lt;/strong&gt;：展示完整的推理过程，让&lt;strong&gt;模型清晰地说明从问题到答案的推导步骤&lt;/strong&gt;。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/CotvsSd.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/CotvsSd.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
             Fig.2: Chain-of-thought prompting enables large language models to tackle complex arithmetic commonsense, and symbolic reasoning tasks. Chain-of-thought reasoning processes are highlighted.
         &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -114,7 +114,7 @@
 &lt;h3 id=&#34;zero-shot-cot-prompting通过指令引导生成思维链推理&#34;&gt;Zero-shot CoT Prompting：通过指令引导生成思维链推理&lt;/h3&gt;
 &lt;p&gt;0-shot CoT 是一种通过简短指令引导LLM进行推理的方法，无需依赖任何示例。在这种方法中，模型不需要看到具体的示范或训练数据，仅&lt;strong&gt;通过一个简单的指令（如&amp;quot;Let&amp;rsquo;s think step by step.&amp;quot;）（Fig.3）即可开始推理&lt;/strong&gt;【4】。&lt;/p&gt;
 &lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/0-shot-cot.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
+    &lt;img loading=&#34;lazy&#34; src=&#34;http://localhost:1313/images/0-shot-cot.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
             Fig.3: Example inputs and outputs of GPT-3
         &lt;/figcaption&gt;
 &lt;/figure&gt;

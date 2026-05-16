@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>0-1 on Mig&#39;s Blog</title>
+    <link>http://localhost:1313/tags/0-1/</link>
+    <description>Recent content in 0-1 on Mig&#39;s Blog</description>
+    <generator>Hugo -- 0.147.7</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 01 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/0-1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI 投资中台建设</title>
+      <link>http://localhost:1313/projects/ai-investment-platform/</link>
+      <pubDate>Sun, 01 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/ai-investment-platform/</guid>
+      <description>从 0 到 1 建设 AI 投资服务平台，月 PV 80w、UV 50w，直接带动营收破百万。</description>
+    </item>
+  </channel>
+</rss>

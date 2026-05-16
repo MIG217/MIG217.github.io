@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Post Training on Mig&#39;s Blog</title>
-    <link>https://mig217.github.io/tags/post-training/</link>
+    <link>http://localhost:1313/tags/post-training/</link>
     <description>Recent content in Post Training on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
     <lastBuildDate>Fri, 30 May 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://mig217.github.io/tags/post-training/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/post-training/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title> Open Training Recipes for Reasoning in Language Models</title>
-      <link>https://mig217.github.io/post/2025-05-30-open-training-recipes/</link>
+      <link>http://localhost:1313/post/2025-05-30-open-training-recipes/</link>
       <pubDate>Fri, 30 May 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/post/2025-05-30-open-training-recipes/</guid>
+      <guid>http://localhost:1313/post/2025-05-30-open-training-recipes/</guid>
       <description>&lt;p&gt;In today&amp;rsquo;s rapidly evolving AI landscape, the remarkable progress we&amp;rsquo;ve witnessed is largely attributed to open scientific research and fully open models. However, as time progresses, more and more research and development work is becoming increasingly closed off.&lt;/p&gt;
 &lt;p&gt;We still need to delve deeper into &lt;strong&gt;how language models work, improve their capabilities, and make them safer, more efficient, and more reliable&lt;/strong&gt;. Simultaneously, we need to extend language models&amp;rsquo; abilities beyond text into domains like &lt;strong&gt;healthcare, science, and even complex decision-making processes&lt;/strong&gt;. Most importantly, we must bring these models into real-world applications, ensuring they are &lt;strong&gt;deployable, interpretable, and effectively mitigate biases and risks&lt;/strong&gt;.&lt;/p&gt;</description>
     </item>
