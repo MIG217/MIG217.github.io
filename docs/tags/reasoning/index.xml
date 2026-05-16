@@ -24,49 +24,7 @@
       <guid>https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</guid>
       <description>&lt;p&gt;本文内容来自 &lt;a href=&#34;https://rdi.berkeley.edu/adv-llm-agents/slides/Jason-Weston-Reasoning-Alignment-Berkeley-Talk.pdf&#34;&gt;Jason Weston (Meta) 在 UC Berkeley Advanced Large Language Model Agents 课程中的分享，探讨了大语言模型的推理能力提升&lt;/a&gt; 。以下为讲座内容：&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;AI 能力正在快速发展，如 O1、R1 等模型在推理基准测试中取得的突破性进展。本文将聚焦于模型的&lt;strong&gt;自我提升能力(self-improvement)&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;为了更好地理解AI的推理机制，我们首先需要区分两种基本的思维模式：&lt;strong&gt;System 1和 System 2&lt;/strong&gt;：&lt;/p&gt;
-&lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/System1&amp;amp;System2.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
-            Fig.1: Hybrid Reasoning Framework: System 1 and System 2 Collaboration in LLMs
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;System 1：快速直觉系统&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这是一种类似人类直觉反应的快速思维系统，主要依赖关联性思维。在LLM中，这种能力体现在&lt;strong&gt;transformer神经网络的基础运作机制上&lt;/strong&gt;。其主要特征包括：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;每个token使用固定的计算资源；&lt;/li&gt;
-&lt;li&gt;直接输出答案；&lt;/li&gt;
-&lt;li&gt;局限性：&lt;strong&gt;容易学习到虚假关联，产生幻觉、迎合性回答、越界等问题&lt;/strong&gt;；&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;System 2: 深度思考系统&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这代表了一种更深层次的思维模式，目前主要通过&lt;strong&gt;CoT&lt;/strong&gt;来实现。在生成最终答案之前，System 2会进行系统性的推理分析。它具有以下优势：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;能够执行&lt;strong&gt;规划、搜索和验证&lt;/strong&gt;等复杂任务；&lt;/li&gt;
-&lt;li&gt;具备动态计算能力，可以通过CoT、ToT等方式实现灵活推理；&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;我们可以通过优化&lt;strong&gt;模型架构或权重来提升System 1的表现&lt;/strong&gt;，也可以通过&lt;strong&gt;改进推理链的生成方式来增强System 2&lt;/strong&gt;的表现；最终目标是让AI具备&lt;strong&gt;自我学习&lt;/strong&gt;能力，这包括3个关键方面：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;能够自主设计具有挑战性的训练任务&lt;/li&gt;
-&lt;li&gt;评估任务的完成质量，形成自我奖励机制&lt;/li&gt;
-&lt;li&gt;根据理解和反馈，持续更新优化自身能力&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;接下来，我们将分两个部分展开讨论：首先回顾语言模型的历史发展历程，然后深入探讨过去一年中的重要研究进展。&lt;/p&gt;
-&lt;h2 id=&#34;llm-post-trainingo1r1-之前的优化之路&#34;&gt;LLM Post-training：O1/R1 之前的优化之路&lt;/h2&gt;
-&lt;h3 id=&#34;instrcut-gpt&#34;&gt;Instrcut GPT&lt;/h3&gt;
-&lt;p&gt;InstructGPT 是在 2022 年提出的一种语言模型优化方法[1]，它&lt;strong&gt;结合了监督学习和基于人类反馈的强化学习（RLHF）&lt;/strong&gt;，比单纯的监督微调更为先进。这种方法包含三个关键步骤(如图)：&lt;/p&gt;
-&lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/illustrating.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
-            Fig.2: Reinforcement Learning from Human Feedback (RLHF) Training Pipeline
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;监督微调（SFT）阶段&lt;/strong&gt;：通过收集人类标注的示范数据，对基础模型进行初步的行为调整；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;奖励模型训练阶段&lt;/strong&gt;：根据人类对模型多个输出的排序评估，训练一个能够判断输出质量的奖励模型；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;强化学习优化阶段&lt;/strong&gt;：利用奖励模型的反馈评分，通过 PPO 算法持续优化模型输出；&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;这种训练方法&lt;strong&gt;通过引入人类反馈和自我优化机制，使模型能够持续改进其输出质量&lt;/strong&gt;。这不仅提升了模型的性能，而是朝着自我训练的目标迈进。&lt;/p&gt;</description>
+&lt;p&gt;AI 能力正在快速发展，如 O1、R1 等模型在推理基准测试中取得的突破性进展。本文将聚焦于模型的&lt;strong&gt;自我提升能力(self-improvement)&lt;/strong&gt;。&lt;/p&gt;</description>
     </item>
     <item>
       <title>如何优化大语言模型（LLM）的推理能力？</title>
@@ -84,42 +42,7 @@
         &lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;如何通过有效的Prompting 来激发大语言模型的深层次推理能力，一直是研究者和开发者关注的核心问题。以下是几种主要的触发方法：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;少量示例CoT提示（Few-shot CoT）&lt;/strong&gt;：通过提供少量推理示例，引导模型学习推理模式并应用到新问题中。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;指令型提示（Instruction prompting）&lt;/strong&gt;：明确指导模型逐步思考问题，避免直接跳至答案。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;指令微调（Instruction tuning）&lt;/strong&gt;：针对多步思考的推理任务对模型进行微调，提升其在类似任务中生成连贯思维链的能力。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;强化学习（Reinforcement learning）&lt;/strong&gt;：利用强化学习技术训练模型，使其能够生成更完整、更准确的推理链。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;本文重点：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;我们将深入探讨Inference-time techniques，特别关注如何通过扩展token预算来提升LLM的推理能力。主要包括三个维度：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;基本提示词技巧：&lt;strong&gt;使用更多的token预算来生成单一的解决方案&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;从多个候选中进行搜索和选择，增加推理的&lt;strong&gt;宽度&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;模型迭代自我改进，增加推理的&lt;strong&gt;深度，最终到达最优解&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;使用更多的token生成单一解决方案&#34;&gt;使用更多的Token生成单一解决方案&lt;/h2&gt;
-&lt;p&gt;优化提示词能显著提升模型在各类任务中的表现。本节将介绍一些提示词工程技术，帮助我们更好地完成复杂任务。
-下图对比了Standard Prompting和CoT Prompting两种方法【2】【3】：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Standard Prompting&lt;/strong&gt;：仅给出最终答案，没有推理过程，容易导致错误结果。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;CoT Prompting&lt;/strong&gt;：展示完整的推理过程，让&lt;strong&gt;模型清晰地说明从问题到答案的推导步骤&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/CotvsSd.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
-            Fig.2: Chain-of-thought prompting enables large language models to tackle complex arithmetic commonsense, and symbolic reasoning tasks. Chain-of-thought reasoning processes are highlighted.
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&#34;zero-shot-cot-prompting通过指令引导生成思维链推理&#34;&gt;Zero-shot CoT Prompting：通过指令引导生成思维链推理&lt;/h3&gt;
-&lt;p&gt;0-shot CoT 是一种通过简短指令引导LLM进行推理的方法，无需依赖任何示例。在这种方法中，模型不需要看到具体的示范或训练数据，仅&lt;strong&gt;通过一个简单的指令（如&amp;quot;Let&amp;rsquo;s think step by step.&amp;quot;）（Fig.3）即可开始推理&lt;/strong&gt;【4】。&lt;/p&gt;
-&lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/0-shot-cot.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
-            Fig.3: Example inputs and outputs of GPT-3
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;优缺点：&lt;/strong&gt;&lt;/p&gt;</description>
+&lt;p&gt;如何通过有效的Prompting 来激发大语言模型的深层次推理能力，一直是研究者和开发者关注的核心问题。以下是几种主要的触发方法：&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

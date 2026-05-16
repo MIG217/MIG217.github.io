@@ -174,20 +174,9 @@
   <div class="entry-content">
     <p>——读 Jaclyn Konzelmann《Looking Ahead into 2026》笔记
 她今年放弃了惯例的&#34;AI 预测清单&#34;——因为变化太快，预测毫无意义。改为定下几条原则：
-1. 边学边做 在快速变化的世界里，最有效的学习方式就是动手做。你不能只是空想，必须去构建。理解该构建什么、以及该如何构建，最佳的方式就是亲自上手。
-真正的魔法时刻，往往是在做的过程中冒出来的：你以为方案 A 够用，做完才发现真正成立的是 B。这些东西，最初的 PRD 和策略文档里根本写不出来。
-这就是边学边做的精髓：你学会了怎么做，但更重要的是，学会了做什么，并培养出对重要功能的直觉。
-Building is the engine of discovery for both the how and the what.
-2. Agency &gt; Intelligence 主动性（Agency）正在成为最有价值的特质。因为在一个智力可以被 AI 增强的世界里，主动性是去行动的能力、欲望、驱动力和内在动机。
-Andrej Karpathy 的Twitter写过一句话
-Agency is significantly more powerful and significantly more scarce.
-我们需要的，是能说&#34;我会想办法搞定&#34;并真的去做的建造者。
-3. 培养产品直觉 人们一直在谈数据驱动决策，但在一个 AI 可以生成无限数据和代码的世界里，终极的差异化在于产品直觉。
-正如 Shopify 的 Tobi Lütke 所说，那是一种《黑客帝国》里 Neo 的瞬间：
-The ability to look at a complex problem and suddenly see the entire system for what it is, and more importantly, what it could be.
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2026-05-02 00:00:00 +0000 UTC'>May 2, 2026</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;123 words&nbsp;·&nbsp;Mingrui Guo</footer>
+  <footer class="entry-footer"><span title='2026-05-02 00:00:00 +0000 UTC'>May 2, 2026</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;1274 words&nbsp;·&nbsp;Mingrui Guo</footer>
   <a class="entry-link" aria-label="post link to 在未知中前行：5 条原则" href="https://mig217.github.io/post/2026-05-01-guiding-principles-for-navigating-the-unknown/"></a>
 </article>
 
@@ -199,17 +188,9 @@ The ability to look at a complex problem and suddenly see the entire system for 
   <div class="entry-content">
     <p>在过去的一年里，AI Agent 的演进出现了两个非常重要的趋势：
 智能体正在变得更通用（Generalist）：可以承担越来越多类型的任务； 智能体的任务时长变得更长（Long-horizon）：能够连续执行几十甚至上百个步骤的复杂任务。 根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。
-与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够组织研究流程、规划任务、调用大量工具，并产出复杂成果。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：
-Manus：典型任务需要调用约 50 次工具 Anthropic Production Agents：实际生产系统常常会进行 数百轮对话与推理 这些长周期、多步骤、工具密集型的系统，被称为 Agentic System。尽管不同项目的具体实现差别较大，但它们普遍遵循以下四个核心原则：
-使用 Planning 保证任务方向正确 在超长任务中，如果缺乏规划，模型非常容易偏航。因此 Agentic System 普遍采用明确的任务计划来做“航向控制”。
-常见做法包括：
-Manus：使用 todo.md 保存任务清单，并在执行过程中不断读写更新； Claude Code：要求用户先批准计划，再执行工具与操作； Gemini Deep Research：在执行前强制生成计划、并请求用户确认； Anthropic Multi-Agent Researcher：将 research plan 写入文件系统，在关键流程中重新读取，确保最终报告“遵循原计划”； 使用 Filesystem 进行 Offload Context 随着工具调用次数、搜索结果、观察内容不断增多，把所有内容保存在消息历史里会快速耗尽上下文窗口。
-因此，可以采用“外部化记忆”机制：
-将庞大中间结果（如搜索原始结果）保存到磁盘 在上下文中只放简短摘要，节省 Tokens 在需要时再从文件读取完整内容 长期记忆可以独立保存，不随对话窗口消失 Example:
-Anthropic Multi-Agent Researcher：将研究计划写到文件里 → 调研完成后再读回来 → 保证报告结构与原计划一致； Manus：将 todo.md 持久化，多次更新、反复读取 文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-11-30 00:00:00 +0000 UTC'>November 30, 2025</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;573 words&nbsp;·&nbsp;Mingrui Guo</footer>
+  <footer class="entry-footer"><span title='2025-11-30 00:00:00 +0000 UTC'>November 30, 2025</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;3492 words&nbsp;·&nbsp;Mingrui Guo</footer>
   <a class="entry-link" aria-label="post link to Deep Agents From LangGraph" href="https://mig217.github.io/post/2025-11-30-deep-agents/"></a>
 </article>
 
@@ -220,14 +201,9 @@ Anthropic Multi-Agent Researcher：将研究计划写到文件里 → 调研完�
   </header>
   <div class="entry-content">
     <p>大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：这些模型到底是如何训练的？
-本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。
-LLM Training Pipeline LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: 预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。
-General LLM Training Pipeline 从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：
-Pre-training：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。 Classic Post-training / RLHF：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。 RL for Reasoning：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。 三个阶段对比
-阶段 核心目标 数据规模 训练时间 成本级别 主要瓶颈 预训练（Pre-training） 学习预测下一个词，构建知识底座 ~10 万亿 tokens 数月 千万美元级 高质量数据、算力资源 经典后训练 / RLHF（Classic Post-training / RLHF） 让模型符合用户偏好 ~10 万个问题 几天 数万–十万美元 人类反馈数据、评测体系 推理型 RL（RL for Reasoning） 提升推理和思考能力 百万级问题 数周 百万美元级 RL 环境设计、防止自我黑客 成功的关键要素 了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-10-02 00:00:00 +0000 UTC'>October 2, 2025</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;1291 words&nbsp;·&nbsp;Mingrui Guo</footer>
+  <footer class="entry-footer"><span title='2025-10-02 00:00:00 +0000 UTC'>October 2, 2025</span>&nbsp;·&nbsp;24 min&nbsp;·&nbsp;11713 words&nbsp;·&nbsp;Mingrui Guo</footer>
   <a class="entry-link" aria-label="post link to Introduction to training LLMs for AI agents" href="https://mig217.github.io/post/2025-10-30-training-llms-for-agents/"></a>
 </article>
 
@@ -307,18 +283,9 @@ What is an Agent? In artificial intelligence, an agent is an “intelligent” s
   <div class="entry-content">
     <p>本文内容来自 Jason Weston (Meta) 在 UC Berkeley Advanced Large Language Model Agents 课程中的分享，探讨了大语言模型的推理能力提升 。以下为讲座内容：
 AI 能力正在快速发展，如 O1、R1 等模型在推理基准测试中取得的突破性进展。本文将聚焦于模型的自我提升能力(self-improvement)。
-为了更好地理解AI的推理机制，我们首先需要区分两种基本的思维模式：System 1和 System 2：
-Fig.1: Hybrid Reasoning Framework: System 1 and System 2 Collaboration in LLMs System 1：快速直觉系统
-这是一种类似人类直觉反应的快速思维系统，主要依赖关联性思维。在LLM中，这种能力体现在transformer神经网络的基础运作机制上。其主要特征包括：
-每个token使用固定的计算资源； 直接输出答案； 局限性：容易学习到虚假关联，产生幻觉、迎合性回答、越界等问题； System 2: 深度思考系统
-这代表了一种更深层次的思维模式，目前主要通过CoT来实现。在生成最终答案之前，System 2会进行系统性的推理分析。它具有以下优势：
-能够执行规划、搜索和验证等复杂任务； 具备动态计算能力，可以通过CoT、ToT等方式实现灵活推理； 我们可以通过优化模型架构或权重来提升System 1的表现，也可以通过改进推理链的生成方式来增强System 2的表现；最终目标是让AI具备自我学习能力，这包括3个关键方面：
-能够自主设计具有挑战性的训练任务 评估任务的完成质量，形成自我奖励机制 根据理解和反馈，持续更新优化自身能力 接下来，我们将分两个部分展开讨论：首先回顾语言模型的历史发展历程，然后深入探讨过去一年中的重要研究进展。
-LLM Post-training：O1/R1 之前的优化之路 Instrcut GPT InstructGPT 是在 2022 年提出的一种语言模型优化方法[1]，它结合了监督学习和基于人类反馈的强化学习（RLHF），比单纯的监督微调更为先进。这种方法包含三个关键步骤(如图)：
-Fig.2: Reinforcement Learning from Human Feedback (RLHF) Training Pipeline 监督微调（SFT）阶段：通过收集人类标注的示范数据，对基础模型进行初步的行为调整； 奖励模型训练阶段：根据人类对模型多个输出的排序评估，训练一个能够判断输出质量的奖励模型； 强化学习优化阶段：利用奖励模型的反馈评分，通过 PPO 算法持续优化模型输出； 这种训练方法通过引入人类反馈和自我优化机制，使模型能够持续改进其输出质量。这不仅提升了模型的性能，而是朝着自我训练的目标迈进。
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-03-01 00:00:00 +0000 UTC'>March 1, 2025</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;867 words&nbsp;·&nbsp;Mingrui Guo</footer>
+  <footer class="entry-footer"><span title='2025-03-01 00:00:00 +0000 UTC'>March 1, 2025</span>&nbsp;·&nbsp;10 min&nbsp;·&nbsp;4686 words&nbsp;·&nbsp;Mingrui Guo</footer>
   <a class="entry-link" aria-label="post link to 大语言模型的自我提升与推理能力进化(Jason Weston, Meta)" href="https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/"></a>
 </article>
 
@@ -330,14 +297,9 @@ Fig.2: Reinforcement Learning from Human Feedback (RLHF) Training Pipeline 监�
   <div class="entry-content">
     <p>2024年，大语言模型在推理能力方面取得了显著突破。以O系列模型为例，在ARC-AGI评估任务中展现了令人瞩目的性能【1】：
 O3模型达到了87.5%的准确率，尽管每个任务的计算成本较高（超过$1,000） 相比之下，未采用特殊推理技术的传统LLMs准确率通常低于25% Fig.1: O-Series Performance 如何通过有效的Prompting 来激发大语言模型的深层次推理能力，一直是研究者和开发者关注的核心问题。以下是几种主要的触发方法：
-少量示例CoT提示（Few-shot CoT）：通过提供少量推理示例，引导模型学习推理模式并应用到新问题中。 指令型提示（Instruction prompting）：明确指导模型逐步思考问题，避免直接跳至答案。 指令微调（Instruction tuning）：针对多步思考的推理任务对模型进行微调，提升其在类似任务中生成连贯思维链的能力。 强化学习（Reinforcement learning）：利用强化学习技术训练模型，使其能够生成更完整、更准确的推理链。 本文重点：
-我们将深入探讨Inference-time techniques，特别关注如何通过扩展token预算来提升LLM的推理能力。主要包括三个维度：
-基本提示词技巧：使用更多的token预算来生成单一的解决方案。 从多个候选中进行搜索和选择，增加推理的宽度。 模型迭代自我改进，增加推理的深度，最终到达最优解。 使用更多的Token生成单一解决方案 优化提示词能显著提升模型在各类任务中的表现。本节将介绍一些提示词工程技术，帮助我们更好地完成复杂任务。 下图对比了Standard Prompting和CoT Prompting两种方法【2】【3】：
-Standard Prompting：仅给出最终答案，没有推理过程，容易导致错误结果。 CoT Prompting：展示完整的推理过程，让模型清晰地说明从问题到答案的推导步骤。 Fig.2: Chain-of-thought prompting enables large language models to tackle complex arithmetic commonsense, and symbolic reasoning tasks. Chain-of-thought reasoning processes are highlighted. Zero-shot CoT Prompting：通过指令引导生成思维链推理 0-shot CoT 是一种通过简短指令引导LLM进行推理的方法，无需依赖任何示例。在这种方法中，模型不需要看到具体的示范或训练数据，仅通过一个简单的指令（如&#34;Let’s think step by step.&#34;）（Fig.3）即可开始推理【4】。
-Fig.3: Example inputs and outputs of GPT-3 优缺点：
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2025-02-16 00:00:00 +0000 UTC'>February 16, 2025</span>&nbsp;·&nbsp;6 min&nbsp;·&nbsp;1113 words&nbsp;·&nbsp;Mingrui Guo</footer>
+  <footer class="entry-footer"><span title='2025-02-16 00:00:00 +0000 UTC'>February 16, 2025</span>&nbsp;·&nbsp;12 min&nbsp;·&nbsp;5940 words&nbsp;·&nbsp;Mingrui Guo</footer>
   <a class="entry-link" aria-label="post link to 如何优化大语言模型（LLM）的推理能力？" href="https://mig217.github.io/post/2025-02-16-improving-llm-reasoning/"></a>
 </article>
     </main>

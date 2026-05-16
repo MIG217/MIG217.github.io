@@ -18,104 +18,14 @@
 &lt;li&gt;&lt;strong&gt;智能体正在变得更通用（Generalist）&lt;/strong&gt;：可以承担越来越多类型的任务；&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;智能体的任务时长变得更长（Long-horizon）&lt;/strong&gt;：能够连续执行几十甚至上百个步骤的复杂任务。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。&lt;/p&gt;
-&lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;static/images/length-of-tasks-log.png&#34; width=&#34;700px&#34;/&gt; 
-&lt;/figure&gt;
-
-&lt;p&gt;与此同时，通用智能体数量激增，如 Manus 和 Claude Code 等系统正在承担远不止“写代码”或“回答问题”的任务。它们能够&lt;strong&gt;组织研究流程、规划任务、调用大量工具，并产出复杂成果&lt;/strong&gt;。但随着任务时长与任务复杂度提升，工程上的挑战也随之而来：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Manus&lt;/strong&gt;：典型任务需要调用约 50 次工具&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Anthropic Production Agents&lt;/strong&gt;：实际生产系统常常会进行 数百轮对话与推理&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;这些长周期、多步骤、工具密集型的系统，被称为 &lt;strong&gt;Agentic System&lt;/strong&gt;。尽管不同项目的具体实现差别较大，但它们普遍遵循以下四个核心原则：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;使用 Planning 保证任务方向正确&lt;/strong&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;在超长任务中，如果缺乏规划，模型非常容易偏航。因此 Agentic System 普遍采用明确的任务计划来做“航向控制”。&lt;/p&gt;
-&lt;p&gt;常见做法包括：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Manus&lt;/strong&gt;：使用 &lt;code&gt;todo.md&lt;/code&gt; 保存任务清单，并在执行过程中不断读写更新；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Claude Code&lt;/strong&gt;：要求用户先批准计划，再执行工具与操作；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Gemini Deep Research&lt;/strong&gt;：在执行前强制生成计划、并请求用户确认；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Anthropic Multi-Agent Researcher&lt;/strong&gt;：将 research plan 写入文件系统，在关键流程中重新读取，确保最终报告“遵循原计划”；&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;&lt;strong&gt;使用 Filesystem 进行 Offload Context&lt;/strong&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;随着工具调用次数、搜索结果、观察内容不断增多，把所有内容保存在消息历史里会快速耗尽上下文窗口。&lt;/p&gt;
-&lt;p&gt;因此，可以采用“外部化记忆”机制：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;将庞大中间结果（如搜索原始结果）保存到磁盘&lt;/li&gt;
-&lt;li&gt;在上下文中只放简短摘要，节省 Tokens&lt;/li&gt;
-&lt;li&gt;在需要时再从文件读取完整内容&lt;/li&gt;
-&lt;li&gt;长期记忆可以独立保存，不随对话窗口消失&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Example:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Anthropic Multi-Agent Researcher&lt;/strong&gt;：将研究计划写到文件里 → 调研完成后再读回来 → 保证报告结构与原计划一致；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Manus&lt;/strong&gt;：将 &lt;code&gt;todo.md&lt;/code&gt; 持久化，多次更新、反复读取&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。&lt;/p&gt;</description>
+&lt;p&gt;根据 METR 的基准测试，AI 能自动完成的人类任务等效时长大约 每 7 个月翻倍。这意味着智能体从“短对话助手”，发展为“能够连续运行数百甚至上千步的自主系统”。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Introduction to training LLMs for AI agents</title>
       <link>https://mig217.github.io/post/2025-10-30-training-llms-for-agents/</link>
       <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
       <guid>https://mig217.github.io/post/2025-10-30-training-llms-for-agents/</guid>
-      <description>&lt;p&gt;大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：&lt;strong&gt;这些模型到底是如何训练的？&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。&lt;/p&gt;
-&lt;h2 id=&#34;llm-training-pipeline&#34;&gt;LLM Training Pipeline&lt;/h2&gt;
-&lt;p&gt;LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: &lt;strong&gt;预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)&lt;/strong&gt;。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。&lt;/p&gt;
-&lt;h3 id=&#34;general-llm-training-pipeline&#34;&gt;General LLM Training Pipeline&lt;/h3&gt;
-&lt;p&gt;从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Pre-training&lt;/strong&gt;：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Classic Post-training / RLHF&lt;/strong&gt;：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;RL for Reasoning&lt;/strong&gt;：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../docs/images/general-llm-training-pipeline.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;三个阶段对比&lt;/strong&gt;&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;阶段&lt;/th&gt;
-          &lt;th&gt;核心目标&lt;/th&gt;
-          &lt;th&gt;数据规模&lt;/th&gt;
-          &lt;th&gt;训练时间&lt;/th&gt;
-          &lt;th&gt;成本级别&lt;/th&gt;
-          &lt;th&gt;主要瓶颈&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;预训练（Pre-training）&lt;/td&gt;
-          &lt;td&gt;学习预测下一个词，构建知识底座&lt;/td&gt;
-          &lt;td&gt;~10 万亿 tokens&lt;/td&gt;
-          &lt;td&gt;数月&lt;/td&gt;
-          &lt;td&gt;千万美元级&lt;/td&gt;
-          &lt;td&gt;高质量数据、算力资源&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;经典后训练 / RLHF（Classic Post-training / RLHF）&lt;/td&gt;
-          &lt;td&gt;让模型符合用户偏好&lt;/td&gt;
-          &lt;td&gt;~10 万个问题&lt;/td&gt;
-          &lt;td&gt;几天&lt;/td&gt;
-          &lt;td&gt;数万–十万美元&lt;/td&gt;
-          &lt;td&gt;人类反馈数据、评测体系&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;推理型 RL（RL for Reasoning）&lt;/td&gt;
-          &lt;td&gt;提升推理和思考能力&lt;/td&gt;
-          &lt;td&gt;百万级问题&lt;/td&gt;
-          &lt;td&gt;数周&lt;/td&gt;
-          &lt;td&gt;百万美元级&lt;/td&gt;
-          &lt;td&gt;RL 环境设计、防止自我黑客&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;成功的关键要素&#34;&gt;成功的关键要素&lt;/h3&gt;
-&lt;p&gt;了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。&lt;/p&gt;</description>
+      <description>&lt;p&gt;大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：&lt;strong&gt;这些模型到底是如何训练的？&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Memory, Reasoning, and Planning of Language Agents</title>
@@ -143,49 +53,7 @@
       <guid>https://mig217.github.io/post/2025-03-01-llm-self-improvement-and-reasoning-evolution/</guid>
       <description>&lt;p&gt;本文内容来自 &lt;a href=&#34;https://rdi.berkeley.edu/adv-llm-agents/slides/Jason-Weston-Reasoning-Alignment-Berkeley-Talk.pdf&#34;&gt;Jason Weston (Meta) 在 UC Berkeley Advanced Large Language Model Agents 课程中的分享，探讨了大语言模型的推理能力提升&lt;/a&gt; 。以下为讲座内容：&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;AI 能力正在快速发展，如 O1、R1 等模型在推理基准测试中取得的突破性进展。本文将聚焦于模型的&lt;strong&gt;自我提升能力(self-improvement)&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;为了更好地理解AI的推理机制，我们首先需要区分两种基本的思维模式：&lt;strong&gt;System 1和 System 2&lt;/strong&gt;：&lt;/p&gt;
-&lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/System1&amp;amp;System2.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
-            Fig.1: Hybrid Reasoning Framework: System 1 and System 2 Collaboration in LLMs
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;System 1：快速直觉系统&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这是一种类似人类直觉反应的快速思维系统，主要依赖关联性思维。在LLM中，这种能力体现在&lt;strong&gt;transformer神经网络的基础运作机制上&lt;/strong&gt;。其主要特征包括：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;每个token使用固定的计算资源；&lt;/li&gt;
-&lt;li&gt;直接输出答案；&lt;/li&gt;
-&lt;li&gt;局限性：&lt;strong&gt;容易学习到虚假关联，产生幻觉、迎合性回答、越界等问题&lt;/strong&gt;；&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;System 2: 深度思考系统&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这代表了一种更深层次的思维模式，目前主要通过&lt;strong&gt;CoT&lt;/strong&gt;来实现。在生成最终答案之前，System 2会进行系统性的推理分析。它具有以下优势：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;能够执行&lt;strong&gt;规划、搜索和验证&lt;/strong&gt;等复杂任务；&lt;/li&gt;
-&lt;li&gt;具备动态计算能力，可以通过CoT、ToT等方式实现灵活推理；&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;我们可以通过优化&lt;strong&gt;模型架构或权重来提升System 1的表现&lt;/strong&gt;，也可以通过&lt;strong&gt;改进推理链的生成方式来增强System 2&lt;/strong&gt;的表现；最终目标是让AI具备&lt;strong&gt;自我学习&lt;/strong&gt;能力，这包括3个关键方面：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;能够自主设计具有挑战性的训练任务&lt;/li&gt;
-&lt;li&gt;评估任务的完成质量，形成自我奖励机制&lt;/li&gt;
-&lt;li&gt;根据理解和反馈，持续更新优化自身能力&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;接下来，我们将分两个部分展开讨论：首先回顾语言模型的历史发展历程，然后深入探讨过去一年中的重要研究进展。&lt;/p&gt;
-&lt;h2 id=&#34;llm-post-trainingo1r1-之前的优化之路&#34;&gt;LLM Post-training：O1/R1 之前的优化之路&lt;/h2&gt;
-&lt;h3 id=&#34;instrcut-gpt&#34;&gt;Instrcut GPT&lt;/h3&gt;
-&lt;p&gt;InstructGPT 是在 2022 年提出的一种语言模型优化方法[1]，它&lt;strong&gt;结合了监督学习和基于人类反馈的强化学习（RLHF）&lt;/strong&gt;，比单纯的监督微调更为先进。这种方法包含三个关键步骤(如图)：&lt;/p&gt;
-&lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/illustrating.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
-            Fig.2: Reinforcement Learning from Human Feedback (RLHF) Training Pipeline
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;监督微调（SFT）阶段&lt;/strong&gt;：通过收集人类标注的示范数据，对基础模型进行初步的行为调整；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;奖励模型训练阶段&lt;/strong&gt;：根据人类对模型多个输出的排序评估，训练一个能够判断输出质量的奖励模型；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;强化学习优化阶段&lt;/strong&gt;：利用奖励模型的反馈评分，通过 PPO 算法持续优化模型输出；&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;这种训练方法&lt;strong&gt;通过引入人类反馈和自我优化机制，使模型能够持续改进其输出质量&lt;/strong&gt;。这不仅提升了模型的性能，而是朝着自我训练的目标迈进。&lt;/p&gt;</description>
+&lt;p&gt;AI 能力正在快速发展，如 O1、R1 等模型在推理基准测试中取得的突破性进展。本文将聚焦于模型的&lt;strong&gt;自我提升能力(self-improvement)&lt;/strong&gt;。&lt;/p&gt;</description>
     </item>
     <item>
       <title>如何优化大语言模型（LLM）的推理能力？</title>
@@ -203,42 +71,7 @@
         &lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;p&gt;如何通过有效的Prompting 来激发大语言模型的深层次推理能力，一直是研究者和开发者关注的核心问题。以下是几种主要的触发方法：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;少量示例CoT提示（Few-shot CoT）&lt;/strong&gt;：通过提供少量推理示例，引导模型学习推理模式并应用到新问题中。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;指令型提示（Instruction prompting）&lt;/strong&gt;：明确指导模型逐步思考问题，避免直接跳至答案。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;指令微调（Instruction tuning）&lt;/strong&gt;：针对多步思考的推理任务对模型进行微调，提升其在类似任务中生成连贯思维链的能力。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;强化学习（Reinforcement learning）&lt;/strong&gt;：利用强化学习技术训练模型，使其能够生成更完整、更准确的推理链。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;本文重点：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;我们将深入探讨Inference-time techniques，特别关注如何通过扩展token预算来提升LLM的推理能力。主要包括三个维度：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;基本提示词技巧：&lt;strong&gt;使用更多的token预算来生成单一的解决方案&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;从多个候选中进行搜索和选择，增加推理的&lt;strong&gt;宽度&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;模型迭代自我改进，增加推理的&lt;strong&gt;深度，最终到达最优解&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;使用更多的token生成单一解决方案&#34;&gt;使用更多的Token生成单一解决方案&lt;/h2&gt;
-&lt;p&gt;优化提示词能显著提升模型在各类任务中的表现。本节将介绍一些提示词工程技术，帮助我们更好地完成复杂任务。
-下图对比了Standard Prompting和CoT Prompting两种方法【2】【3】：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Standard Prompting&lt;/strong&gt;：仅给出最终答案，没有推理过程，容易导致错误结果。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;CoT Prompting&lt;/strong&gt;：展示完整的推理过程，让&lt;strong&gt;模型清晰地说明从问题到答案的推导步骤&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/CotvsSd.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
-            Fig.2: Chain-of-thought prompting enables large language models to tackle complex arithmetic commonsense, and symbolic reasoning tasks. Chain-of-thought reasoning processes are highlighted.
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;h3 id=&#34;zero-shot-cot-prompting通过指令引导生成思维链推理&#34;&gt;Zero-shot CoT Prompting：通过指令引导生成思维链推理&lt;/h3&gt;
-&lt;p&gt;0-shot CoT 是一种通过简短指令引导LLM进行推理的方法，无需依赖任何示例。在这种方法中，模型不需要看到具体的示范或训练数据，仅&lt;strong&gt;通过一个简单的指令（如&amp;quot;Let&amp;rsquo;s think step by step.&amp;quot;）（Fig.3）即可开始推理&lt;/strong&gt;【4】。&lt;/p&gt;
-&lt;figure class=&#34;align-center&#34;&gt;
-    &lt;img loading=&#34;lazy&#34; src=&#34;https://mig217.github.io/images/0-shot-cot.png&#34; width=&#34;700px&#34;/&gt; &lt;figcaption&gt;
-            Fig.3: Example inputs and outputs of GPT-3
-        &lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;优缺点：&lt;/strong&gt;&lt;/p&gt;</description>
+&lt;p&gt;如何通过有效的Prompting 来激发大语言模型的深层次推理能力，一直是研究者和开发者关注的核心问题。以下是几种主要的触发方法：&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
