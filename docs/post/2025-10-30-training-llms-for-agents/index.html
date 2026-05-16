@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Introduction to training LLMs for AI agents | Mig&#39;s Blog</title>
+<meta name="keywords" content="LLM Agents">
+<meta name="description" content="大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：这些模型到底是如何训练的？
+本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。
+LLM Training Pipeline
+LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: 预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。
+General LLM Training Pipeline
+从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：
+
+Pre-training：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。
+Classic Post-training / RLHF：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。
+RL for Reasoning：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。
+
+
+三个阶段对比
+
+  
+      
+          阶段
+          核心目标
+          数据规模
+          训练时间
+          成本级别
+          主要瓶颈
+      
+  
+  
+      
+          预训练（Pre-training）
+          学习预测下一个词，构建知识底座
+          ~10 万亿 tokens
+          数月
+          千万美元级
+          高质量数据、算力资源
+      
+      
+          经典后训练 / RLHF（Classic Post-training / RLHF）
+          让模型符合用户偏好
+          ~10 万个问题
+          几天
+          数万–十万美元
+          人类反馈数据、评测体系
+      
+      
+          推理型 RL（RL for Reasoning）
+          提升推理和思考能力
+          百万级问题
+          数周
+          百万美元级
+          RL 环境设计、防止自我黑客
+      
+  
+
+成功的关键要素
+了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。">
+<meta name="author" content="Mingrui Guo">
+<link rel="canonical" href="https://mig217.github.io/post/2025-10-30-training-llms-for-agents/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.0c97af6b620c7c27339391da564af7a42d9ec4425c9be081f4a2abf2cd8b6131.css" integrity="sha256-DJeva2IMfCczk5HaVkr3pC2exEJcm&#43;CB9KKr8s2LYTE=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://mig217.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://mig217.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://mig217.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://mig217.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://mig217.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://mig217.github.io/post/2025-10-30-training-llms-for-agents/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://mig217.github.io/post/2025-10-30-training-llms-for-agents/">
+  <meta property="og:site_name" content="Mig&#39;s Blog">
+  <meta property="og:title" content="Introduction to training LLMs for AI agents">
+  <meta property="og:description" content="大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：这些模型到底是如何训练的？
+本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。
+LLM Training Pipeline LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: 预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。
+General LLM Training Pipeline 从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：
+Pre-training：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。 Classic Post-training / RLHF：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。 RL for Reasoning：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。 三个阶段对比
+阶段 核心目标 数据规模 训练时间 成本级别 主要瓶颈 预训练（Pre-training） 学习预测下一个词，构建知识底座 ~10 万亿 tokens 数月 千万美元级 高质量数据、算力资源 经典后训练 / RLHF（Classic Post-training / RLHF） 让模型符合用户偏好 ~10 万个问题 几天 数万–十万美元 人类反馈数据、评测体系 推理型 RL（RL for Reasoning） 提升推理和思考能力 百万级问题 数周 百万美元级 RL 环境设计、防止自我黑客 成功的关键要素 了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2025-10-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-10-02T00:00:00+00:00">
+    <meta property="article:tag" content="LLM Agents">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Introduction to training LLMs for AI agents">
+<meta name="twitter:description" content="大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：这些模型到底是如何训练的？
+本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。
+LLM Training Pipeline
+LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: 预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。
+General LLM Training Pipeline
+从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：
+
+Pre-training：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。
+Classic Post-training / RLHF：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。
+RL for Reasoning：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。
+
+
+三个阶段对比
+
+  
+      
+          阶段
+          核心目标
+          数据规模
+          训练时间
+          成本级别
+          主要瓶颈
+      
+  
+  
+      
+          预训练（Pre-training）
+          学习预测下一个词，构建知识底座
+          ~10 万亿 tokens
+          数月
+          千万美元级
+          高质量数据、算力资源
+      
+      
+          经典后训练 / RLHF（Classic Post-training / RLHF）
+          让模型符合用户偏好
+          ~10 万个问题
+          几天
+          数万–十万美元
+          人类反馈数据、评测体系
+      
+      
+          推理型 RL（RL for Reasoning）
+          提升推理和思考能力
+          百万级问题
+          数周
+          百万美元级
+          RL 环境设计、防止自我黑客
+      
+  
+
+成功的关键要素
+了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://mig217.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Introduction to training LLMs for AI agents",
+      "item": "https://mig217.github.io/post/2025-10-30-training-llms-for-agents/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Introduction to training LLMs for AI agents",
+  "name": "Introduction to training LLMs for AI agents",
+  "description": "大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：这些模型到底是如何训练的？\n本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。\nLLM Training Pipeline LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: 预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。\nGeneral LLM Training Pipeline 从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：\nPre-training：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。 Classic Post-training / RLHF：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。 RL for Reasoning：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。 三个阶段对比\n阶段 核心目标 数据规模 训练时间 成本级别 主要瓶颈 预训练（Pre-training） 学习预测下一个词，构建知识底座 ~10 万亿 tokens 数月 千万美元级 高质量数据、算力资源 经典后训练 / RLHF（Classic Post-training / RLHF） 让模型符合用户偏好 ~10 万个问题 几天 数万–十万美元 人类反馈数据、评测体系 推理型 RL（RL for Reasoning） 提升推理和思考能力 百万级问题 数周 百万美元级 RL 环境设计、防止自我黑客 成功的关键要素 了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。\n",
+  "keywords": [
+    "LLM Agents"
+  ],
+  "articleBody": "大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：这些模型到底是如何训练的？\n本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。\nLLM Training Pipeline LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: 预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。\nGeneral LLM Training Pipeline 从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：\nPre-training：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。 Classic Post-training / RLHF：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。 RL for Reasoning：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。 三个阶段对比\n阶段 核心目标 数据规模 训练时间 成本级别 主要瓶颈 预训练（Pre-training） 学习预测下一个词，构建知识底座 ~10 万亿 tokens 数月 千万美元级 高质量数据、算力资源 经典后训练 / RLHF（Classic Post-training / RLHF） 让模型符合用户偏好 ~10 万个问题 几天 数万–十万美元 人类反馈数据、评测体系 推理型 RL（RL for Reasoning） 提升推理和思考能力 百万级问题 数周 百万美元级 RL 环境设计、防止自我黑客 成功的关键要素 了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。\n模型架构 (Architecture): 模型的骨架，目前 Transformer 仍是绝对主流，MoE (Mixture of Experts) 因其高效扩展性而备受关注。 训练算法与损失函数 (Algorithm \u0026 Loss): 模型优化的导航系统，决定了模型如何从数据中学习。 数据与强化学习环境 (Data \u0026 RL Environment): 模型学习的“教材”。尤其在对齐和能力提升阶段，高质量的数据和精心设计的 RL 环境至关重要。 评测 (Evaluation): 衡量训练效果的标尺，指导着整个优化迭代的方向。 系统与基础设施 (Systems \u0026 Infrastructure): 支撑训练的动力引擎，决定了你能否高效、稳定地将模型规模化。 一个有趣的转变是，在 2023 年之前，学术界和业界的焦点更多集中在架构和算法的创新上。而如今，随着技术路线逐渐收敛，共识已经形成：真正拉开模型效果差距的，是数据、评测和系统这三大支柱。\nLLM 训练已从单纯的算法竞赛，演变为一项复杂的系统工程：\n数据决定上限：数据的质量和多样性，直接决定了模型可能达到的最终高度。 评测决定方向：科学的评测体系，是迭代优化、做出正确技术决策的指南针。 系统决定规模：强大的基础设施，决定了你能否训练更大、更强的模型。 提示工程与领域微调 当我们获得一个训练好的基础模型后，如何高效地将其应用于特定场景？提示工程 (Prompting) 和 领域微调 (Fine-tuning) 是两种最核心的技术。\n提示（Prompting）\n我们可以将称之为 “提问的艺术”，即通过精心设计的指令 (Prompt) 来引导模型精准地执行任务。其核心特点是轻量、低成本且由评测驱动。对于大多数开发者而言，这是将模型与业务结合的最高效途径。\n微调（Fine-tuning）\n微调的核心思想是利用特定领域的数据，对基础模型进行“专项强化训练”，使其成为该领域的“专家”。例如，医疗公司可利用专业医疗数据对模型进行微调，显著提升其在医疗报告理解上的准确性。相比提示工程，微调需要额外的数据和算力投入，但能让模型更深入地内化领域知识，效果上限更高。\nPretraining 接下来，我们将深入探讨预训练阶段。这部分将围绕三个核心展开：方法 (Method)、数据 (Data) 和算力 (Computation)。\nMethod 预训练的目标是让模型学习世界知识，但实现这一目标的任务却很简单：预测下一个词 (Next Token Prediction)。\n这个过程与手机输入法预测下一个词的原理类似。然而，当模型在超过 10 万亿 Token 的互联网级数据上完成这个任务后，推理、归纳甚至“思考”的能力便会“涌现”出来。这一核心思想自 GPT-2 以来，便成为业界主流。\n简单语言模型：N-gram 要理解现代 LLM，可以回顾其最朴素的前身——N-gram 模型。这是一种纯粹的统计方法，其核心思想是：一个词的出现概率，只与它前面的 N-1 个词相关。\n预测方式：通过在语料库中统计 N-gram 片段的出现频率来计算概率。 致命缺陷： 存储灾难：需要存储海量片段，无法扩展到互联网数据。 无法泛化：无法处理未在语料库中见过的文本。 为了解决这些问题，研究者们转向了神经网络。神经网络语言模型本质上可以看作是 N-gram 模型的一种高效、可泛化的“参数化近似”。它不再死记硬背所有统计频次，而是学习文本中蕴含的模式，并将这些模式压缩到模型的参数中。\n自回归 (Autoregressive) 神经网络模型 现代 LLM 普遍采用自回归 (AR) 模式进行训练，其工作流程可分解为以下几步：\n文本向量化 (Word Embedding)：\n分词 (Tokenization)：将文本 “She likely prefers” 切分为 Token 序列 [“She”, “likely”, “prefers”]。 嵌入 (Embedding)：将每个 Token 映射为一个高维向量。这组向量成为神经网络的数字输入。 上下文融合 (Neural Network Processing)： 这组向量被送入 Transformer 网络。通过自注意力等机制，模型对输入信息进行复杂的加权融合，生成一个蕴含了全部上下文信息的新向量。\n概率预测 (Probability Prediction)：\n这个上下文向量通过一个线性层，被转换为一个与词汇表等大的高维向量（称为 logits）。Logits 向量中的每个值代表对应词成为下一个词的可能性得分。 使用 Softmax 函数将 logits 转换为一个总和为 1 的概率分布。例如，“dogs” 的概率为 0.7，“cats” 为 0.2 等。 训练与推理：\n训练时：模型将预测概率（如 “dogs” 的 0.7）与真实答案（概率 1.0）进行比较，通过交叉熵损失 (Cross-Entropy Loss) 计算差距，并据此反向传播更新模型参数。 推理时：模型根据生成的概率分布进行采样 (Sampling)，通常选择概率最高的词，并将其拼接回输入，循环往复，生成完整的回答。 Data 预训练数据是大模型的\"养料\"，其规模之大令人咂舌。当前主流模型通常需要消耗 超过 10 万亿 tokens 的数据：\nLlama 4：大约在 20–40 万亿 tokens DeepSeek V3：大约 15 万亿 tokens Llama 3：大约 15 万亿 tokens 换算一下，这相当于 超过 200 亿个独立网页 的内容量。然而规模不等于质量。从充斥着广告和低质信息的互联网中提炼出“精华”，是预训练成败的关键。\n数据处理流程\n数据抓取与文本提取：利用 Common Crawl 等开源项目，从互联网上下载海量的原始网页快照，再从中精准提取正文文本。这是计算成本最高的环节之一。\n多层过滤与去重：\n内容过滤：移除有害、不适宜 (NSFW) 及隐私内容。 启发式过滤：通过长度、字符等简单规则，快速筛掉明显的低质量文本。 数据去重：去除高度雷同的内容，避免模型学习无效模式。 基于模型的质量筛选：训练一个分类器，让它学习**高质量文本（如维基百科）**的特征，然后用它去为海量网页打分，筛选出最“像”高质量内容的文本。\n数据混合 (Data Mix)：将来自网页、代码、书籍、论文等不同来源的干净数据，按特定比例混合。这个数据配方直接塑造了模型的能力倾向，例如，增加代码数据的权重，可以显著提升模型的编程能力。\n预训练后期的策略\n中期训练 (Mid-training)：在预训练后期，使用一个规模更小但质量极高的“黄金数据集”（如书籍、论文）进行第二阶段训练，以巩固和深化核心知识。 长上下文持续预训练 (Continual Pre-training for Longer Context)：为节约成本，通常在训练前期使用较短上下文（如 4k），在最后阶段才逐步增加到目标长度（如 128k）。 由于涉及核心竞争力和潜在的版权风险，顶级的数据处理流程和数据配方，是各家机构真正的护城河。\nComputation 在预训练中，计算量 (Compute) 投入几乎是决定模型性能的唯一关键因素。这个规律对所有类型的数据和模型都普遍适用。\n计算量主要由两个维度决定：\n模型规模 (Parameters)：模型包含的参数数量。 数据量 (Training Tokens)：用于训练的文本总量。 幸运的是，模型性能与计算量之间的关系并非杂乱无章，而是遵循着一种可预测的规律——缩放法则 (Scaling Laws)。这意味着我们可以在小规模实验中观察模型表现，然后依据缩放曲线，精准推断出在投入百倍、千倍计算量后模型的性能会达到何种水平。\nScaling Laws: Tuning 缩放法则彻底改变了超参数的调优方式，将一个极其昂贵的过程变得高效。\n传统做法：直接启动多个不同超参的大模型并行试错，成本高昂。 现代做法：在多个小模型上快速实验，找到超参数与模型规模之间的缩放关系，再将最优配置外推 (Extrapolate) 到目标大模型上。 缩放法则让我们可以从小模型的廉价试错中，找到适用于大模型的规律，极大提升了研发效率。\nScaling laws for development 在选择模型架构时，我们真正关心的不应是它在当前算力下的表现，而是当计算资源扩大10倍、100倍后，哪个架构会变得更强(@kaplanScalingLawsNeural2020)。关键在于比较两个指标：\n初始性能 (Constant)：在同等算力下，谁的性能更好。 缩放速率 (Scaling Rate)：每增加单位算力，谁的性能提升得更快。 Example: Transformer vs. LSTM\n问题: Transformer 架构还是 LSTM 架构？ 方法: 我们可以在较小的规模下，分别训练这两种模型，并绘制它们的性能曲线 观察 (见图): Transformer 的线始终在 LSTM 的线下方: 在任何计算规模下，Transformer 的表现都更好。这被称为有更好的“常数”。 Transformer 的线的斜率更陡: 每增加一点计算资源，Transformer 性能的提升幅度比 LSTM 更大。这被称为有更好的“缩放速率”。 应永远选择缩放速率更优的架构。 一个架构即使当前表现稍逊，但只要其潜力巨大，就更值得投资。\nScaling laws: eg Chinchilla 在计算预算固定的前提下，资源应该更偏向于扩大模型规模还是增加数据量？DeepMind 的 Chinchilla 论文通过缩放法则给出了答案(@hoffmannTrainingComputeOptimalLarge2022)。\nChinchilla 发现：为了最高效地利用算力，模型参数量与数据量之间存在一个“黄金比例”——每 1 个模型参数，大约需要 20 个 Token 的数据来训练。\n局限性：\n被忽略的成本：Chinchilla 法则只优化了训练成本，完全没有考虑模型部署后的推理成本。 现实权衡：对于商业服务而言，推理成本是决定成败的关键。因此，更明智的决策可能是：宁愿在训练阶段投入更多资源（例如，用更多数据训练一个相对较小的模型），以换取未来长期、低廉的推理成本。 Summary: 训练一个前沿模型的代价 这里以一个假设的405B参数的 Llama 3 模型为例，估算了其训练所需的各项成本（基于2023-2024年数据）:\n规模：405B 参数，15.6T Tokens 数据。 硬件：16,000 张 NVIDIA H100 GPU。 时间：约 70 天。 金钱成本: 综合硬件租用和人力等成本，为 5200万美元（范围可能在 5000 万到 8000 万美元之间）。 环境成本: 仅训练这一个模型所产生的碳排放，约等于 2000 次从纽约到伦敦的往返机票。 未来趋势: 每一代新模型的训练算力消耗都将大约是上一代的 10 倍。 大模型的预训练阶段，本质上是一场围绕方法、数据和算力的系统性工程。它以一个极其简单的任务为起点，通过海量高质量数据和庞大计算资源的投入，最终实现了智能的涌现。\nPosttraining 预训练的目标是预测下一个词。这使得模型精通语言模式，却不理解“遵循指令”或“帮助用户”这类概念。\n例如，如果你对一个原始的预训练模型说：“给6岁的孩子解释一下登月”，它很可能不会回答，而是续写一个相似的问题，比如：“给6岁的孩子解释一下万有引力”。\n因此，我们需要一个额外的“后训练”阶段，来校准模型的行为，使其真正变得有用、可控。\n后训练的两个主要阶段 1. Alignment / Instruction Following\n这是让模型变得有用的第一步，也是 2022年 ChatGPT 取得成功的核心。\n目标：让模型学会理解并遵循用户指令，知道什么样的回答是“好”的回答。 任务：主要通过监督微调 (SFT) 和基于人类反馈的强化学习 (RLHF)。 数据：与预训练相比，数据量小得多，大约在 5千到 50万个高质量问答对之间。 这个阶段好比教一个满腹经纶的学者“如何与人有效沟通”，只需少量高质量范例，即可让它学会互动的范式。\n2. Reasoning\n这是在“对齐”之后更高级的阶段，是 2024年以来的新趋势（以 o1 等模型为代表）。\n目标：不仅要回答得“好”，更要通过深度思考，确保答案的正确性，尤其是在数学、编程等有客观标准的任务上。 方法：主要通过带有验证器的强化学习 (RL with Verifiers)。 它引入了Test-time Compute 的概念。传统模型性能在训练结束后就已固定；而具备推理能力的模型，可以在回答问题时投入更多计算资源来“思考”，从而得到更准确的答案。\nSupervised Finetuning SFT (Supervised Fine-tuning) 是对齐模型的第一步，其核心是Behavior Cloning。\n它的原理与预训练一致——预测下一个词，但关键区别在于，它不再使用海量的互联网数据，而是在一个高质量的、我们期望的“问题-答案”数据集上进行训练，强制模型只学习和模仿“标准答案”的说话方式。\nSFT 可以做什么？\nSFT 可以将一个原始的知识库模型，转变为一个能干的助手，教会它：\nInstruction following：听懂并执行命令。 Desired format or style：例如，使用表情符号、要点列表，或保持某种特定的语气。 Tool use：教会模型调用计算器、搜索引擎等外部API来完成复杂任务。 Early reasoning：通过学习带有推理链的范例，教会模型在回答前先“思考”。 理论上，任何你能提供“优质输入-输出”配对的任务，都可以通过 SFT 来学习。\nSFT 的数据从何而来？\nAsk Humans 最直接的方式。雇佣人类专家为各种问题编写高质量答案。这是 GPT-3 进化到初代 ChatGPT 的关键一步，优点是质量最高，缺点是成本高昂且速度缓慢。\nSynthetic Data 利用一个更强大的“教师模型”来自动生成海量问答数据。**斯坦福的 Alpaca 模型(@duboisAlpacaFarmSimulationFramework2024a)**是这一方法的早期成功典范，它开启了使用合成数据来复刻闭源模型能力的浪潮。\nGenerate \u0026 Verify 当训练最强模型，没有更强的“老师”可以请教时，你需要一个能判断对错的“裁判”。其步骤是：\n让模型针对一个问题生成多个候选答案。 使用Verifier——例如代码测试程序、数学检查器——来自动筛选。 只保留通过验证的优质答案作为训练数据。 DeepSeek R1 正是通过这种“头脑风暴 + 裁判筛选”的模式，训练出了顶级的推理能力\nSFT 需要多少数据？\nSFT 所需的数据量远小于预训练：\n简单任务 (学习风格)：约1万条数据通常足够。LIMA 论文(\u003c@zhouLIMALessMore2023\u003e)发现，数千个高质量范例就能教会模型期望的风格。 复杂任务 (推理、工具使用)：需要更多数据，例如 DeepSeek R1 使用了约80万条样本。 预训练已让模型学到了几乎所有知识。SFT 的作用更像是激活和规范，它告诉模型在何种情境下，应该唤醒哪种它已具备的能力，使其行为模式符合特定用户的偏好。\nReinforcement Learning SFT 本质是“行为克隆”，但这存在三大缺陷：\n受限于范例质量：模型的上限无法超越提供标准答案的人类或教师模型。但人类作为“裁判”的能力，远高于作为“创作者”的能力。 可能教会模型幻觉：当模型模仿一个它自己无法验证真实性的答案时（例如引用一篇它没读过的文献），它学会的不是事实，而是“编造看起来煞有介事的假信息”的行为模式。 成本高昂：编写大量完美的“标准答案”费时费钱。 RL 的核心思想：最大化期望行为\n为了解决上述问题，RL 提出与其克隆好的行为，不如去强化好的行为。我们不再提供唯一标准答案，而是让模型自己探索多种答案，然后通过一个 Reward Signal 告诉它哪些更好，从而引导它产出更高分的答案。\nReward Signal 从何而来？\nRule-based Rewards: 对于有明确对错标准的任务（如代码、数学），直接用规则来打分。代码能通过单元测试就给高分，反之则给低分。 RLHF - RL from Human Feedback: 这是成就 ChatGPT 的关键技术。让模型生成多个答案，然后让人类选择“更喜欢哪一个”，用这些偏好数据训练一个 Reward Model，让这个AI裁判去指导主模型。 LLM as a Judge: 直接用一个最强的 LLM 来给答案打分，作为奖励信号。 DeepSeek R1 的强化学习流程 DeepSeek R1 采用了一种精细化的“分而治之”策略，对不同任务“对症下药”，如图所示(@alammarIllustratedDeepSeekR12025)：\n对于推理等客观任务：使用基于规则的验证器（如单元测试）作为“硬核裁判”，奖励信号准确可靠。 对于写作等主观任务：使用模拟人类偏好的奖励模型作为“AI裁判”，判断回答的有用性和安全性。 这种结合了客观规则和主观模型的混合式强化学习，使得模型在保证逻辑严谨的同时，也提升了在开放性对话中的表现。\nGRPO 算法 GRPO 由 DeepSeek R1 推广(@shaoDeepSeekMathPushingLimits2024)，是目前开源社区最常用的 RL 算法。其流程简单直接：\n生成：针对一个问题，生成多个不同答案。 打分：用奖励模型或验证器为每个答案打分。 学习：更新模型参数，鼓励模型多产出高分答案的行为，抑制低分行为。 在实际操作中，通常会加入 KL散度约束 (KL Divergence)，它像一根“缰绳”，防止模型为了追求高分而“走火入魔”，确保其生成的内容依然自然、流畅。\nInfra is Key 在大规模 RL 中，算法本身并非最难，底层的软硬件基础设施才是真正的挑战，尤其是在需要模型与环境进行多步交互的智能体 (Agent) 任务中，生成样本（采样）的过程极其消耗计算资源。\nKimi 团队的解决方案展示了顶级基础设施的形态(@teamKimiK2Open2025)：\n智能调度：暂停耗时过长的采样任务，先用已有数据更新模型，再用新模型继续被暂停的任务，避免流程卡顿。 大规模并行：当一个任务等待外部API时，GPU会立即切换到其他任务，最大化利用率。 架构优化：将训练、推理等引擎部署在同一物理节点，最大限度减少通信延迟。 Evaluation 评估是机器学习与人工智能中最关键的环节之一。它的重要性体现在三个方面：\n量化进展：帮助识别模型改进方向，衡量性能变化，指导超参数选择。 模型选择：用于比较不同模型，以确定最适合特定应用场景的方案。 生产可用性判断：即使模型在评测中表现最佳，也需要通过评估确定其是否达到实际应用要求。 评估主要分为两类：Closed-ended Evaluation 和 Open-ended Evaluation。\nClosed-ended Evaluation 核心思想：将评测问题转化为有少数几个固定答案的格式（如多选题），从而可以轻松地自动化验证。\n典型例子：MMLU (Massive Multitask Language Understanding) 是一个广泛使用的基准测试，它包含大量类似大学考试的多项选择题，覆盖了从数学到历史的众多学科(@hendrycksMeasuringMassiveMultitask2021)。 主要挑战： Prompt Sensitivity: 对同一个问题，不同的提问方式可能会导致模型给出截然不同的答案。 Data Contamination: 评测数据常出现在公开语料中，模型可能在预训练阶段就已经“见过”了考题，导致评测分数虚高。 Open-ended Evaluation 对于像 ChatGPT 这样以对话和生成为核心的模型，封闭式评测远远不够。开放式评测旨在评估它们在真实、无固定答案场景下的表现。\n主要挑战：\n应用场景多样：模型需要处理从聊天、编程到内容摘要等各种任务。 答案开放性强：模型的回答通常很长，且没有唯一的“标准答案”，因此无法通过简单的文本匹配来判断对错。 因此，研究者提出了 Preference Comparison 的评估思路：\n人工评估：ChatBot Arena Chatbot Arena (@chiangChatbotArenaOpen2024) 采用了双盲人类（double-blind human evaluation）评估方式：用户在不知道模型身份的情况下，与随机两款聊天机器人交互并投票选择更优者。\n优点： 结果客观、可信度高。 缺点： 成本高昂且速度缓慢，难以进行大规模、高频率的迭代测试。 LLM 自动评估：AlpacaEval 为了降低人工成本，研究者提出用 LLM 充当评审员。AlpacaEval（@duboisLengthControlledAlpacaEvalSimple2025） 是早期代表方法，核心流程如下：\n针对同一个指令，分别获取基准模型和待评测模型的回答。 将这两个回答提交给一个强大的裁判LLM，让它判断哪个更好。 通过大量比较，计算出待评测模型的胜率 (Win Rate)。 优点\n与 Chatbot Arena 的结果高度一致（Spearman 相关系数 0.98）。 成本极低（约 3 分钟、10 美元以内即可完成全流程）。 缺点\n存在Spurious Correlation风险，即评审模型的偏好可能影响评测结果。 Systems 当我们讨论如何提升模型性能时，一个共识是“扩展性决定上限 (scaling is what matters)”。这意味着投入更多的计算资源通常能带来更好的结果。但现实是，我们所有人都受限于计算资源。\n既然计算是瓶颈，为什么不直接购买更多的 GPU 呢？原因有三：\nGPU昂贵且稀缺: 顶级 GPU 不仅价格高昂，而且供应紧张。即使有预算，也未必能买到。 物理限制: 大规模 GPU 集群的通信开销巨大。GPU 之间的数据传输速度可能成为新的瓶颈，拖慢整体训练速度。 效率问题: 必须确保每一块 GPU 的计算潜力都被充分压榨，否则只是徒增成本。 因此，与其盲目堆砌硬件，不如通过系统级的优化来高效地分配和利用现有资源。\nGPU 的基础概念 要优化训练过程，首先需要了解 GPU 的核心特性：\n大规模并行处理：与 CPU 核心少而强不同，GPU 拥有成千上万个核心。它采用“单指令多数据”（SIMD）模式，在大量线程上对不同数据执行相同的指令，专为高吞吐量而生。 矩阵乘法优化：GPU 最初为图形处理涉及，而图形处理的本质是密集的矩阵运算。因此，GPU 内置了专门用于加速矩阵乘法的硬件单元（如 Tensor Cores），这类运算的速度通常是其他浮点操作的 10 倍以上。 计算不再是瓶颈：GPU 的浮点计算能力 (FLOPs) 增速远超其内存带宽和通信速度(@ivanovDataMovementAll2021)。这意味着，如今的瓶颈不再是“算得慢”，而是“喂不饱”。保持计算单元持续有数据可算是系统优化的核心挑战。如下图所示，计算性能的提升曲线远比内存带宽陡峭。 内存层次结构：GPU内部的内存是分层级的。离计算核心越近的内存（如L1 Cache、Shared Memory）速度越快，但容量越小；离得越远（如Global Memory DRAM）容量越大，但速度越慢。高效的算法需要精心设计，以最大化地利用高速缓存，减少对慢速全局内存的访问。 关键指标：MFU\n模型 FLOP 利用率 (Model Flop Utilization, MFU) 是衡量系统效率的关键指标：\n$$\\text{MFU} = \\frac{\\text{GPU 的理论峰值吞吐量 (Theoretical Best)}}{\\text{观测到的模型吞吐量 (Observed Throughput)}}$$\nMFU 的值反映了你的代码在多大程度上压榨出了 GPU 的理论性能。一个 MFU 为 1 的程序意味着计算单元在任何时候都处于忙碌状态。 在实际应用中，MFU 能达到 50% 就已经是非常出色的表现，许多大公司也需要投入大量精力才能将这个数字从 15%-20% 提升到 50%。\n系统优化技术 了解了 GPU 的特性后，我们可以探讨一些具体的优化方法。\nLow-Precision Training 核心思想：使用更少的bits（如bf16）来表示数字，从而减少内存占用和加速数据传输。\n由于深度学习训练过程（尤其是随机梯度下降）本身充满了噪声，因此大多数运算并不需要32为浮点数（fp32）的高精度。将矩阵乘法等主要计算从 fp32 切换到 bf16 可以带来显著的性能提升。\nFor Training: Automatic Mixed Precision (AMP)\nWeights: 以 fp32 格式存储主权重，以保持精度。 Computation: 在进行前向和反向传播时，将权重和激活值转换为 bf16 进行矩阵运算，以获得速度提升和内存节省。 Gradients: 以 bf16 格式存储，进一步节省内存。 Update: 将 bf 梯度转换回 fp32，用于更新主权重。 Operator Fusion 核心思想：将多个连续的计算操作合并成一个单一的计算内核（Kernel），以减少对全局内存的读写次数。\n在PyTorch等框架中，每一行独立的计算（如 y = x.cos()）都可能触发一次全局内存读写。\nOperator Fusion 可以将 y = x.cos() 和 z = y.sin() 这样的多个操作合并，实现一次读取、多次计算、一次写回，从而大幅减少内存访问开销。\ntorch.compile 就是PyTorch中实现 Operator Fusion 的强大工具。\nTiling 核心思想：通过巧妙地组织计算顺序，最大化地复用已加载到高速缓存中的数据。\n以矩阵乘法为例，传统的计算方式需要频繁地从全局内存中读取整个行和列。而Tiling则将大矩阵切分成小块（Tile）。计算时，先将几个小块加载到高速的共享内存中，完成所有与这些小块相关的计算后，再加载下一批。\n这样，加载到高速缓存中的每个数据点都被多次使用，极大地减少了对慢速全局内存的访问次数。\nExample: Flash Attention\nFlashAttention 是注意力机制优化算法(@daoFlashAttentionFastMemoryEfficient2022)，它结合了上述技术：\nOperator Fusion: 将注意力的多个计算步骤（矩阵乘法、缩放、掩码、Softmax）融合成一个内核。 Tiling: 在计算注意力分数时使用Tiling策略，避免实例化巨大的注意力矩阵。 Recomputation: 在反向传播时，不存储中间结果（如注意力矩阵），而是重新计算它们。因为重计算比从全局内存中读取这些巨大的中间结果要快得多。 通过这些系统级的优化，FlashAttention 在没有改变任何模型逻辑的情况下，实现了高达 1.7 倍的端到端训练加速。\n多GPU并行策略 当模型规模大到单个 GPU 无法容纳时，我们就必须采用并行计算策略。\n当训练一个 P 参数的模型，通常需要约 16P GB 的内存：\nModel Weights: 4P GB Gradients: 4P GB Optimizer States: 8P GB (Adam需存储均值和方差) 这意味着，训练一个7B参数的模型大约需要 $16 \\times 7B \\approx 112GB$ 的显存，这远远超出了单张 GPU 的容量。\nData Parallelism 核心思想：将模型和优化器完整地复制到每张 GPU 上，然后将训练数据分片，每张 GPU 处理一部分数据，每一步计算完成后，聚合所有的 GPU 的梯度，然后同步更新各自的模型副本。\n优点：简单直接，可以有效利用多张 GPU 加速训练。 缺点：完全没有节省内存。如果模型本身放不下一张卡，数据并行也无能为力。 为了解决显存问题，ZeRO(@rajbhandariZeROMemoryOptimizations2020)等技术应运而生。它是一种增强的数据并行，通过将优化器状态、梯度甚至模型参数分片到不同的 GPU 上，从而极大地降低了单张 GPU 的显存压力。\nModel Parallelism 核心思想：将模型本身切分到不同的 GPU 上。这适用于数据并行无法解决的超大模型场景。\nPipeline Parallelism: 按模型的Layer进行分层。例如，GPU 0 负责第 1-10 层，GPU 1 负责 11-20 层，数据像流水线一样依次流过各个 GPU (@huangGPipeEfficientTraining2019)。 Tensor Pipeline: 在单层内部进行切分。例如，将一个巨大的权重矩阵切分成几块，分别放到不同的 GPU 上进行计算，最后将结果聚合(@shoeybiMegatronLMTrainingMultiBillion2020)。 Architectural Sparsity 核心思想： 并非每个输入数据都需要经过模型的所有参数。通过激活模型的一部分参数来处理输入，可以有效降低计算量。\n**混合专家模型（Mixture of Experts, MoE）**是该思想的典型代表。MoE 模型包含多个专家子网络和一个路由器。对于每个输入，路由器会选择性地激活一个或几个专家来处理它 (@fedusReviewSparseExpert2022)。\n优点：可以在保持计算量（FLOPs）不变的情况下，大幅增加模型总参数量。由于每次只有部分专家被激活，因此非常适合并行化，可以将不同的专家部署在不同的 GPU 上。\nSummary 本次讨论虽然涵盖了许多核心内容，但AI领域的发展日新月异，还有很多重要话题我们未能深入：\n在技术实现层面，我们没有探讨像MoE（混合专家模型）和SSM（状态空间模型）这样的前沿架构；也未涉及模型解码策略与推理优化、ChatGPT等产品的UI/工具设计，以及至关重要的多模态技术。\n整个领域还面临着更宏大和深刻的挑战：如何有效防止技术滥用、如何突破上下文窗口的限制、如何应对高质量数据枯竭的“数据墙”危机，以及如何解决数据收集的合法性问题。\n这些悬而未决的议题，共同构成了AI下一阶段的发展蓝图和核心挑战。\nReference Alammar, Jay. 2025. “The Illustrated DeepSeek-R1.” https://newsletter.languagemodels.co/p/the-illustrated-deepseek-r1.\nChiang, Wei-Lin, Lianmin Zheng, Ying Sheng, Anastasios Nikolas Angelopoulos, Tianle Li, Dacheng Li, Hao Zhang, et al. 2024. “Chatbot Arena: An Open Platform for Evaluating LLMs by Human Preference.” arXiv. https://doi.org/10.48550/arXiv.2403.04132.\nDao, Tri, Daniel Y. Fu, Stefano Ermon, Atri Rudra, and Christopher Ré. 2022. “FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness.” arXiv. https://doi.org/10.48550/arXiv.2205.14135.\nDubois, Yann, Balázs Galambosi, Percy Liang, and Tatsunori B. Hashimoto. 2025. “Length-Controlled AlpacaEval: A Simple Way to Debias Automatic Evaluators.” arXiv. https://doi.org/10.48550/arXiv.2404.04475.\nDubois, Yann, Xuechen Li, Rohan Taori, Tianyi Zhang, Ishaan Gulrajani, Jimmy Ba, Carlos Guestrin, Percy Liang, and Tatsunori B. Hashimoto. 2024. “AlpacaFarm: A Simulation Framework for Methods That Learn from Human Feedback.” arXiv. https://doi.org/10.48550/arXiv.2305.14387.\nFedus, William, Jeff Dean, and Barret Zoph. 2022. “A Review of Sparse Expert Models in Deep Learning.” arXiv. https://doi.org/10.48550/arXiv.2209.01667.\nHendrycks, Dan, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika, Dawn Song, and Jacob Steinhardt. 2021. “Measuring Massive Multitask Language Understanding.” arXiv. https://doi.org/10.48550/arXiv.2009.03300.\nHoffmann, Jordan, Sebastian Borgeaud, Arthur Mensch, Elena Buchatskaya, Trevor Cai, Eliza Rutherford, Diego de Las Casas, et al. 2022. “Training Compute-Optimal Large Language Models.” arXiv. https://doi.org/10.48550/arXiv.2203.15556.\nHuang, Yanping, Youlong Cheng, Ankur Bapna, Orhan Firat, Mia Xu Chen, Dehao Chen, HyoukJoong Lee, et al. 2019. “GPipe: Efficient Training of Giant Neural Networks Using Pipeline Parallelism.” arXiv. https://doi.org/10.48550/arXiv.1811.06965.\nIvanov, Andrei, Nikoli Dryden, Tal Ben-Nun, Shigang Li, and Torsten Hoefler. 2021. “Data Movement Is All You Need: A Case Study on Optimizing Transformers.” arXiv. https://doi.org/10.48550/arXiv.2007.00072.\nKaplan, Jared, Sam McCandlish, Tom Henighan, Tom B. Brown, Benjamin Chess, Rewon Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario Amodei. 2020. “Scaling Laws for Neural Language Models.” arXiv. https://doi.org/10.48550/arXiv.2001.08361.\nRajbhandari, Samyam, Jeff Rasley, Olatunji Ruwase, and Yuxiong He. 2020. “ZeRO: Memory Optimizations Toward Training Trillion Parameter Models.” arXiv. https://doi.org/10.48550/arXiv.1910.02054.\nShao, Zhihong, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei Zhang, et al. 2024. “DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models.” arXiv. https://doi.org/10.48550/arXiv.2402.03300.\nShoeybi, Mohammad, Mostofa Patwary, Raul Puri, Patrick LeGresley, Jared Casper, and Bryan Catanzaro. 2020. “Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism.” arXiv. https://doi.org/10.48550/arXiv.1909.08053.\nTeam, Kimi, Yifan Bai, Yiping Bao, Guanduo Chen, Jiahao Chen, Ningxin Chen, Ruijue Chen, et al. 2025. “Kimi K2: Open Agentic Intelligence.” arXiv. https://doi.org/10.48550/arXiv.2507.20534.\nZhou, Chunting, Pengfei Liu, Puxin Xu, Srini Iyer, Jiao Sun, Yuning Mao, Xuezhe Ma, et al. 2023. “LIMA: Less Is More for Alignment.” arXiv. https://doi.org/10.48550/arXiv.2305.11206.\n",
+  "wordCount" : "1291",
+  "inLanguage": "en",
+  "datePublished": "2025-10-02T00:00:00Z",
+  "dateModified": "2025-10-02T00:00:00Z",
+  "author":[{
+    "@type": "Person",
+    "name": "Mingrui Guo"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mig217.github.io/post/2025-10-30-training-llms-for-agents/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Mig's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://mig217.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://mig217.github.io/" accesskey="h" title="Mig&#39;s Blog (Alt + H)">Mig&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://mig217.github.io/post/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mig217.github.io/faq/" title="FAQ">
+                    <span>FAQ</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://mig217.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://mig217.github.io/post/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Introduction to training LLMs for AI agents
+    </h1>
+    <div class="post-meta"><span title='2025-10-02 00:00:00 +0000 UTC'>October 2, 2025</span>&nbsp;·&nbsp;7 min&nbsp;·&nbsp;1291 words&nbsp;·&nbsp;Mingrui Guo
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#llm-training-pipeline" aria-label="LLM Training Pipeline">LLM Training Pipeline</a><ul>
+                        
+                <li>
+                    <a href="#general-llm-training-pipeline" aria-label="General LLM Training Pipeline">General LLM Training Pipeline</a></li>
+                <li>
+                    <a href="#%e6%88%90%e5%8a%9f%e7%9a%84%e5%85%b3%e9%94%ae%e8%a6%81%e7%b4%a0" aria-label="成功的关键要素">成功的关键要素</a></li>
+                <li>
+                    <a href="#%e6%8f%90%e7%a4%ba%e5%b7%a5%e7%a8%8b%e4%b8%8e%e9%a2%86%e5%9f%9f%e5%be%ae%e8%b0%83" aria-label="提示工程与领域微调">提示工程与领域微调</a></li></ul>
+                </li>
+                <li>
+                    <a href="#pretraining" aria-label="Pretraining">Pretraining</a><ul>
+                        
+                <li>
+                    <a href="#method" aria-label="Method">Method</a><ul>
+                        
+                <li>
+                    <a href="#%e7%ae%80%e5%8d%95%e8%af%ad%e8%a8%80%e6%a8%a1%e5%9e%8bn-gram" aria-label="简单语言模型：N-gram">简单语言模型：N-gram</a></li>
+                <li>
+                    <a href="#%e8%87%aa%e5%9b%9e%e5%bd%92-autoregressive-%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e6%a8%a1%e5%9e%8b" aria-label="自回归 (Autoregressive) 神经网络模型">自回归 (Autoregressive) 神经网络模型</a></li></ul>
+                </li>
+                <li>
+                    <a href="#data" aria-label="Data">Data</a></li>
+                <li>
+                    <a href="#computation" aria-label="Computation">Computation</a><ul>
+                        
+                <li>
+                    <a href="#scaling-laws-tuning" aria-label="Scaling Laws: Tuning">Scaling Laws: Tuning</a></li>
+                <li>
+                    <a href="#scaling-laws-for-development" aria-label="Scaling laws for development">Scaling laws for development</a></li>
+                <li>
+                    <a href="#scaling-laws-eg-chinchilla" aria-label="Scaling laws: eg Chinchilla">Scaling laws: eg Chinchilla</a></li></ul>
+                </li>
+                <li>
+                    <a href="#summary-%e8%ae%ad%e7%bb%83%e4%b8%80%e4%b8%aa%e5%89%8d%e6%b2%bf%e6%a8%a1%e5%9e%8b%e7%9a%84%e4%bb%a3%e4%bb%b7" aria-label="Summary: 训练一个前沿模型的代价">Summary: 训练一个前沿模型的代价</a></li></ul>
+                </li>
+                <li>
+                    <a href="#posttraining" aria-label="Posttraining">Posttraining</a><ul>
+                        
+                <li>
+                    <a href="#%e5%90%8e%e8%ae%ad%e7%bb%83%e7%9a%84%e4%b8%a4%e4%b8%aa%e4%b8%bb%e8%a6%81%e9%98%b6%e6%ae%b5" aria-label="后训练的两个主要阶段">后训练的两个主要阶段</a></li>
+                <li>
+                    <a href="#supervised-finetuning" aria-label="Supervised Finetuning">Supervised Finetuning</a></li>
+                <li>
+                    <a href="#reinforcement-learning" aria-label="Reinforcement Learning">Reinforcement Learning</a></li>
+                <li>
+                    <a href="#deepseek-r1-%e7%9a%84%e5%bc%ba%e5%8c%96%e5%ad%a6%e4%b9%a0%e6%b5%81%e7%a8%8b" aria-label="DeepSeek R1 的强化学习流程">DeepSeek R1 的强化学习流程</a></li>
+                <li>
+                    <a href="#grpo-%e7%ae%97%e6%b3%95" aria-label="GRPO 算法">GRPO 算法</a></li>
+                <li>
+                    <a href="#infra-is-key" aria-label="Infra is Key">Infra is Key</a></li></ul>
+                </li>
+                <li>
+                    <a href="#evaluation" aria-label="Evaluation">Evaluation</a><ul>
+                        
+                <li>
+                    <a href="#closed-ended-evaluation" aria-label="Closed-ended Evaluation">Closed-ended Evaluation</a></li>
+                <li>
+                    <a href="#open-ended-evaluation" aria-label="Open-ended Evaluation">Open-ended Evaluation</a></li></ul>
+                </li>
+                <li>
+                    <a href="#systems" aria-label="Systems">Systems</a><ul>
+                        
+                <li>
+                    <a href="#gpu-%e7%9a%84%e5%9f%ba%e7%a1%80%e6%a6%82%e5%bf%b5" aria-label="GPU 的基础概念">GPU 的基础概念</a></li>
+                <li>
+                    <a href="#%e7%b3%bb%e7%bb%9f%e4%bc%98%e5%8c%96%e6%8a%80%e6%9c%af" aria-label="系统优化技术">系统优化技术</a></li>
+                <li>
+                    <a href="#%e5%a4%9agpu%e5%b9%b6%e8%a1%8c%e7%ad%96%e7%95%a5" aria-label="多GPU并行策略">多GPU并行策略</a></li></ul>
+                </li>
+                <li>
+                    <a href="#summary" aria-label="Summary">Summary</a></li>
+                <li>
+                    <a href="#reference" aria-label="Reference">Reference</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：<strong>这些模型到底是如何训练的？</strong></p>
+<p>本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。</p>
+<h2 id="llm-training-pipeline">LLM Training Pipeline<a hidden class="anchor" aria-hidden="true" href="#llm-training-pipeline">#</a></h2>
+<p>LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: <strong>预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)</strong>。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。</p>
+<h3 id="general-llm-training-pipeline">General LLM Training Pipeline<a hidden class="anchor" aria-hidden="true" href="#general-llm-training-pipeline">#</a></h3>
+<p>从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：</p>
+<ol>
+<li><strong>Pre-training</strong>：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。</li>
+<li><strong>Classic Post-training / RLHF</strong>：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。</li>
+<li><strong>RL for Reasoning</strong>：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。</li>
+</ol>
+<p><img loading="lazy" src="../../docs/images/general-llm-training-pipeline.png"></p>
+<p><strong>三个阶段对比</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>阶段</th>
+          <th>核心目标</th>
+          <th>数据规模</th>
+          <th>训练时间</th>
+          <th>成本级别</th>
+          <th>主要瓶颈</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>预训练（Pre-training）</td>
+          <td>学习预测下一个词，构建知识底座</td>
+          <td>~10 万亿 tokens</td>
+          <td>数月</td>
+          <td>千万美元级</td>
+          <td>高质量数据、算力资源</td>
+      </tr>
+      <tr>
+          <td>经典后训练 / RLHF（Classic Post-training / RLHF）</td>
+          <td>让模型符合用户偏好</td>
+          <td>~10 万个问题</td>
+          <td>几天</td>
+          <td>数万–十万美元</td>
+          <td>人类反馈数据、评测体系</td>
+      </tr>
+      <tr>
+          <td>推理型 RL（RL for Reasoning）</td>
+          <td>提升推理和思考能力</td>
+          <td>百万级问题</td>
+          <td>数周</td>
+          <td>百万美元级</td>
+          <td>RL 环境设计、防止自我黑客</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="成功的关键要素">成功的关键要素<a hidden class="anchor" aria-hidden="true" href="#成功的关键要素">#</a></h3>
+<p>了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。</p>
+<ol>
+<li><strong>模型架构 (Architecture)</strong>: 模型的骨架，目前 Transformer 仍是绝对主流，MoE (Mixture of Experts) 因其高效扩展性而备受关注。</li>
+<li><strong>训练算法与损失函数 (Algorithm &amp; Loss)</strong>: 模型优化的导航系统，决定了模型如何从数据中学习。</li>
+<li><strong>数据与强化学习环境 (Data &amp; RL Environment)</strong>: 模型学习的“教材”。尤其在对齐和能力提升阶段，高质量的数据和精心设计的 RL 环境至关重要。</li>
+<li><strong>评测 (Evaluation)</strong>: 衡量训练效果的标尺，指导着整个优化迭代的方向。</li>
+<li><strong>系统与基础设施 (Systems &amp; Infrastructure)</strong>: 支撑训练的动力引擎，决定了你能否高效、稳定地将模型规模化。</li>
+</ol>
+<p>一个有趣的转变是，在 2023 年之前，学术界和业界的焦点更多集中在<strong>架构和算法</strong>的创新上。而如今，随着技术路线逐渐收敛，共识已经形成：<strong>真正拉开模型效果差距的，是数据、评测和系统这三大支柱</strong>。</p>
+<p>LLM 训练已从单纯的算法竞赛，演变为一项复杂的系统工程：</p>
+<ul>
+<li><strong>数据决定上限</strong>：数据的质量和多样性，直接决定了模型可能达到的最终高度。</li>
+<li><strong>评测决定方向</strong>：科学的评测体系，是迭代优化、做出正确技术决策的指南针。</li>
+<li><strong>系统决定规模</strong>：强大的基础设施，决定了你能否训练更大、更强的模型。</li>
+</ul>
+<h3 id="提示工程与领域微调">提示工程与领域微调<a hidden class="anchor" aria-hidden="true" href="#提示工程与领域微调">#</a></h3>
+<p>当我们获得一个训练好的基础模型后，如何高效地将其应用于特定场景？<strong>提示工程 (Prompting)</strong> 和 <strong>领域微调 (Fine-tuning)</strong> 是两种最核心的技术。</p>
+<p><strong>提示（Prompting）</strong></p>
+<p>我们可以将称之为 <strong>“提问的艺术”</strong>，即通过精心设计的指令 (Prompt) 来引导模型精准地执行任务。其核心特点是<strong>轻量、低成本且由评测驱动</strong>。对于大多数开发者而言，这是将<strong>模型与业务结合的最高效途径</strong>。</p>
+<p><strong>微调（Fine-tuning）</strong></p>
+<p>微调的核心思想是利用特定领域的数据，对基础模型进行“专项强化训练”，使其成为该领域的“专家”。例如，医疗公司可利用专业医疗数据对模型进行微调，显著提升其在医疗报告理解上的准确性。相比提示工程，微调需要额外的<strong>数据和算力投入</strong>，但<strong>能让模型更深入地内化领域知识，效果上限更高</strong>。</p>
+<p><img loading="lazy" src="../../docs/images/llm-specializing-pipeline.png"></p>
+<h2 id="pretraining">Pretraining<a hidden class="anchor" aria-hidden="true" href="#pretraining">#</a></h2>
+<p>接下来，我们将深入探讨预训练阶段。这部分将围绕三个核心展开：<strong>方法 (Method)</strong>、<strong>数据 (Data)</strong> 和<strong>算力 (Computation)</strong>。</p>
+<h3 id="method">Method<a hidden class="anchor" aria-hidden="true" href="#method">#</a></h3>
+<p>预训练的<strong>目标是让模型学习世界知识</strong>，但实现这一目标的任务却很简单：<strong>预测下一个词 (Next Token Prediction)</strong>。</p>
+<p>这个过程与手机输入法预测下一个词的原理类似。然而，当模型在超过 10 万亿 Token 的互联网级数据上完成这个任务后，推理、归纳甚至“思考”的能力便会“涌现”出来。这一核心思想自 GPT-2 以来，便成为业界主流。</p>
+<h4 id="简单语言模型n-gram">简单语言模型：N-gram<a hidden class="anchor" aria-hidden="true" href="#简单语言模型n-gram">#</a></h4>
+<p>要理解现代 LLM，可以回顾其最朴素的前身——<strong>N-gram 模型</strong>。这是一种纯粹的统计方法，其核心思想是：<strong>一个词的出现概率，只与它前面的 N-1 个词相关</strong>。</p>
+<ul>
+<li><strong>预测方式</strong>：通过在语料库中统计 N-gram 片段的出现频率来计算概率。</li>
+<li><strong>致命缺陷</strong>：
+<ul>
+<li>存储灾难：需要存储海量片段，无法扩展到互联网数据。</li>
+<li>无法泛化：无法处理未在语料库中见过的文本。</li>
+</ul>
+</li>
+</ul>
+<p><img loading="lazy" src="https://cdn.botpenguin.com/assets/website/Screenshot_2023_09_20_at_4_36_17_PM_9bace7cd14.webp"></p>
+<p>为了解决这些问题，研究者们转向了神经网络。<strong>神经网络语言模型本质上可以看作是 N-gram 模型的一种高效、可泛化的“参数化近似”</strong>。它不再死记硬背所有统计频次，而是学习文本中蕴含的模式，并将这些模式压缩到模型的参数中。</p>
+<h4 id="自回归-autoregressive-神经网络模型">自回归 (Autoregressive) 神经网络模型<a hidden class="anchor" aria-hidden="true" href="#自回归-autoregressive-神经网络模型">#</a></h4>
+<p>现代 LLM 普遍采用<strong>自回归 (AR)</strong> 模式进行训练，其工作流程可分解为以下几步：</p>
+<ol>
+<li>
+<p><strong>文本向量化 (Word Embedding)：</strong></p>
+<ul>
+<li><strong>分词 (Tokenization)</strong>：将文本 &ldquo;She likely prefers&rdquo; 切分为 Token 序列 [&ldquo;She&rdquo;, &ldquo;likely&rdquo;, &ldquo;prefers&rdquo;]。</li>
+<li><strong>嵌入 (Embedding)</strong>：将每个 Token 映射为一个高维向量。这组向量成为神经网络的数字输入。</li>
+</ul>
+</li>
+<li>
+<p><strong>上下文融合 (Neural Network Processing)：</strong>
+这组向量被送入 Transformer 网络。通过自注意力等机制，模型对输入信息进行复杂的加权融合，生成一个蕴含了全部上下文信息的新向量。</p>
+</li>
+<li>
+<p><strong>概率预测 (Probability Prediction)：</strong></p>
+<ul>
+<li>这个上下文向量通过一个线性层，被转换为一个与词汇表等大的高维向量（称为 logits）。Logits 向量中的每个值代表对应词成为下一个词的可能性得分。</li>
+<li>使用 Softmax 函数将 logits 转换为一个总和为 1 的概率分布。例如，&ldquo;dogs&rdquo; 的概率为 0.7，&ldquo;cats&rdquo; 为 0.2 等。</li>
+</ul>
+</li>
+<li>
+<p><strong>训练与推理：</strong></p>
+<ul>
+<li><strong>训练时</strong>：模型将预测概率（如 &ldquo;dogs&rdquo; 的 0.7）与真实答案（概率 1.0）进行比较，通过<strong>交叉熵损失 (Cross-Entropy Loss)</strong> 计算差距，并据此反向传播更新模型参数。</li>
+<li><strong>推理时</strong>：模型根据生成的概率分布进行采样 (Sampling)，通常选择概率最高的词，并将其拼接回输入，循环往复，生成完整的回答。</li>
+</ul>
+</li>
+</ol>
+<p><img loading="lazy" src="https://lena-voita.github.io/resources/lectures/lang_models/neural/nn_lm_idea_linear-min.png"></p>
+<h3 id="data">Data<a hidden class="anchor" aria-hidden="true" href="#data">#</a></h3>
+<p>预训练数据是大模型的&quot;养料&quot;，其规模之大令人咂舌。当前主流模型通常需要消耗 超过 10 万亿 tokens 的数据：</p>
+<ul>
+<li><strong>Llama 4</strong>：大约在 20–40 万亿 tokens</li>
+<li><strong>DeepSeek V3</strong>：大约 15 万亿 tokens</li>
+<li><strong>Llama 3</strong>：大约 15 万亿 tokens</li>
+</ul>
+<p>换算一下，这相当于 超过 200 亿个独立网页 的内容量。然而<strong>规模不等于质量</strong>。从充斥着广告和低质信息的互联网中提炼出“精华”，是预训练成败的关键。</p>
+<p><strong>数据处理流程</strong></p>
+<ol>
+<li>
+<p><strong>数据抓取与文本提取</strong>：利用 <code>Common Crawl</code> 等开源项目，从互联网上下载海量的原始网页快照，再从中精准提取正文文本。这是计算成本最高的环节之一。</p>
+</li>
+<li>
+<p><strong>多层过滤与去重</strong>：</p>
+<ul>
+<li><strong>内容过滤</strong>：移除有害、不适宜 (NSFW) 及隐私内容。</li>
+<li><strong>启发式过滤</strong>：通过长度、字符等简单规则，快速筛掉明显的低质量文本。</li>
+<li><strong>数据去重</strong>：去除高度雷同的内容，避免模型学习无效模式。</li>
+</ul>
+</li>
+<li>
+<p><strong>基于模型的质量筛选</strong>：训练一个分类器，让它学习**高质量文本（如维基百科）**的特征，然后用它去为海量网页打分，筛选出最“像”高质量内容的文本。</p>
+</li>
+<li>
+<p><strong>数据混合 (Data Mix)</strong>：将来自网页、代码、书籍、论文等不同来源的干净数据，按特定比例混合。这个<strong>数据配方直接塑造了模型的能力倾向</strong>，例如，<strong>增加代码数据的权重，可以显著提升模型的编程能力</strong>。</p>
+</li>
+</ol>
+<p><strong>预训练后期的策略</strong></p>
+<ul>
+<li><strong>中期训练 (Mid-training)</strong>：在预训练后期，使用一个规模更小但<strong>质量极高的“黄金数据集”（如书籍、论文）进行第二阶段训练</strong>，以巩固和深化核心知识。</li>
+<li><strong>长上下文持续预训练 (Continual Pre-training for Longer Context)</strong>：为节约成本，通常在训练前期使用较短上下文（如 4k），在最后阶段才逐步增加到目标长度（如 128k）。</li>
+</ul>
+<p>由于涉及核心竞争力和潜在的版权风险，<strong>顶级的数据处理流程和数据配方，是各家机构真正的护城河</strong>。</p>
+<h3 id="computation">Computation<a hidden class="anchor" aria-hidden="true" href="#computation">#</a></h3>
+<p>在预训练中，<strong>计算量 (Compute)</strong> 投入几乎是决定模型性能的唯一关键因素。这个规律对所有类型的数据和模型都普遍适用。</p>
+<p>计算量主要由两个维度决定：</p>
+<ul>
+<li><strong>模型规模 (Parameters)</strong>：模型包含的参数数量。</li>
+<li><strong>数据量 (Training Tokens)</strong>：用于训练的文本总量。</li>
+</ul>
+<p>幸运的是，模型性能与计算量之间的关系并非杂乱无章，而是遵循着一种可预测的规律——<strong>缩放法则 (Scaling Laws)</strong>。这意味着我们可以<strong>在小规模实验中观察模型表现，然后依据缩放曲线，精准推断出在投入百倍、千倍计算量后模型的性能会达到何种水平</strong>。</p>
+<p><img loading="lazy" src="https://i.imgur.com/7lhHT8n.png"></p>
+<h4 id="scaling-laws-tuning">Scaling Laws: Tuning<a hidden class="anchor" aria-hidden="true" href="#scaling-laws-tuning">#</a></h4>
+<p>缩放法则彻底改变了超参数的调优方式，将一个极其昂贵的过程变得高效。</p>
+<ul>
+<li><strong>传统做法</strong>：直接启动多个不同超参的大模型并行试错，成本高昂。</li>
+<li><strong>现代做法</strong>：在多个小模型上快速实验，找到超参数与模型规模之间的缩放关系，再将最优配置外推 (Extrapolate) 到目标大模型上。</li>
+</ul>
+<p>缩放法则让我们可以从小模型的廉价试错中，找到适用于大模型的规律，极大提升了研发效率。</p>
+<h4 id="scaling-laws-for-development">Scaling laws for development<a hidden class="anchor" aria-hidden="true" href="#scaling-laws-for-development">#</a></h4>
+<p>在选择模型架构时，我们真正关心的不应是它在当前算力下的表现，而是当计算资源扩大10倍、100倍后，哪个架构会变得更强(@kaplanScalingLawsNeural2020)。关键在于比较两个指标：</p>
+<ul>
+<li><strong>初始性能 (Constant)</strong>：在同等算力下，谁的性能更好。</li>
+<li><strong>缩放速率 (Scaling Rate)</strong>：每增加单位算力，谁的性能提升得更快。</li>
+</ul>
+<p><strong>Example: Transformer vs. LSTM</strong></p>
+<ul>
+<li><strong>问题</strong>: Transformer 架构还是 LSTM 架构？</li>
+<li><strong>方法</strong>: 我们可以在较小的规模下，分别训练这两种模型，并绘制它们的性能曲线</li>
+<li><strong>观察 (见图)</strong>:
+<img loading="lazy" src="../../static/images/Screenshot%202025-10-04%20at%2012.49.10%E2%80%AFPM.png">
+<ul>
+<li><strong>Transformer 的线始终在 LSTM 的线下方</strong>: 在任何计算规模下，Transformer 的表现都更好。这被称为有更好的“常数”。</li>
+<li><strong>Transformer 的线的斜率更陡</strong>: 每增加一点计算资源，Transformer 性能的提升幅度比 LSTM 更大。这被称为有更好的“缩放速率”。</li>
+</ul>
+</li>
+</ul>
+<p><strong>应永远选择缩放速率更优的架构</strong>。 一个架构即使当前表现稍逊，但只要其潜力巨大，就更值得投资。</p>
+<h4 id="scaling-laws-eg-chinchilla">Scaling laws: eg Chinchilla<a hidden class="anchor" aria-hidden="true" href="#scaling-laws-eg-chinchilla">#</a></h4>
+<p>在计算预算固定的前提下，资源应该更偏向于扩大模型规模还是增加数据量？DeepMind 的 Chinchilla 论文通过缩放法则给出了答案(@hoffmannTrainingComputeOptimalLarge2022)。</p>
+<p>Chinchilla 发现：为了最高效地利用算力，模型参数量与数据量之间存在一个“黄金比例”——<strong>每 1 个模型参数，大约需要 20 个 Token 的数据来训练</strong>。</p>
+<p><img loading="lazy" src="../../static/images/Screenshot%202025-10-04%20at%2012.57.17%E2%80%AFPM.png"></p>
+<p><strong>局限性：</strong></p>
+<ul>
+<li><strong>被忽略的成本</strong>：Chinchilla 法则只优化了训练成本，完全没有考虑模型部署后的<strong>推理成本</strong>。</li>
+<li><strong>现实权衡</strong>：对于商业服务而言，推理成本是决定成败的关键。因此，更明智的决策可能是：<strong>宁愿在训练阶段投入更多资源（例如，用更多数据训练一个相对较小的模型），以换取未来长期、低廉的推理成本</strong>。</li>
+</ul>
+<h3 id="summary-训练一个前沿模型的代价">Summary: 训练一个前沿模型的代价<a hidden class="anchor" aria-hidden="true" href="#summary-训练一个前沿模型的代价">#</a></h3>
+<p>这里以一个假设的405B参数的 Llama 3 模型为例，估算了其训练所需的各项成本（基于2023-2024年数据）:</p>
+<ul>
+<li><strong>规模</strong>：405B 参数，15.6T Tokens 数据。</li>
+<li><strong>硬件</strong>：16,000 张 NVIDIA H100 GPU。</li>
+<li><strong>时间</strong>：约 70 天。</li>
+<li><strong>金钱成本</strong>: 综合硬件租用和人力等成本，为 <strong>5200万美元</strong>（范围可能在 5000 万到 8000 万美元之间）。</li>
+<li><strong>环境成本</strong>: 仅训练这一个模型所产生的碳排放，约等于 <strong>2000 次从纽约到伦敦的往返机票</strong>。</li>
+<li><strong>未来趋势</strong>: 每一代新模型的训练算力消耗都将大约是上一代的 <strong>10 倍</strong>。</li>
+</ul>
+<p>大模型的预训练阶段，本质上是一场<strong>围绕方法、数据和算力的系统性工程</strong>。它以一个极其简单的任务为起点，通过海量高质量数据和庞大计算资源的投入，最终实现了智能的涌现。</p>
+<h2 id="posttraining">Posttraining<a hidden class="anchor" aria-hidden="true" href="#posttraining">#</a></h2>
+<p>预训练的目标是<strong>预测下一个词</strong>。这使得模型精通语言模式，却不理解“遵循指令”或“帮助用户”这类概念。</p>
+<p>例如，如果你对一个原始的预训练模型说：“给6岁的孩子解释一下登月”，它很可能不会回答，而是续写一个相似的问题，比如：“给6岁的孩子解释一下万有引力”。</p>
+<p>因此，我们需要一个额外的“后训练”阶段，来校准模型的行为，使其真正变得有用、可控。</p>
+<h3 id="后训练的两个主要阶段">后训练的两个主要阶段<a hidden class="anchor" aria-hidden="true" href="#后训练的两个主要阶段">#</a></h3>
+<p><strong>1. Alignment / Instruction Following</strong></p>
+<p>这是让模型变得有用的第一步，也是 <strong>2022年 ChatGPT 取得成功的核心</strong>。</p>
+<ul>
+<li><strong>目标</strong>：让模型学会理解并遵循用户指令，知道什么样的回答是“好”的回答。</li>
+<li><strong>任务</strong>：主要通过监督微调 (SFT) 和基于人类反馈的强化学习 (RLHF)。</li>
+<li><strong>数据</strong>：与预训练相比，数据量小得多，大约在 5千到 50万个高质量问答对之间。</li>
+</ul>
+<p>这个阶段好比教一个满腹经纶的学者“如何与人有效沟通”，只需少量高质量范例，即可让它学会互动的范式。</p>
+<p><strong>2. Reasoning</strong></p>
+<p>这是在“对齐”之后更高级的阶段，是 <strong>2024年以来的新趋势</strong>（以 o1 等模型为代表）。</p>
+<ul>
+<li><strong>目标</strong>：不仅要回答得“好”，更要通过深度思考，确保答案的<strong>正确性</strong>，尤其是在数学、编程等有客观标准的任务上。</li>
+<li><strong>方法</strong>：主要通过带有验证器的强化学习 (RL with Verifiers)。</li>
+</ul>
+<p>它引入了<strong>Test-time Compute</strong> 的概念。传统模型性能在训练结束后就已固定；而具备推理能力的模型，可以在<strong>回答问题时投入更多计算资源来“思考”</strong>，从而得到更准确的答案。</p>
+<h3 id="supervised-finetuning">Supervised Finetuning<a hidden class="anchor" aria-hidden="true" href="#supervised-finetuning">#</a></h3>
+<p><strong>SFT (Supervised Fine-tuning)</strong> 是对齐模型的第一步，其核心是<strong>Behavior Cloning</strong>。</p>
+<p>它的原理与预训练一致——预测下一个词，但关键区别在于，它不再使用海量的互联网数据，而是在一个<strong>高质量的、我们期望的“问题-答案”数据集</strong>上进行训练，强制模型只学习和模仿“标准答案”的说话方式。</p>
+<p><strong>SFT 可以做什么？</strong></p>
+<p>SFT 可以将一个原始的知识库模型，转变为一个能干的助手，教会它：</p>
+<ol>
+<li><strong>Instruction following</strong>：听懂并执行命令。</li>
+<li><strong>Desired format or style</strong>：例如，使用表情符号、要点列表，或保持某种特定的语气。</li>
+<li><strong>Tool use</strong>：教会模型调用计算器、搜索引擎等外部API来完成复杂任务。</li>
+<li><strong>Early reasoning</strong>：通过学习带有推理链的范例，教会模型在回答前先“思考”。</li>
+</ol>
+<p>理论上，<strong>任何你能提供“优质输入-输出”配对的任务，都可以通过 SFT 来学习。</strong></p>
+<p><strong>SFT 的数据从何而来？</strong></p>
+<ol>
+<li><strong>Ask Humans</strong></li>
+</ol>
+<p>最直接的方式。雇佣人类专家为各种问题编写高质量答案。这是 <strong>GPT-3 进化到初代 ChatGPT 的关键一步</strong>，优点是质量最高，缺点是成本高昂且速度缓慢。</p>
+<ol start="2">
+<li><strong>Synthetic Data</strong></li>
+</ol>
+<p>利用一个更强大的“教师模型”来自动生成海量问答数据。**斯坦福的 Alpaca 模型(@duboisAlpacaFarmSimulationFramework2024a)**是这一方法的早期成功典范，它开启了使用合成数据来复刻闭源模型能力的浪潮。</p>
+<ol start="3">
+<li><strong>Generate &amp; Verify</strong></li>
+</ol>
+<p>当训练最强模型，没有更强的“老师”可以请教时，你需要一个能判断对错的“裁判”。其步骤是：</p>
+<ul>
+<li>让模型针对一个问题生成多个候选答案。</li>
+<li>使用<strong>Verifier</strong>——例如代码测试程序、数学检查器——来自动筛选。</li>
+<li>只保留通过验证的优质答案作为训练数据。</li>
+</ul>
+<p><strong>DeepSeek R1</strong> 正是通过这种“头脑风暴 + 裁判筛选”的模式，训练出了顶级的推理能力</p>
+<p><strong>SFT 需要多少数据？</strong></p>
+<p>SFT 所需的数据量远小于预训练：</p>
+<ul>
+<li><strong>简单任务 (学习风格)</strong>：约1万条数据通常足够。LIMA 论文(&lt;@zhouLIMALessMore2023&gt;)发现，数千个高质量范例就能教会模型期望的风格。</li>
+<li><strong>复杂任务 (推理、工具使用)</strong>：需要更多数据，例如 <strong>DeepSeek R1</strong> 使用了约<strong>80万条</strong>样本。</li>
+</ul>
+<p>预训练已让模型学到了几乎所有知识。SFT 的作用更像是<strong>激活和规范</strong>，它告诉模型在何种情境下，应该唤醒哪种它已具备的能力，使其行为模式符合特定用户的偏好。</p>
+<h3 id="reinforcement-learning">Reinforcement Learning<a hidden class="anchor" aria-hidden="true" href="#reinforcement-learning">#</a></h3>
+<p>SFT 本质是“行为克隆”，但这存在三大缺陷：</p>
+<ol>
+<li><strong>受限于范例质量</strong>：模型的上限无法超越提供标准答案的人类或教师模型。但人类<strong>作为“裁判”的能力，远高于作为“创作者”的能力</strong>。</li>
+<li><strong>可能教会模型幻觉</strong>：当模型模仿一个它自己无法验证真实性的答案时（例如引用一篇它没读过的文献），它学会的不是事实，而是“编造看起来煞有介事的假信息”的行为模式。</li>
+<li><strong>成本高昂</strong>：编写大量完美的“标准答案”费时费钱。</li>
+</ol>
+<p><strong>RL 的核心思想：最大化期望行为</strong></p>
+<p>为了解决上述问题，RL 提出<strong>与其克隆好的行为，不如去强化好的行为</strong>。我们不再提供唯一标准答案，而是让模型自己探索多种答案，然后通过一个 <strong>Reward Signal</strong> 告诉它哪些更好，从而引导它产出更高分的答案。</p>
+<p><strong>Reward Signal 从何而来？</strong></p>
+<ol>
+<li><strong>Rule-based Rewards</strong>: 对于有明确对错标准的任务（如代码、数学），直接用规则来打分。代码能通过单元测试就给高分，反之则给低分。</li>
+<li><strong>RLHF - RL from Human Feedback</strong>: 这是成就 <strong>ChatGPT 的关键技术</strong>。让模型生成多个答案，然后让人类选择“更喜欢哪一个”，用这些偏好数据训练一个 <strong>Reward Model</strong>，让这个AI裁判去指导主模型。</li>
+<li><strong>LLM as a Judge</strong>: 直接用一个最强的 LLM 来给答案打分，作为奖励信号。</li>
+</ol>
+<h3 id="deepseek-r1-的强化学习流程">DeepSeek R1 的强化学习流程<a hidden class="anchor" aria-hidden="true" href="#deepseek-r1-的强化学习流程">#</a></h3>
+<p>DeepSeek R1 采用了一种精细化的“分而治之”策略，对不同任务“对症下药”，如图所示(@alammarIllustratedDeepSeekR12025)：</p>
+<ul>
+<li><strong>对于推理等客观任务</strong>：使用基于规则的验证器（如单元测试）作为“硬核裁判”，奖励信号准确可靠。</li>
+<li><strong>对于写作等主观任务</strong>：使用模拟人类偏好的奖励模型作为“AI裁判”，判断回答的有用性和安全性。</li>
+</ul>
+<p><img loading="lazy" src="https://substackcdn.com/image/fetch/$s_!HRLo!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0e5f9acf-b4ca-4ec4-9731-4845c8fc5515_902x394.png"></p>
+<p>这种结合了<strong>客观规则和主观模型</strong>的混合式强化学习，使得模型在保证逻辑严谨的同时，也提升了在开放性对话中的表现。</p>
+<h3 id="grpo-算法">GRPO 算法<a hidden class="anchor" aria-hidden="true" href="#grpo-算法">#</a></h3>
+<p>GRPO 由 DeepSeek R1 推广(@shaoDeepSeekMathPushingLimits2024)，是目前开源社区最常用的 RL 算法。其流程简单直接：</p>
+<ol>
+<li><strong>生成</strong>：针对一个问题，生成多个不同答案。</li>
+<li><strong>打分</strong>：用奖励模型或验证器为每个答案打分。</li>
+<li><strong>学习</strong>：更新模型参数，鼓励模型多产出高分答案的行为，抑制低分行为。</li>
+</ol>
+<p><img loading="lazy" src="../../static/images/Screenshot%202025-10-04%20at%205.13.14%E2%80%AFPM.png"></p>
+<p>在实际操作中，通常会加入 <strong>KL散度约束 (KL Divergence)</strong>，它像一根“缰绳”，防止模型为了追求高分而“走火入魔”，确保其生成的内容依然自然、流畅。</p>
+<h3 id="infra-is-key">Infra is Key<a hidden class="anchor" aria-hidden="true" href="#infra-is-key">#</a></h3>
+<p>在大规模 RL 中，<strong>算法本身并非最难，底层的软硬件基础设施才是真正的挑战</strong>，尤其是在需要模型与环境进行多步交互的智能体 (Agent) 任务中，生成样本（采样）的过程极其消耗计算资源。</p>
+<p><strong>Kimi 团队的解决方案</strong>展示了顶级基础设施的形态(@teamKimiK2Open2025)：</p>
+<ol>
+<li><strong>智能调度</strong>：暂停耗时过长的采样任务，先用已有数据更新模型，再用新模型继续被暂停的任务，避免流程卡顿。</li>
+<li><strong>大规模并行</strong>：当一个任务等待外部API时，GPU会立即切换到其他任务，最大化利用率。</li>
+<li><strong>架构优化</strong>：将训练、推理等引擎部署在同一物理节点，最大限度减少通信延迟。</li>
+</ol>
+<p><img loading="lazy" src="../../static/images/Screenshot%202025-10-04%20at%205.16.11%E2%80%AFPM.png"></p>
+<h2 id="evaluation">Evaluation<a hidden class="anchor" aria-hidden="true" href="#evaluation">#</a></h2>
+<p>评估是机器学习与人工智能中最关键的环节之一。它的重要性体现在三个方面：</p>
+<ol>
+<li><strong>量化进展</strong>：帮助识别模型改进方向，衡量性能变化，指导超参数选择。</li>
+<li><strong>模型选择</strong>：用于比较不同模型，以确定最适合特定应用场景的方案。</li>
+<li><strong>生产可用性判断</strong>：即使模型在评测中表现最佳，也需要通过评估确定其是否达到实际应用要求。</li>
+</ol>
+<p>评估主要分为两类：<strong>Closed-ended Evaluation</strong> 和 <strong>Open-ended Evaluation</strong>。</p>
+<h3 id="closed-ended-evaluation">Closed-ended Evaluation<a hidden class="anchor" aria-hidden="true" href="#closed-ended-evaluation">#</a></h3>
+<p><strong>核心思想</strong>：将评测问题转化为<strong>有少数几个固定答案的格式（如多选题）</strong>，从而<strong>可以轻松地自动化验证</strong>。</p>
+<ul>
+<li><strong>典型例子</strong>：MMLU (Massive Multitask Language Understanding) 是一个广泛使用的基准测试，它包含大量类似大学考试的多项选择题，覆盖了从数学到历史的众多学科(@hendrycksMeasuringMassiveMultitask2021)。</li>
+<li><strong>主要挑战</strong>：
+<ul>
+<li><strong>Prompt Sensitivity</strong>: 对同一个问题，不同的提问方式可能会导致模型给出截然不同的答案。</li>
+<li><strong>Data Contamination</strong>: 评测数据常出现在公开语料中，模型可能在预训练阶段就已经“见过”了考题，导致评测分数虚高。</li>
+</ul>
+</li>
+</ul>
+<h3 id="open-ended-evaluation">Open-ended Evaluation<a hidden class="anchor" aria-hidden="true" href="#open-ended-evaluation">#</a></h3>
+<p>对于像 ChatGPT 这样以对话和生成为核心的模型，封闭式评测远远不够。开放式评测旨在评估它们在真实、无固定答案场景下的表现。</p>
+<p><strong>主要挑战</strong>：</p>
+<ul>
+<li><strong>应用场景多样</strong>：模型需要处理从聊天、编程到内容摘要等各种任务。</li>
+<li><strong>答案开放性强</strong>：模型的回答通常很长，且没有唯一的“标准答案”，因此无法通过简单的文本匹配来判断对错。</li>
+</ul>
+<p>因此，研究者提出了 <strong>Preference Comparison</strong> 的评估思路：</p>
+<ol>
+<li><strong>人工评估：ChatBot Arena</strong></li>
+</ol>
+<p><strong>Chatbot Arena</strong> (@chiangChatbotArenaOpen2024) 采用了双盲人类（double-blind human evaluation）评估方式：<strong>用户在不知道模型身份的情况下，与随机两款聊天机器人交互并投票选择更优者</strong>。</p>
+<ul>
+<li><strong>优点</strong>： 结果客观、可信度高。</li>
+<li><strong>缺点</strong>： 成本高昂且速度缓慢，难以进行大规模、高频率的迭代测试。</li>
+</ul>
+<ol start="2">
+<li><strong>LLM 自动评估：AlpacaEval</strong></li>
+</ol>
+<p>为了降低人工成本，研究者提出用 <strong>LLM 充当评审员</strong>。AlpacaEval（@duboisLengthControlledAlpacaEvalSimple2025） 是早期代表方法，核心流程如下：</p>
+<ul>
+<li>针对同一个指令，分别获取<strong>基准模型</strong>和<strong>待评测模型</strong>的回答。</li>
+<li>将这两个回答提交给一个强大的<strong>裁判LLM</strong>，让它判断哪个更好。</li>
+<li>通过大量比较，计算出待评测模型的胜率 (Win Rate)。</li>
+</ul>
+<p><strong>优点</strong></p>
+<ul>
+<li>与 Chatbot Arena 的结果高度一致（Spearman 相关系数 0.98）。</li>
+<li>成本极低（约 3 分钟、10 美元以内即可完成全流程）。</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>存在<strong>Spurious Correlation</strong>风险，即评审模型的偏好可能影响评测结果。</li>
+</ul>
+<h2 id="systems">Systems<a hidden class="anchor" aria-hidden="true" href="#systems">#</a></h2>
+<p>当我们讨论如何提升模型性能时，一个共识是“扩展性决定上限 (scaling is what matters)”。这意味着投入更多的计算资源通常能带来更好的结果。但现实是，<strong>我们所有人都受限于计算资源</strong>。</p>
+<p>既然计算是瓶颈，为什么不直接购买更多的 GPU 呢？原因有三：</p>
+<ol>
+<li><strong>GPU昂贵且稀缺</strong>: 顶级 GPU 不仅价格高昂，而且供应紧张。即使有预算，也未必能买到。</li>
+<li><strong>物理限制</strong>: 大规模 GPU 集群的通信开销巨大。GPU 之间的数据传输速度可能成为新的瓶颈，拖慢整体训练速度。</li>
+<li><strong>效率问题</strong>: 必须确保每一块 GPU 的计算潜力都被充分压榨，否则只是徒增成本。</li>
+</ol>
+<p>因此，与其盲目堆砌硬件，不如<strong>通过系统级的优化来高效地分配和利用现有资源</strong>。</p>
+<h3 id="gpu-的基础概念">GPU 的基础概念<a hidden class="anchor" aria-hidden="true" href="#gpu-的基础概念">#</a></h3>
+<p>要优化训练过程，首先需要了解 GPU 的核心特性：</p>
+<ol>
+<li><strong>大规模并行处理</strong>：与 CPU 核心少而强不同，GPU 拥有成千上万个核心。它采用“单指令多数据”（SIMD）模式，在大量线程上对不同数据执行相同的指令，专为<strong>高吞吐量</strong>而生。</li>
+</ol>
+<p><img loading="lazy" src="https://cvw.cac.cornell.edu/gpu-architecture/gpu-characteristics/ArchCPUGPUcores.png"></p>
+<ol start="2">
+<li><strong>矩阵乘法优化</strong>：GPU 最初为图形处理涉及，而图形处理的本质是密集的矩阵运算。因此，GPU 内置了专门用于加速矩阵乘法的硬件单元（如 Tensor Cores），这类运算的速度通常是其他浮点操作的 10 倍以上。</li>
+</ol>
+<p><img loading="lazy" src="https://pbs.twimg.com/media/FcEzLBDakAEnVeZ?format=jpg&name=medium"></p>
+<ol start="3">
+<li><strong>计算不再是瓶颈</strong>：GPU 的浮点计算能力 (FLOPs) 增速远超其内存带宽和通信速度(@ivanovDataMovementAll2021)。这意味着，如今的瓶颈不再是“算得慢”，而是“喂不饱”。<strong>保持计算单元持续有数据可算是系统优化的核心挑战</strong>。如下图所示，计算性能的提升曲线远比内存带宽陡峭。</li>
+</ol>
+<p><img loading="lazy" src="https://pbs.twimg.com/media/F_5F9haa8AAEv-T?format=jpg&name=large"></p>
+<ol start="4">
+<li><strong>内存层次结构</strong>：GPU内部的内存是分层级的。离计算核心越近的内存（如L1 Cache、Shared Memory）速度越快，但容量越小；离得越远（如Global Memory DRAM）容量越大，但速度越慢。高效的算法需要精心设计，以最大化地利用高速缓存，减少对慢速全局内存的访问。</li>
+</ol>
+<p><img loading="lazy" src="https://cvw.cac.cornell.edu/gpu-architecture/gpu-memory/GPUMemLevels.png"></p>
+<p><strong>关键指标：MFU</strong></p>
+<p>模型 FLOP 利用率 (Model Flop Utilization, MFU) 是衡量系统效率的关键指标：</p>
+<p>$$\text{MFU} = \frac{\text{GPU 的理论峰值吞吐量 (Theoretical Best)}}{\text{观测到的模型吞吐量 (Observed Throughput)}}$$</p>
+<p>MFU 的值反映了你的代码在多大程度上压榨出了 GPU 的理论性能。一个 MFU 为 1 的程序意味着计算单元在任何时候都处于忙碌状态。
+在实际应用中，<strong>MFU 能达到 50% 就已经是非常出色的表现</strong>，许多大公司也需要投入大量精力才能将这个数字从 15%-20% 提升到 50%。</p>
+<h3 id="系统优化技术">系统优化技术<a hidden class="anchor" aria-hidden="true" href="#系统优化技术">#</a></h3>
+<p>了解了 GPU 的特性后，我们可以探讨一些具体的优化方法。</p>
+<ol>
+<li><strong>Low-Precision Training</strong></li>
+</ol>
+<p><strong>核心思想</strong>：使用更少的bits（如<code>bf16</code>）来表示数字，从而减少内存占用和加速数据传输。</p>
+<p>由于深度学习训练过程（尤其是随机梯度下降）本身充满了噪声，因此大多数运算并不需要32为浮点数（<code>fp32</code>）的高精度。将矩阵乘法等主要计算从 <code>fp32</code> 切换到 <code>bf16</code> 可以带来显著的性能提升。</p>
+<p><strong>For Training: Automatic Mixed Precision (AMP)</strong></p>
+<ul>
+<li><strong>Weights</strong>: 以 <code>fp32</code> 格式存储主权重，以保持精度。</li>
+<li><strong>Computation</strong>: 在进行前向和反向传播时，将权重和激活值转换为 <code>bf16</code> 进行矩阵运算，以获得速度提升和内存节省。</li>
+<li><strong>Gradients</strong>: 以 <code>bf16</code> 格式存储，进一步节省内存。</li>
+<li><strong>Update</strong>: 将 <code>bf</code> 梯度转换回 <code>fp32</code>，用于更新主权重。</li>
+</ul>
+<ol start="2">
+<li><strong>Operator Fusion</strong></li>
+</ol>
+<p><strong>核心思想</strong>：将多个连续的计算操作合并成一个单一的计算内核（Kernel），以减少对全局内存的读写次数。</p>
+<p>在PyTorch等框架中，每一行独立的计算（如 <code>y = x.cos()</code>）都可能触发一次全局内存读写。<br>
+Operator Fusion 可以将 <code>y = x.cos()</code> 和 <code>z = y.sin()</code> 这样的多个操作合并，实现<strong>一次读取、多次计算、一次写回</strong>，从而大幅减少内存访问开销。</p>
+<p><img loading="lazy" src="https://quadric.io/wp-content/uploads/2023/09/Figure4-memory-1024x603.png"></p>
+<p><code>torch.compile</code> 就是PyTorch中实现 Operator Fusion 的强大工具。</p>
+<ol start="3">
+<li><strong>Tiling</strong></li>
+</ol>
+<p><strong>核心思想</strong>：通过巧妙地组织计算顺序，最大化地复用已加载到高速缓存中的数据。</p>
+<p>以矩阵乘法为例，传统的计算方式需要频繁地从全局内存中读取整个行和列。而Tiling则将大矩阵切分成小块（Tile）。计算时，先将几个小块加载到高速的共享内存中，完成所有与这些小块相关的计算后，再加载下一批。<br>
+这样，加载到高速缓存中的每个数据点都被多次使用，<strong>极大地减少了对慢速全局内存的访问次数</strong>。</p>
+<p><img loading="lazy" src="https://nichijou.co/static/8a6ac4a5ad16d10fb7057c2042b31ad6/e1ec8/block.jpg"></p>
+<p><strong>Example: Flash Attention</strong></p>
+<p>FlashAttention 是注意力机制优化算法(@daoFlashAttentionFastMemoryEfficient2022)，它结合了上述技术：</p>
+<ul>
+<li><strong>Operator Fusion</strong>: 将注意力的多个计算步骤（矩阵乘法、缩放、掩码、Softmax）融合成一个内核。</li>
+<li><strong>Tiling</strong>: 在计算注意力分数时使用Tiling策略，避免实例化巨大的注意力矩阵。</li>
+<li><strong>Recomputation</strong>: 在反向传播时，不存储中间结果（如注意力矩阵），而是重新计算它们。因为重计算比从全局内存中读取这些巨大的中间结果要快得多。</li>
+</ul>
+<p><img loading="lazy" src="../../static/images/Screenshot%202025-10-08%20at%2012.50.52%E2%80%AFPM.png"></p>
+<p>通过这些系统级的优化，FlashAttention 在没有改变任何模型逻辑的情况下，实现了高达 <strong>1.7 倍</strong>的端到端训练加速。</p>
+<p><img loading="lazy" src="../../static/images/Screenshot%202025-10-08%20at%2012.53.42%E2%80%AFPM.png"></p>
+<h3 id="多gpu并行策略">多GPU并行策略<a hidden class="anchor" aria-hidden="true" href="#多gpu并行策略">#</a></h3>
+<p>当模型规模大到单个 GPU 无法容纳时，我们就必须采用并行计算策略。</p>
+<p>当训练一个 P 参数的模型，通常需要约 <strong>16P GB</strong> 的内存：</p>
+<ul>
+<li><strong>Model Weights</strong>: 4P GB</li>
+<li><strong>Gradients</strong>: 4P GB</li>
+<li><strong>Optimizer States</strong>: 8P GB (Adam需存储均值和方差)</li>
+</ul>
+<p>这意味着，训练一个7B参数的模型大约需要 $16 \times 7B \approx 112GB$ 的显存，这远远超出了单张 GPU 的容量。</p>
+<ol>
+<li><strong>Data Parallelism</strong></li>
+</ol>
+<p><strong>核心思想</strong>：将模型和优化器完整地复制到每张 GPU 上，然后将训练数据分片，每张 GPU 处理一部分数据，每一步计算完成后，聚合所有的 GPU 的梯度，然后同步更新各自的模型副本。</p>
+<ul>
+<li><strong>优点</strong>：简单直接，可以有效利用多张 GPU 加速训练。</li>
+<li><strong>缺点</strong>：<strong>完全没有节省内存</strong>。如果模型本身放不下一张卡，数据并行也无能为力。</li>
+</ul>
+<p>为了解决显存问题，<strong>ZeRO</strong>(@rajbhandariZeROMemoryOptimizations2020)等技术应运而生。它是一种增强的数据并行，通过<strong>将优化器状态、梯度甚至模型参数分片到不同的 GPU 上</strong>，从而极大地降低了单张 GPU 的显存压力。</p>
+<p><img loading="lazy" src="../../static/images/Screenshot%202025-10-08%20at%201.17.14%E2%80%AFPM.png"></p>
+<ol start="2">
+<li><strong>Model Parallelism</strong></li>
+</ol>
+<p><strong>核心思想</strong>：将模型本身切分到不同的 GPU 上。这适用于数据并行无法解决的超大模型场景。</p>
+<ul>
+<li><strong>Pipeline Parallelism</strong>: 按模型的Layer进行分层。例如，GPU 0 负责第 1-10 层，GPU 1 负责 11-20 层，数据像流水线一样依次流过各个 GPU (@huangGPipeEfficientTraining2019)。</li>
+</ul>
+<p><img loading="lazy" src="../../static/images/Screenshot%202025-10-09%20at%207.48.24%E2%80%AFAM.png"></p>
+<ul>
+<li><strong>Tensor Pipeline</strong>: 在单层内部进行切分。例如，将一个巨大的权重矩阵切分成几块，分别放到不同的 GPU 上进行计算，最后将结果聚合(@shoeybiMegatronLMTrainingMultiBillion2020)。</li>
+</ul>
+<p><img loading="lazy" src="../../static/images/Screenshot%202025-10-09%20at%207.50.41%E2%80%AFAM.png"></p>
+<ol start="3">
+<li><strong>Architectural Sparsity</strong></li>
+</ol>
+<p><strong>核心思想</strong>： 并非每个输入数据都需要经过模型的所有参数。通过激活模型的一部分参数来处理输入，可以有效降低计算量。</p>
+<p>**混合专家模型（Mixture of Experts, MoE）**是该思想的典型代表。<strong>MoE 模型包含多个专家子网络和一个路由器。对于每个输入，路由器会选择性地激活一个或几个专家来处理它</strong> (@fedusReviewSparseExpert2022)。</p>
+<p><img loading="lazy" src="../../static/images/Screenshot%202025-10-09%20at%207.50.41%E2%80%AFAM.png"></p>
+<p><strong>优点</strong>：可以在保持计算量（FLOPs）不变的情况下，大幅增加模型总参数量。由于每次只有部分专家被激活，因此非常适合并行化，可以将不同的专家部署在不同的 GPU 上。</p>
+<h2 id="summary">Summary<a hidden class="anchor" aria-hidden="true" href="#summary">#</a></h2>
+<p>本次讨论虽然涵盖了许多核心内容，但AI领域的发展日新月异，还有很多重要话题我们未能深入：</p>
+<ul>
+<li>
+<p>在技术实现层面，我们没有探讨像<strong>MoE（混合专家模型）和SSM（状态空间模型）这样的前沿架构；也未涉及模型解码策略与推理优化、ChatGPT等产品的UI/工具设计</strong>，以及至关重要的<strong>多模态技术</strong>。</p>
+</li>
+<li>
+<p>整个领域还面临着更宏大和深刻的挑战：<strong>如何有效防止技术滥用、如何突破上下文窗口的限制、如何应对高质量数据枯竭的“数据墙”危机，以及如何解决数据收集的合法性问题</strong>。</p>
+</li>
+</ul>
+<p>这些悬而未决的议题，共同构成了AI下一阶段的发展蓝图和核心挑战。</p>
+<h2 id="reference">Reference<a hidden class="anchor" aria-hidden="true" href="#reference">#</a></h2>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-alammarIllustratedDeepSeekR12025" class="csl-entry">
+<p>Alammar, Jay. 2025. “The Illustrated DeepSeek-R1.”
+<a href="https://newsletter.languagemodels.co/p/the-illustrated-deepseek-r1">https://newsletter.languagemodels.co/p/the-illustrated-deepseek-r1</a>.</p>
+</div>
+<div id="ref-chiangChatbotArenaOpen2024" class="csl-entry">
+<p>Chiang, Wei-Lin, Lianmin Zheng, Ying Sheng, Anastasios Nikolas
+Angelopoulos, Tianle Li, Dacheng Li, Hao Zhang, et al. 2024. “Chatbot
+Arena: An Open Platform for Evaluating LLMs by Human Preference.” arXiv.
+<a href="https://doi.org/10.48550/arXiv.2403.04132">https://doi.org/10.48550/arXiv.2403.04132</a>.</p>
+</div>
+<div id="ref-daoFlashAttentionFastMemoryEfficient2022"
+class="csl-entry">
+<p>Dao, Tri, Daniel Y. Fu, Stefano Ermon, Atri Rudra, and Christopher Ré.
+2022. “FlashAttention: Fast and Memory-Efficient Exact Attention with
+IO-Awareness.” arXiv. <a href="https://doi.org/10.48550/arXiv.2205.14135">https://doi.org/10.48550/arXiv.2205.14135</a>.</p>
+</div>
+<div id="ref-duboisLengthControlledAlpacaEvalSimple2025"
+class="csl-entry">
+<p>Dubois, Yann, Balázs Galambosi, Percy Liang, and Tatsunori B. Hashimoto.
+2025. “Length-Controlled AlpacaEval: A Simple Way to Debias Automatic
+Evaluators.” arXiv. <a href="https://doi.org/10.48550/arXiv.2404.04475">https://doi.org/10.48550/arXiv.2404.04475</a>.</p>
+</div>
+<div id="ref-duboisAlpacaFarmSimulationFramework2024a"
+class="csl-entry">
+<p>Dubois, Yann, Xuechen Li, Rohan Taori, Tianyi Zhang, Ishaan Gulrajani,
+Jimmy Ba, Carlos Guestrin, Percy Liang, and Tatsunori B. Hashimoto.
+2024. “AlpacaFarm: A Simulation Framework for Methods That Learn from
+Human Feedback.” arXiv. <a href="https://doi.org/10.48550/arXiv.2305.14387">https://doi.org/10.48550/arXiv.2305.14387</a>.</p>
+</div>
+<div id="ref-fedusReviewSparseExpert2022" class="csl-entry">
+<p>Fedus, William, Jeff Dean, and Barret Zoph. 2022. “A Review of Sparse
+Expert Models in Deep Learning.” arXiv.
+<a href="https://doi.org/10.48550/arXiv.2209.01667">https://doi.org/10.48550/arXiv.2209.01667</a>.</p>
+</div>
+<div id="ref-hendrycksMeasuringMassiveMultitask2021" class="csl-entry">
+<p>Hendrycks, Dan, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika,
+Dawn Song, and Jacob Steinhardt. 2021. “Measuring Massive Multitask
+Language Understanding.” arXiv.
+<a href="https://doi.org/10.48550/arXiv.2009.03300">https://doi.org/10.48550/arXiv.2009.03300</a>.</p>
+</div>
+<div id="ref-hoffmannTrainingComputeOptimalLarge2022" class="csl-entry">
+<p>Hoffmann, Jordan, Sebastian Borgeaud, Arthur Mensch, Elena Buchatskaya,
+Trevor Cai, Eliza Rutherford, Diego de Las Casas, et al. 2022. “Training
+Compute-Optimal Large Language Models.” arXiv.
+<a href="https://doi.org/10.48550/arXiv.2203.15556">https://doi.org/10.48550/arXiv.2203.15556</a>.</p>
+</div>
+<div id="ref-huangGPipeEfficientTraining2019" class="csl-entry">
+<p>Huang, Yanping, Youlong Cheng, Ankur Bapna, Orhan Firat, Mia Xu Chen,
+Dehao Chen, HyoukJoong Lee, et al. 2019. “GPipe: Efficient Training of
+Giant Neural Networks Using Pipeline Parallelism.” arXiv.
+<a href="https://doi.org/10.48550/arXiv.1811.06965">https://doi.org/10.48550/arXiv.1811.06965</a>.</p>
+</div>
+<div id="ref-ivanovDataMovementAll2021" class="csl-entry">
+<p>Ivanov, Andrei, Nikoli Dryden, Tal Ben-Nun, Shigang Li, and Torsten
+Hoefler. 2021. “Data Movement Is All You Need: A Case Study on
+Optimizing Transformers.” arXiv.
+<a href="https://doi.org/10.48550/arXiv.2007.00072">https://doi.org/10.48550/arXiv.2007.00072</a>.</p>
+</div>
+<div id="ref-kaplanScalingLawsNeural2020" class="csl-entry">
+<p>Kaplan, Jared, Sam McCandlish, Tom Henighan, Tom B. Brown, Benjamin
+Chess, Rewon Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario
+Amodei. 2020. “Scaling Laws for Neural Language Models.” arXiv.
+<a href="https://doi.org/10.48550/arXiv.2001.08361">https://doi.org/10.48550/arXiv.2001.08361</a>.</p>
+</div>
+<div id="ref-rajbhandariZeROMemoryOptimizations2020" class="csl-entry">
+<p>Rajbhandari, Samyam, Jeff Rasley, Olatunji Ruwase, and Yuxiong He. 2020.
+“ZeRO: Memory Optimizations Toward Training Trillion Parameter Models.”
+arXiv. <a href="https://doi.org/10.48550/arXiv.1910.02054">https://doi.org/10.48550/arXiv.1910.02054</a>.</p>
+</div>
+<div id="ref-shaoDeepSeekMathPushingLimits2024" class="csl-entry">
+<p>Shao, Zhihong, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi,
+Haowei Zhang, et al. 2024. “DeepSeekMath: Pushing the Limits of
+Mathematical Reasoning in Open Language Models.” arXiv.
+<a href="https://doi.org/10.48550/arXiv.2402.03300">https://doi.org/10.48550/arXiv.2402.03300</a>.</p>
+</div>
+<div id="ref-shoeybiMegatronLMTrainingMultiBillion2020"
+class="csl-entry">
+<p>Shoeybi, Mohammad, Mostofa Patwary, Raul Puri, Patrick LeGresley, Jared
+Casper, and Bryan Catanzaro. 2020. “Megatron-LM: Training Multi-Billion
+Parameter Language Models Using Model Parallelism.” arXiv.
+<a href="https://doi.org/10.48550/arXiv.1909.08053">https://doi.org/10.48550/arXiv.1909.08053</a>.</p>
+</div>
+<div id="ref-teamKimiK2Open2025" class="csl-entry">
+<p>Team, Kimi, Yifan Bai, Yiping Bao, Guanduo Chen, Jiahao Chen, Ningxin
+Chen, Ruijue Chen, et al. 2025. “Kimi K2: Open Agentic Intelligence.”
+arXiv. <a href="https://doi.org/10.48550/arXiv.2507.20534">https://doi.org/10.48550/arXiv.2507.20534</a>.</p>
+</div>
+<div id="ref-zhouLIMALessMore2023" class="csl-entry">
+<p>Zhou, Chunting, Pengfei Liu, Puxin Xu, Srini Iyer, Jiao Sun, Yuning Mao,
+Xuezhe Ma, et al. 2023. “LIMA: Less Is More for Alignment.” arXiv.
+<a href="https://doi.org/10.48550/arXiv.2305.11206">https://doi.org/10.48550/arXiv.2305.11206</a>.</p>
+</div>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://mig217.github.io/tags/llm-agents/">LLM Agents</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://mig217.github.io/post/2025-11-30-deep-agents/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Deep Agents From LangGraph</span>
+  </a>
+  <a class="next" href="https://mig217.github.io/post/2025-08-20-context-engineering/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Context Engineering</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Introduction to training LLMs for AI agents on x"
+            href="https://x.com/intent/tweet/?text=Introduction%20to%20training%20LLMs%20for%20AI%20agents&amp;url=https%3a%2f%2fmig217.github.io%2fpost%2f2025-10-30-training-llms-for-agents%2f&amp;hashtags=LLMAgents">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Introduction to training LLMs for AI agents on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmig217.github.io%2fpost%2f2025-10-30-training-llms-for-agents%2f&amp;title=Introduction%20to%20training%20LLMs%20for%20AI%20agents&amp;summary=Introduction%20to%20training%20LLMs%20for%20AI%20agents&amp;source=https%3a%2f%2fmig217.github.io%2fpost%2f2025-10-30-training-llms-for-agents%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Introduction to training LLMs for AI agents on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fmig217.github.io%2fpost%2f2025-10-30-training-llms-for-agents%2f&title=Introduction%20to%20training%20LLMs%20for%20AI%20agents">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Introduction to training LLMs for AI agents on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmig217.github.io%2fpost%2f2025-10-30-training-llms-for-agents%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Introduction to training LLMs for AI agents on whatsapp"
+            href="https://api.whatsapp.com/send?text=Introduction%20to%20training%20LLMs%20for%20AI%20agents%20-%20https%3a%2f%2fmig217.github.io%2fpost%2f2025-10-30-training-llms-for-agents%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Introduction to training LLMs for AI agents on telegram"
+            href="https://telegram.me/share/url?text=Introduction%20to%20training%20LLMs%20for%20AI%20agents&amp;url=https%3a%2f%2fmig217.github.io%2fpost%2f2025-10-30-training-llms-for-agents%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Introduction to training LLMs for AI agents on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Introduction%20to%20training%20LLMs%20for%20AI%20agents&u=https%3a%2f%2fmig217.github.io%2fpost%2f2025-10-30-training-llms-for-agents%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://mig217.github.io/">Mig&#39;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

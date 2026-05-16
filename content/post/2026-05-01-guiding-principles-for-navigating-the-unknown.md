@@ -4,7 +4,7 @@ author: ["Mingrui Guo"]
 date: "2026-05-02"
 categories: ["AI"]
 tags: ["PM"]
-draft: true
+draft: false
 ShowToc: true
 TocOpen: false
 math: true

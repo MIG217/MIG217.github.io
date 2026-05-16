@@ -59,6 +59,65 @@
 &lt;p&gt;文件系统就是 Agentic System 的 外部化记忆（Externalized Memory）。&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Introduction to training LLMs for AI agents</title>
+      <link>https://mig217.github.io/post/2025-10-30-training-llms-for-agents/</link>
+      <pubDate>Thu, 02 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>https://mig217.github.io/post/2025-10-30-training-llms-for-agents/</guid>
+      <description>&lt;p&gt;大家可能都已经对 LLM 很熟悉了。大概在两三年前，ChatGPT、Claude、Llama、DeepSeek 等模型相继出现，可以说是彻底改变了世界。但在使用这些强大工具的同时,一个核心问题值得探讨：&lt;strong&gt;这些模型到底是如何训练的？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;本文将从宏观视角梳理 LLM 的训练流程，重点关注训练 AI Agents 所需的关键技术路径,而非底层实现细节。&lt;/p&gt;
+&lt;h2 id=&#34;llm-training-pipeline&#34;&gt;LLM Training Pipeline&lt;/h2&gt;
+&lt;p&gt;LLM 的训练是一项复杂的系统工程,通常可以划分为三个核心阶段: &lt;strong&gt;预训练(Pre-training)、经典后训练(Classic Post-training/RLHF) 和 推理强化学习(RL for Reasoning)&lt;/strong&gt;。在实际应用中,我们还会结合 提示工程(Prompting) 和 微调(Fine-tuning) 来进一步激发模型潜力。&lt;/p&gt;
+&lt;h3 id=&#34;general-llm-training-pipeline&#34;&gt;General LLM Training Pipeline&lt;/h3&gt;
+&lt;p&gt;从整体上看，大语言模型（LLM）的训练分为三个阶段，每个阶段的目标、规模和挑战各不相同：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Pre-training&lt;/strong&gt;：在大规模文本上学习预测下一个词，建立通用知识基础；这是规模最大、成本最高的一步，瓶颈在于高质量数据和算力资源。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Classic Post-training / RLHF&lt;/strong&gt;：通过人类反馈强化学习，使模型输出更符合用户偏好；相比预训练，所需数据和成本大幅降低，但高度依赖优质反馈和有效评测体系。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RL for Reasoning&lt;/strong&gt;：让模型在回答前进行推理，提升解决数学、编程等客观问题的能力；规模和成本介于前两者之间，难点在于设计合适的 RL 环境并防止模型“自我黑客”。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;../../docs/images/general-llm-training-pipeline.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;三个阶段对比&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;阶段&lt;/th&gt;
+          &lt;th&gt;核心目标&lt;/th&gt;
+          &lt;th&gt;数据规模&lt;/th&gt;
+          &lt;th&gt;训练时间&lt;/th&gt;
+          &lt;th&gt;成本级别&lt;/th&gt;
+          &lt;th&gt;主要瓶颈&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;预训练（Pre-training）&lt;/td&gt;
+          &lt;td&gt;学习预测下一个词，构建知识底座&lt;/td&gt;
+          &lt;td&gt;~10 万亿 tokens&lt;/td&gt;
+          &lt;td&gt;数月&lt;/td&gt;
+          &lt;td&gt;千万美元级&lt;/td&gt;
+          &lt;td&gt;高质量数据、算力资源&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;经典后训练 / RLHF（Classic Post-training / RLHF）&lt;/td&gt;
+          &lt;td&gt;让模型符合用户偏好&lt;/td&gt;
+          &lt;td&gt;~10 万个问题&lt;/td&gt;
+          &lt;td&gt;几天&lt;/td&gt;
+          &lt;td&gt;数万–十万美元&lt;/td&gt;
+          &lt;td&gt;人类反馈数据、评测体系&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;推理型 RL（RL for Reasoning）&lt;/td&gt;
+          &lt;td&gt;提升推理和思考能力&lt;/td&gt;
+          &lt;td&gt;百万级问题&lt;/td&gt;
+          &lt;td&gt;数周&lt;/td&gt;
+          &lt;td&gt;百万美元级&lt;/td&gt;
+          &lt;td&gt;RL 环境设计、防止自我黑客&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;成功的关键要素&#34;&gt;成功的关键要素&lt;/h3&gt;
+&lt;p&gt;了解了训练的宏观阶段后，我们再深入一层，看看在每个阶段中，哪些要素是决定模型成败的关键。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Memory, Reasoning, and Planning of Language Agents</title>
       <link>https://mig217.github.io/post/2025-03-30-memory-reasoning-and-planning-of-language-agents/</link>
       <pubDate>Wed, 16 Apr 2025 00:00:00 +0000</pubDate>
