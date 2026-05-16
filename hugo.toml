@@ -105,10 +105,6 @@ I believe understanding the technology makes you a better product manager.
     name = "Tags"
     url = "tags/"
     weight = 5
-  [[menu.main]]
-    name = "FAQ"
-    url = "faq/"
-    weight = 6
 
 [languages]
   [languages.en]
