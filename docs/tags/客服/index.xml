@@ -10,9 +10,9 @@
     <atom:link href="https://mig217.github.io/tags/%E5%AE%A2%E6%9C%8D/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>会话 Agent 图片理解能力建设</title>
-      <link>https://mig217.github.io/projects/etc-multimodal-agent/</link>
+      <link>https://mig217.github.io/projects/multimodal-agent/</link>
       <pubDate>Sun, 01 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/projects/etc-multimodal-agent/</guid>
+      <guid>https://mig217.github.io/projects/multimodal-agent/</guid>
       <description>为现有文本客服 Agent 添加图片理解能力——用 vision 预处理节点将用户截图转化为结构化上下文，在不改动原有路由框架的前提下支持三种输入形态。</description>
     </item>
   </channel>

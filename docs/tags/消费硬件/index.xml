@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>AI on Mig&#39;s Blog</title>
-    <link>https://mig217.github.io/tags/ai/</link>
-    <description>Recent content in AI on Mig&#39;s Blog</description>
+    <title>消费硬件 on Mig&#39;s Blog</title>
+    <link>https://mig217.github.io/tags/%E6%B6%88%E8%B4%B9%E7%A1%AC%E4%BB%B6/</link>
+    <description>Recent content in 消费硬件 on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
     <lastBuildDate>Sun, 17 May 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://mig217.github.io/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mig217.github.io/tags/%E6%B6%88%E8%B4%B9%E7%A1%AC%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>当 iPhone 不再是欲望品</title>
       <link>https://mig217.github.io/post/2026-05-17-iphone-not-desire/</link>
@@ -18,13 +18,6 @@
 &lt;h2 id=&#34;一我开始用-excel-决定换不换手机&#34;&gt;一、我开始用 Excel 决定换不换手机&lt;/h2&gt;
 &lt;p&gt;前几天我盯着 iPhone 17 Pro 的以旧换新页面，认真打开 Excel 算了一笔账。&lt;/p&gt;
 &lt;p&gt;15 Pro 的折抵价、12 期免息分摊、明年 18 Pro 发布后 15 Pro 的残值预估、存储芯片涨价会不会传导到 18 Pro 的定价……我用一个产品经理做 ROI 分析的全部工具，去回答一个本来应该很简单的问题:&lt;strong&gt;要不要换&lt;/strong&gt;。&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>AI 投资中台建设</title>
-      <link>https://mig217.github.io/projects/ai-investment-platform/</link>
-      <pubDate>Sun, 01 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/projects/ai-investment-platform/</guid>
-      <description>从 0 到 1 建设 AI 投资服务平台，月 PV 80w、UV 50w，直接带动营收破百万。</description>
     </item>
   </channel>
 </rss>
