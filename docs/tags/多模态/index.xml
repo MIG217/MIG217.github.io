@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Agent on Mig&#39;s Blog</title>
-    <link>https://mig217.github.io/tags/agent/</link>
-    <description>Recent content in Agent on Mig&#39;s Blog</description>
+    <title>多模态 on Mig&#39;s Blog</title>
+    <link>https://mig217.github.io/tags/%E5%A4%9A%E6%A8%A1%E6%80%81/</link>
+    <description>Recent content in 多模态 on Mig&#39;s Blog</description>
     <generator>Hugo -- 0.147.7</generator>
     <language>en</language>
     <lastBuildDate>Sun, 01 Jun 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://mig217.github.io/tags/agent/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mig217.github.io/tags/%E5%A4%9A%E6%A8%A1%E6%80%81/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>会话 Agent 图片理解能力建设</title>
       <link>https://mig217.github.io/projects/etc-multimodal-agent/</link>
       <pubDate>Sun, 01 Jun 2025 00:00:00 +0000</pubDate>
       <guid>https://mig217.github.io/projects/etc-multimodal-agent/</guid>
       <description>为现有文本客服 Agent 添加图片理解能力——用 vision 预处理节点将用户截图转化为结构化上下文，在不改动原有路由框架的前提下支持三种输入形态。</description>
-    </item>
-    <item>
-      <title>金融资讯智能体</title>
-      <link>https://mig217.github.io/projects/financial-news-agent/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>https://mig217.github.io/projects/financial-news-agent/</guid>
-      <description>覆盖 40+ 业务场景的金融资讯 Agent，从用户调研到数据 API 设计、Agent 架构、前端组件的完整建设过程。</description>
     </item>
   </channel>
 </rss>

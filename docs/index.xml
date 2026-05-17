@@ -59,6 +59,13 @@
 &lt;p&gt;This article explores how to effectively prompt and utilize the new generation of reasoning models. Models released over the past year have demonstrated remarkable progress in reasoning and planning tasks. OpenAI has deeply optimized Chain of Thought (CoT) processing, using reinforcement learning to fine-tune models so they automatically integrate step-by-step reasoning into their response process.&lt;/p&gt;</description>
     </item>
     <item>
+      <title>会话 Agent 图片理解能力建设</title>
+      <link>https://mig217.github.io/projects/etc-multimodal-agent/</link>
+      <pubDate>Sun, 01 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>https://mig217.github.io/projects/etc-multimodal-agent/</guid>
+      <description>为现有文本客服 Agent 添加图片理解能力——用 vision 预处理节点将用户截图转化为结构化上下文，在不改动原有路由框架的前提下支持三种输入形态。</description>
+    </item>
+    <item>
       <title> Open Training Recipes for Reasoning in Language Models</title>
       <link>https://mig217.github.io/post/2025-05-30-open-training-recipes/</link>
       <pubDate>Fri, 30 May 2025 00:00:00 +0000</pubDate>
